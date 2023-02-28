@@ -1,0 +1,20 @@
+Sprint Backlog
+
+- Input box to submit search terms
+- Enable drop down menu to select search terms
+- Configure OR search parameters
+- Generate 10 search results through connection to API
+- List of movie detail information pulled from API
+- Display details of movie in overlay inline window on search page
+- Front-end page for creating watchlist
+- Back-end for creating / saving watchlist
+- Login landing page
+- Create account page
+- Username, password, create button, cancel button
+- Backend setup for users, including encryption
+- Suggestion backend (function to generate a new list of movies)
+- Suggestion frontend (button, text box, tool tip)
+
+The team sat down and looked through the product backlog, with details on implementation for each feature, and identified the foundational features. It was decided that the search function should be operational by the end of the sprint as it is crucial for all the other product requirements. Setting up the search function would also allow us to design the movie class with movie details that are consistent through the app. Furthermore since watchlists are reused in various features (compare, suggestion, montage), it was decided that the basic functionality of watchlists should also be implemented in the first sprint. The log in feature is also critical as it allows watchlists to be fully functional, and since encryption is its own specified feature that would require additional configurations and is something we have less experience with, we also included encrypted log in. Since it is the first sprint, we wanted to be ambitious and ensure all team members had a fair but challenging amount of work. Furthermore, since there are no requirements on how the front end of the suggestion feature should look, we decided to add it to our backlog in order to begin figuring out how we want the feature to present.
+
+Devika Sen, Oscar Clavijo Bernal, Adit Hattikudur, Hiro Miki, Akanksha Shukla
