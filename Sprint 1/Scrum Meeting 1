@@ -1,0 +1,23 @@
+What have you done since the last meeting? 
+
+Akanksha: Designing (rough draft) the UI for presenting movie details. 
+Oscar: Began some research on encryption and implementing a database. 
+Adit: I have thought about how I would like to layout the front-end and design the creating/saving watchlist page in conjunction with the watchlist landing and display pages. I have also thought about the back-end and which components will need to be included in the database as keys. 
+Devika: Looked at the documentation for the API, started using it in a sample program to understand the data. 
+Hiroaki: I reviewed the recording of our initial stakeholder meeting and started learning about React for developing the front end of suggestion feature/page
+
+What do you plan to do for the next meeting? 
+
+Akanksha: Work closely with Devika to implement movie detail functionality on search results.  
+Oscar: Set up a SQL database and write up a framework to connect that to our project. 
+Adit: I plan to create the database and write the html/css/js for the front end. I will learn more js to better understand the web elements in React.
+Devika: Have a usable component to pull from the API and connect it to the rest of the project. 
+Hiroaki: I plan to create a dummy suggestion page, where the user can type in a text box, and also a tool tip that appears which states “enter number of movies to suggest” 
+
+Anything blocking your progress?
+
+Akanksha: Unfamiliar with React (we are seeking to use it to implement UI)
+Oscar: No blocks; outside commitments blocked progress between last and the current meeting. 
+Adit: I feel breaking the saving watchlists feature into only two subtasks may be a bit too much. I may add a third sub task to allow for ample time for proper implementation and testing. 
+Devika: No blocks. 
+Hiroaki: I have never used React before, so there is definitely a learning curve
