@@ -1,0 +1,23 @@
+What have you done since the last meeting?
+
+Adit: I worked on learning the ReactJS framework, Javascript syntax, and formulating SQL database. I am thinking about keys and which pieces of the site need to pull from which tables.
+Hiroaki: Learnt basic syntax of React. Worked on the frontend of suggestion page, specificallly, implemeting suggestion button and textbox to select number of movies to suggest. 
+Oscar: Refreshed familiarity with React, and began research/tutorials on encryption for the database. No implementation yet. 
+Devika: Figured out how to use React for the client side implementation. Worked on the front end of the search page, such as the input box to input movie search terms and the headers for the page. 
+Akanksha: Have begun setting up React components for movie details feature in order to get comfortable with the component structure and React syntax.
+
+What do you plan to do for the next meeting?
+
+Adit: I hope to write the use cases and acceptance tests for saving/creating watchlists. I will do this by checking the creation of the list after the cucumber tests interact with the elements.
+Hiroaki: Before the next meeting, I would like to finish the basic front end  of suggestion featrue. Specifically, I will work on tool tip, and refine the design of suggestion button
+Oscar: I hope to have usable/presentable implementation with use cases set up. 
+Devika: Establish the connection with the API to return search results, and conduct testing regarding the relationship between search terms inserted and the search results returned.
+Akanksha: Have largely working and presentable front end of movie details on a dummy search results page.
+
+Anything blocking your progress?
+
+Adit: I am also having trouble with the learning curve for React and Javascript. We should possibly switch to a more HTML/CSS framework.
+Hiroaki: The learning curve for react.
+Oscar: Outside commitments; technical aspects are not a block in the progress. 
+Devika: I am still trying to learn all the nuances of React, and feel like it is slowing down my progress as it is still unfamiliar to me. I would be much more comfortable with JavaScript.
+Akanksha: I am struggling to adapt to working in React and how the set up would work. 
