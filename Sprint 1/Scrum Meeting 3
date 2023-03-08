@@ -1,0 +1,20 @@
+What have you done since the last meeting?
+Devika: Created and conducted use cases and acceptance testing for the search input box to ensure search terms provide relevant results from movie API.
+Adit: Worked on SQL schema and design connecting with user database and movieDB.
+Hiro: Worked on experimenting with home page and react.  Made sure that text box only accepts numbers and that the min is 1 and max is 10
+Oscar: I have begun working on setting up encrypted user database and familiarizing myself with the hashing library
+Akanksha: Set up some dummy front end hover functionality and a pop up overlay window.
+
+What do you plan to do for the next meeting?
+Devika: Start perfecting the front end and UI of the search page to make it more aesthetic and easier for users to interact with. Create the functionality of Boolean search parameters.
+Adit: Finalize SQL schema and produce use cases. Attempt to layout front end and try for acceptance testing with basic implementation.
+Hiro: Continue working on the front, make sure that I can earn at least 5 points
+Oscar: I plan on having completed the set up of an encrypted user database
+Akanksha: I plan to have semi functional hover buttons that reflect requirements and have the pop up overlay window actually display details.
+
+Anything blocking your progress?
+Devika: Outside commitments from other classes are making it difficult to manage my time and complete as much as I need to within the time I have available. 
+Adit: There is a learning curve to JavaScript and React, but I am getting through it.
+Hiro: The deadline for the first sprint is coming up so it is stressful 
+Oscar: Commitments from other classes and work
+Akanksha: Workload from other classes is limiting the time I can dedicate to learning React
