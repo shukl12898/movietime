@@ -1,0 +1,20 @@
+What have you done since the last meeting?
+Adit: I finished the majority of my use cases and finalized the layout of the sql tables
+Hiro: I wrote some cucumber test for suggestion page, and worked on changing pages in our app
+Devika: I have finished white box testing with full coverage and implementation for the search function
+Oscar: I have begun setting up the controller for the API calls for login, and made encrypted login work
+Akanksha: I have finished some white box testing for the movie details and implementation for the feature
+
+What do you plan to do for the next meeting?
+Adit: I will start work on the front end of the MyWatchlists page, which involves adding/moving/copying movies to watchlists. I will also work on the adding/creating watchlists functionality of the search page.
+Hiro: Hopefully I can push more actual production codes before code submission
+Devika: Fix bugs in the search function and complete use cases for acceptance testing
+Oscar: I plan on completing the API set up and setting up use cases for acceptance testing
+Akanksha: I hope to work on making the movie details feature work correctly with the search feature
+
+Anything blocking your progress?
+Adit: I am still having trouble understanding react and will work to learn the syntax of how I can query the sql database.
+Hiro: Figuring out the testing is a hard task
+Devika: Struggling to merge Akanksha's movie details functionality with my search functionality
+Oscar: Figuting out white box testing in Jest
+Akanksha: It is taking time to merge the search functionality seamlessly with the movie details functionality
