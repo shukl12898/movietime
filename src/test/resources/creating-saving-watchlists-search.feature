@@ -17,3 +17,13 @@ Feature: Testing out the creating/saving watchlist features of the search page
     And I click on add to existing watchlist
     And I click on "action" watchlist
     Then I should see "You've added "Fight Club" to "action"" on the page
+
+  Scenario: Open the page and try to add a searched movie to an existing watchlist with the same movie
+    Given I am on the search page
+    When I enter "Fight Club"
+    And I click search
+    And I hover over the "Fight Club" result
+    And I click on add to existing watchlist
+    And I click on "action" watchlist
+    Then I should see "Sorry. The "action" watchlist already contains "Fight Club"" on the page
+
