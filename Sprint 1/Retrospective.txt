@@ -1,0 +1,11 @@
+Team 14 Sprint 1 Retrospective
+Present Members: Hiro, Akanksha, Devika, Oscar, Adit
+What process aspects will be changed?
+- We will work on design earlier to avoid working on features that require implementation that has not be completed as yet. Adit attempted to work on the creating/saving watchlist feature but realized he needed a view_all_watchlists page first. This will allow us to better formulate our task/subtask chart and avoid these slowdowns. 
+- We will work on pushing and completing our build earlier with the deadline. Some team members pushed their implementation/tests close to the deadline and accidentally created a failed build and violated Continuous Integration. More time will allow us to look for missing files and ensure our build is complete. 
+- We will work on following TDD with our implementation with white-box testing and black-box testing to make for more lean implementation. We will begin writing tests earlier to achieve this. 
+What tasks will be added to the product backlog?
+- We will add creating a view all watchlists page to the product backlog
+- Add use cases that we missed last sprint
+- Load more search functionality (to get infinite results or a more reasonable number)
+- Modify Movie Details to integrate seamlessly with search
