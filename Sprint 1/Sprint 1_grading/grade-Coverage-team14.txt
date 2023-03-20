@@ -1,0 +1,25 @@
+Best Practice Coverage Report
+Owner: Team 14
+Grade: 0/12
+Comments: 
+	Using commit: https://github.com/CSCI310/20231-project-team-14/commit/acc00a3daa0e0b2ffe650a8eb01a5f5d317423b5
+
+[INFO] Creating an optimized production build...
+[INFO] Failed to compile.
+[INFO] 
+[INFO] Module not found: Error: Can't resolve '../components/MovieDetails' in 'C:\Users\halfond\USC-Materials\USC-private\class\CS310\2023-Spring\projects\team_repos\Sprint1\20231-project-team-14\site\src\components'
+[INFO] 
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  01:30 min
+[INFO] Finished at: 2023-03-19T20:29:40-07:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal com.github.eirslett:frontend-maven-plugin:1.12.0:npm (npm run build) on project Project: Failed to run task: 'npm run build' failed. org.apache.commons.exec.ExecuteException: Process exited with an error: 1 (Exit value: 1) -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
