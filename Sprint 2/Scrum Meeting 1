@@ -1,0 +1,23 @@
+What have you done since the last meeting? 
+
+Akanksha: Continued making progress on seamlessly merging the movie details and search features.
+Oscar: I have made progress on the creating account front end page (same page as login).
+Adit: I have been planning the front end for the view all watchlists page and been working on understanding the JavaScript necessary to implement the hover features
+Devika: Been working on trying to fix the build failure in Docker when we merge.
+Hiroaki: Been working on front end of suggestion feature.
+
+What do you plan to do for the next meeting? 
+
+Akanksha: I plan to have made more progress in having all movies of an actor appear with details, not just one.
+Oscar: I hopefully will have the back end set up for creating an account.
+Adit: I will implement the front end of the view all watchlists page and do the functionality for accessing the sql table
+Devika: I hopefully want to have resolved the build failure so I can begin 
+Hiroaki: I plan to have completed the front end of suggestion and work on the backend.
+
+Anything blocking your progress?
+
+Akanksha: External commitments taking time away from 310 work.
+Oscar: No blocks.
+Adit: I am having trouble understanding how to connect the back end to the front end. 
+Devika: No blocks. 
+Hiroaki: Still navigating react learning curve.
