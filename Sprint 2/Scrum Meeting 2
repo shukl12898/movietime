@@ -1,0 +1,23 @@
+What have you done since the last meeting? 
+
+Akanksha: I’ve still been trying to properly integrate movie search with movie details. 
+Oscar: Started restructuring the backend to work with SQLite. 
+Adit: I’ve been working on the view all watchlists page and learning how to implement the hover functionality for creating/saving new watchlists. 
+Devika: Helped write unit tests for the search/details feature. Continuing to collaborate with Akanksha on this implementation. 
+Hiroaki: Fixed the position of the tooltip so that it doesn’t overlap with other UI elements.Worked on additional use cases of  suggestion.
+
+What do you plan to do for the next meeting? 
+
+Akanksha: I hope to have completely integrated the two features 
+Oscar: Will finish implementing SQLite into the program, and have that functionality pass all tests. 
+Adit: I will begin creating white-box and black-box tests, while also revising the issues on GitHub and bolstering my use cases according to our sprint review.
+Devika: Write more unit tests and achieve necessary coverage for the files. 
+Hiroaki:  Revising the issues and work on additional use cases. Continue working on suggestion front end
+
+Anything blocking your progress?
+
+Akanksha: I’m struggling to understand what the movie database returns when we search for actors
+Oscar: Started failing tests now that I am changing the database (to SQLite). Have to work on debugging. 
+Adit: I am still having some trouble with React and understanding linking the front to the back end.
+Devika: No blocks. 
+Hiroaki: I still have trouble understanding the issue that was assigned to me. 
