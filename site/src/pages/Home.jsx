@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 
+
 // This page provides a button with a redirect to "/other"
 function Home() {
   // Calling navigate() will allow us to redirect the webpage
@@ -24,6 +25,7 @@ function Home() {
               }}
             >
               Click to go to Login page
+
        </button>
        <button
            onClick={() => {
@@ -31,7 +33,6 @@ function Home() {
            }}>
               Click to go to Search page
        </button>
-
     </div>
   );
 }

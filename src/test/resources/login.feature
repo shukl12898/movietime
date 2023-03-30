@@ -1,4 +1,4 @@
-Feature: testing the login and account creation functionality
+Feature: testing login functionality
   Scenario: an existing user logs in.
     Given I am on the login page
     When I enter "oclavijo" in the username box
