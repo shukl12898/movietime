@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, fireEvent, screen } from '@testing-library/react';
 import MovieResult from './components/MovieResult';
-import MovieDetails from "./components/MovieDetails";
+import MovieDetails from './components/MovieDetails';
 import ReactDOM from 'react-dom';
 
 
