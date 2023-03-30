@@ -1,27 +1,10 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import OneWatchlist from "../components/OneWatchlist";
 import MultipleWatchlists from "../components/MultipleWatchlists";
 
 // This page provides a button with a redirect to "/other"
 
-const moviesList = [{
-  id: 0, // Used in JSX as a key
-  title: 'Flight',
-  des: 'mathematician',
-}, {
-  id: 1, // Used in JSX as a key
-  title: 'Train',
-  des: 'chemist',
-}, {
-  id: 2, // Used in JSX as a key
-  title: 'Plane',
-  des: 'physicist',
-}, {
-  id: 3, // Used in JSX as a key
-  title: 'Boat',
-  des: 'chemist',
-}];
+
 
 const multiList = [
 {
