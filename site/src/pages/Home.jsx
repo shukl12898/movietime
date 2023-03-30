@@ -1,12 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
+
+
 
 // This page provides a button with a redirect to "/other"
 function Home() {
-  // fetchResponse is a constant in this component's state. Use handleFetchResponse(newValue)
-  // to update the value of fetchResponse
-  const [fetchResponse, handleFetchResponse] = useState();
-
   // Calling navigate() will allow us to redirect the webpage
   const navigate = useNavigate();
 
@@ -22,36 +20,19 @@ function Home() {
         Click to go to Other page
       </button>
       <button
-        onClick={() => {
-          fetch("/api/ping", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-              param0: "Frontend"
-            })
-          })
-            .then((res) => res.json())
-            .then((response) => {
-              console.log("API Responded With: ");
-              console.log(response);
-              if (response?.data) {
-                handleFetchResponse(response.data);
-              } else {
-                console.log("Malformed data response"); //TODO: Handle me!
-              }
-            })
-            .catch((err) => {
-              console.log(err)
-              handleFetchResponse("An API error occured");
-            });
-        }}
-      >
-        Fetch backend
-      </button>
-      {/* Conditionally render this div if fetchResponse is a valid value */}
-      {fetchResponse ? <div>{fetchResponse}</div> : null}
+              onClick={() => {
+                navigate("/Login");
+              }}
+            >
+              Click to go to Login page
+
+       </button>
+       <button
+           onClick={() => {
+             navigate("/Search");
+           }}>
+              Click to go to Search page
+       </button>
     </div>
   );
 }
