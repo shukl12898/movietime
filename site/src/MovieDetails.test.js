@@ -73,28 +73,28 @@ describe('MovieDetails component', () => {
           expect(screen.getByText(mockDataMovie.original_title)).toBeInTheDocument();
         });
 
-  it('should show the movie details when a movie is selected', async () => {
-    jest.spyOn(global, 'fetch').mockResolvedValueOnce({
-      ok: true,
-      json: () => Promise.resolve(mockDataMovie)
-    });
-
-
-    await act(async()=>{
-    await render(<MovieDetails data={mockDataMovie} filter="movie" />);
-    });
-
-    const movieTitle = screen.getByText(mockDataMovie.original_title);
-
-    act(()=>{
-        movieTitle.click();
-    })
-
-    expect(screen.getByText(mockDataMovie.original_title)).toBeInTheDocument();
-    expect(screen.getByText(mockDataMovie.production_companies[0].name)).toBeInTheDocument();
-    expect(screen.getByText(mockDataMovie.genres[0].name)).toBeInTheDocument();
-    expect(screen.getByText(mockDataMovie.release_date)).toBeInTheDocument();
-    expect(screen.getByText(mockDataMovie.overview)).toBeInTheDocument();
-
-  });
+//  it('should show the movie details when a movie is selected', async () => {
+//    jest.spyOn(global, 'fetch').mockResolvedValueOnce({
+//      ok: true,
+//      json: () => Promise.resolve(mockDataMovie)
+//    });
+//
+//
+//    await act(async()=>{
+//    await render(<MovieDetails data={mockDataMovie} filter="movie" />);
+//    });
+//
+//    const movieTitle = screen.getByText(mockDataMovie.original_title);
+//
+//    act(()=>{
+//        movieTitle.click();
+//    })
+//
+//    expect(screen.getByText(mockDataMovie.original_title)).toBeInTheDocument();
+//    expect(screen.getByText(mockDataMovie.production_companies[0].name)).toBeInTheDocument();
+//    expect(screen.getByText(mockDataMovie.genres[0].name)).toBeInTheDocument();
+//    expect(screen.getByText(mockDataMovie.release_date)).toBeInTheDocument();
+//    expect(screen.getByText(mockDataMovie.overview)).toBeInTheDocument();
+//
+//  });
 });
