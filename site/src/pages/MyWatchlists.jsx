@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import OneWatchlist from "../components/OneWatchlist";
 import MultipleWatchlists from "../components/MultipleWatchlists";
