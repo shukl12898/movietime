@@ -1,0 +1,23 @@
+What have you done since the last meeting? 
+
+Adit: I have completed the first draft of the view all watchlists page.
+Hiro: Completed the basic front end of suggestion page
+Devika: Completed all testing for the search functionality so far
+Oscar: Completed the back end and front end for login, create account
+Akanksha: Fixed the build failure, and made the cast details scrollable
+
+What do you plan to do for the next meeting? 
+
+Adit: I am working on testing the front end of the view all watchlists page and connecting it to SQL via an API.
+Hiro: Working on combining the page with watchlist page and do the jtesting and issue refactor
+Devika: Working on using Boolean OR search parameters to interact with the API
+Oscar: I plan on completing the testing for the login feature
+Akanksha: I plan on having full coverage for movie details testing
+
+Anything blocking your progress?
+
+Adit: I have having trouble understanding Jest and ensuring my tests work. 
+Hiro: Understanding j test
+Devika: The API is very hard to work with
+Oscar: No blocks
+Akanksha: Difficult to mock the movie details overlay in jest
