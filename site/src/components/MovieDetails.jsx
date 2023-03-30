@@ -66,6 +66,9 @@ function MovieDetails(props) {
         }
     }, [movieID]);
 
+        console.log(castDetails);
+
+
     const showDetails = (movieID) => {
         setShowOverlay(true);
         setSelectedMovieID(movieID);
@@ -80,7 +83,7 @@ function MovieDetails(props) {
       <div className="background">
         {movieDetails.length > 0 ? (
           movieDetails.map((movie) => (
-            <div className="movie-title" key={movie.id} onClick={() => showDetails(movie.id)}>
+            <div className="movie-title"  data-testid="movie-title" key={movie.id} onClick={() => showDetails(movie.id)}>
               {movie.original_title}
             </div>
           ))
@@ -89,11 +92,11 @@ function MovieDetails(props) {
         )}
 
         {showOverlay && selectedMovieID && (
-              <div className="overlay" onClick={hideDetails}>
+              <div className="overlay" data-testid="overlay" onClick={hideDetails}>
                 <div key={selectedMovieID}>
                   <p>Movie Details</p>
                   <h1>{movieDetails.filter((movie) => movie.id === selectedMovieID)[0].original_title}</h1>
-                  <h2>{movieDetails.filter((movie) => movie.id === selectedMovieID)[0].release_date.substring(0, 4)}</h2>
+                  <h2>{movieDetails.filter((movie) => movie.id === selectedMovieID)[0].release_date.toString().substring(0, 4)}</h2>
                   <h2>{movieDetails.filter((movie) => movie.id === selectedMovieID)[0].genres && movieDetails.filter((movie) => movie.id === selectedMovieID)[0].genres.map((genre) => genre.name).join(", ")}</h2>
                   <img src={imageURL + movieDetails.filter((movie) => movie.id === selectedMovieID)[0].poster_path} />
                   {castDetails && (
@@ -104,7 +107,7 @@ function MovieDetails(props) {
                         <li key={index}>{member.name}</li>
                       )}
                       {!Array.isArray(castDetails) && castDetails.cast.map((member,index) =>
-                        <li key={index}>{member.name}</li>
+                        <li key={index} data-testid="cast">{member.name}</li>
                       )}
                     </ul>
                   </h2>
