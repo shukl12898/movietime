@@ -11,12 +11,12 @@ export default function MultipleWatchlists(props) {
 
   const listItems = props.watchlistsArr.map(watchlist =>
     <li
-    key={watchlist.wName}>
-    {watchlist.wName}
+    key={watchlist.wName}
+    >
+        {watchlist.wName}
         <OneWatchlist movies={watchlist.list}/>
     </li>
   );
-
 
   return (
     <ul>{listItems}</ul>
