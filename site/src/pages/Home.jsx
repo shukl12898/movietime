@@ -7,15 +7,6 @@ import SearchFilter from '../components/SearchFilter';
 
 // This page provides a button with a redirect to "/other"
 function Home() {
-  // // fetchResponse is a constant in this component's state. Use handleFetchResponse(newValue)
-  // // to update the value of fetchResponse
-  const [fetchResponse, handleFetchResponse] = useState();
-
-
-
-  // Calling navigate() will allow us to redirect the webpage
-  const navigate = useNavigate();
-
   //empty array for movie results
   const [movies, assignMovies] = useState([]);
   const [query, setQuery]= useState('');
