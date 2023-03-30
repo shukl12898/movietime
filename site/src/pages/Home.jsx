@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+
 // This page provides a button with a redirect to "/other"
 function Home() {
   // fetchResponse is a constant in this component's state. Use handleFetchResponse(newValue)
@@ -21,6 +22,13 @@ function Home() {
       >
         Click to go to Other page
       </button>
+      <button
+              onClick={() => {
+                navigate("/Login");
+              }}
+            >
+              Click to go to Login page
+            </button>
       <button
         onClick={() => {
           fetch("/api/ping", {
@@ -52,6 +60,7 @@ function Home() {
       </button>
       {/* Conditionally render this div if fetchResponse is a valid value */}
       {fetchResponse ? <div>{fetchResponse}</div> : null}
+
     </div>
   );
 }
