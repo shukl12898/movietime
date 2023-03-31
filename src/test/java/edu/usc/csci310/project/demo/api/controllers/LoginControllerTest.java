@@ -38,38 +38,26 @@ public class LoginControllerTest {
         assertEquals("tommytrojan", r.getDisplayName());
         assertEquals(1, r.getUserId());
         assertEquals(200, r.getStatus());
-    }
 
-    @Test
-    void loginMismatchPw() throws Exception {
-        setUp();
-        LoginRequest rq = new LoginRequest();
         rq.setPassword("wrongpassword");
         rq.setUsername("tommytrojan");
-
-        ResponseEntity<LoginResponse> rsp = l.verifyLogin(rq);
+        rsp = l.verifyLogin(rq);
         assertEquals(HttpStatusCode.valueOf(401), rsp.getStatusCode());
 
-        LoginResponse r = rsp.getBody();
+        r = rsp.getBody();
         assertEquals(null, r.getDisplayName());
         assertEquals(0, r.getUserId());
         assertEquals(401, r.getStatus());
-    }
 
-    @Test
-    void loginMismatchUser() throws Exception {
-        setUp();
-        LoginRequest rq = new LoginRequest();
         rq.setPassword("password");
         rq.setUsername("trojan");
-
-        ResponseEntity<LoginResponse> rsp = l.verifyLogin(rq);
-        assertEquals(HttpStatusCode.valueOf(401), rsp.getStatusCode());
-
-        LoginResponse r = rsp.getBody();
+        r = rsp.getBody();
         assertEquals(null, r.getDisplayName());
         assertEquals(0, r.getUserId());
         assertEquals(401, r.getStatus());
+
+
     }
+
 
 }
