@@ -6,7 +6,6 @@ import CreateAccount from '../components/CreateAccount';
 
 function Login() {
 
-  const [user, setUser] = useState();
   const [signUp, setSignUp] = useState(false);
 
   const navigate = useNavigate();
@@ -16,6 +15,7 @@ function Login() {
     <>
     <LoginComponent />
     <button onClick={() => {setSignUp(true);}} >Create Account</button>
+    <button onClick={() => { navigate("/Home");}} > Return Home </button>
     </>
     );
   } else {
@@ -23,7 +23,7 @@ function Login() {
     <>
     <CreateAccount />
     <button onClick={() => {setSignUp(false);}} >Login</button>
-
+    <button onClick={() => { navigate("/Home");}} > Return Home </button>
     </>);
   }
 
