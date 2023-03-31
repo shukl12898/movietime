@@ -16,7 +16,7 @@ public class LoginControllerTest {
 
     LoginController l = new LoginController();
     DatabaseManager db;
-
+    @Before
     void setUp() throws Exception {
         db = new DatabaseManager();
         db.dropAllTables();
@@ -27,7 +27,6 @@ public class LoginControllerTest {
     }
     @Test
     void testLogin() throws Exception {
-        setUp();
         LoginRequest rq = new LoginRequest();
         rq.setPassword("password");
         rq.setUsername("tommytrojan");
