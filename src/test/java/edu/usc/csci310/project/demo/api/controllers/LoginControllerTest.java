@@ -17,18 +17,15 @@ public class LoginControllerTest {
 
     LoginController l = new LoginController();
 
-    static void setUp() throws Exception {
+    @Before
+    void setUp() throws Exception {
         DatabaseManager db;
-        db = new DatabaseManager();
-        db.dropAllTables();
-        db.close();
         db = new DatabaseManager();
         db.insertIntoUser("tommytrojan", "password");
         db.close();
     }
     @Test
     void testLogin() throws Exception {
-        setUp();
         LoginRequest rq = new LoginRequest();
         rq.setPassword("password");
         rq.setUsername("tommytrojan");
