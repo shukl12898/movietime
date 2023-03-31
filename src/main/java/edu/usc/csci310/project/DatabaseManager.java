@@ -141,6 +141,10 @@ public class DatabaseManager {
         return u;
     }
 
+    public void close() throws SQLException {
+        c.close();
+    }
+
 
 
 }

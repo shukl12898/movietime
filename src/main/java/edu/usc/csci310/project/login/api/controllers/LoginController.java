@@ -21,6 +21,7 @@ public class LoginController {
         try {
             DatabaseManager db = new DatabaseManager();
             UserModel u = db.getUser(request.getUsername(), request.getPassword());
+            db.close();
             response.setUserId(u.getUser_id());
             response.setDisplayName(u.getDisplayName());
             response.setStatus(200); // ok
