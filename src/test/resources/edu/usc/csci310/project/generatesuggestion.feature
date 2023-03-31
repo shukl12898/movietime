@@ -4,7 +4,7 @@ Feature: Generate Suggestions
     When I select "The Hunger Games" on "Action" Watchlist
     And I enter 7 on the textbox
     And I click the Generate button
-    Then I should see 7 similar movies suggested and it should not contain "The Hunger Games" itself
+    Then I should see 7 suggestions which shouldn't contain "The Hunger Games"
 
   Scenario: Hovering over the tooltip
     Given I am on endpoint "Watchlist"
