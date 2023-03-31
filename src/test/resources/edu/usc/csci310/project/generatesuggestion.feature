@@ -17,7 +17,7 @@ Feature: Generate Suggestions
     And I select "SMILE" on "Horror Watchlist
     And I enter 3 on the textbox
     And I click the Generate button
-    Then I should see 3 movies that are related to both 'The Hunger Games" and "SMILE"
+    Then I should see 3 movies related to 'The Hunger Games" AND "SMILE"
 
   Scenario:Enter a number that's bigger than 10
     Given I am on endpoint "Watchlist"
