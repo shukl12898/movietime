@@ -1,69 +1,32 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import LoginComponent from '../components/LoginComponent';
+import CreateAccount from '../components/CreateAccount';
+
 function Login() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
- // const [fetchResponse, handleFetchResponse] = useState();
 
-  function handleUsernameChange(event) {
-    setUsername(event.target.value);
-  }
+  const [user, setUser] = useState();
+  const [signUp, setSignUp] = useState(false);
 
-  function handlePasswordChange(event) {
-      setPassword(event.target.value);
-    }
   const navigate = useNavigate();
 
-  return (
-    <div>
-      <h2>Login</h2>
-      <button
-              onClick={() => {
-                navigate("/Home");
-              }}
-            >
-              Click to go to Home page
-            </button>
+  if (!signUp) {
+    return (
+    <>
+    <LoginComponent />
+    <button onClick={() => {setSignUp(true);}} >Create Account</button>
+    </>
+    );
+  } else {
+    return (
+    <>
+    <CreateAccount />
+    <button onClick={() => {setSignUp(false);}} >Login</button>
 
-        <div>
-          <label>Username:</label>
-          <input type="text" value={username} onChange={handleUsernameChange}/>
-        </div>
-        <div>
-          <label>Password:</label>
-          <input
-            type="password"
-            value={password}
-            onChange={handlePasswordChange}
-          />
-        </div>
-        <div>
-        <button onClick={() => {
-                fetch("/api/login", {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json"
-                  },
-                  body: JSON.stringify({
-                   username: username,
-                   password: password
-                   })
-                })
-                  .then(res => res.json())
-                  .then((response) => {
-                      console.log("API Responded With: ");
-                      console.log(response);
-                  })
-                  .catch(error => {
-                    console.log(error)
-                  });
-              }}
-              >Log In</button>
-        </div>
+    </>);
+  }
 
-    </div>
-  );
 }
 
 export default Login;
