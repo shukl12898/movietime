@@ -8,6 +8,7 @@ import edu.usc.csci310.project.login.api.controllers.LoginController;
 import edu.usc.csci310.project.login.api.requests.LoginRequest;
 import edu.usc.csci310.project.login.api.responses.LoginResponse;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.http.HttpStatusCode;
@@ -15,9 +16,9 @@ import org.springframework.http.ResponseEntity;
 public class LoginControllerTest {
 
     LoginController l = new LoginController();
-    DatabaseManager db;
-    @Before
-    void setUp() throws Exception {
+
+    static void setUp() throws Exception {
+        DatabaseManager db;
         db = new DatabaseManager();
         db.dropAllTables();
         db.close();
@@ -27,6 +28,7 @@ public class LoginControllerTest {
     }
     @Test
     void testLogin() throws Exception {
+        setUp();
         LoginRequest rq = new LoginRequest();
         rq.setPassword("password");
         rq.setUsername("tommytrojan");
