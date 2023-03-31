@@ -33,4 +33,3 @@ Feature: Generate Suggestions
     Given I am endpoint "Suggested movies"
     When I press the create new watchlist button from the list
     Then I should see a new watchlist based on the suggested movies
-
