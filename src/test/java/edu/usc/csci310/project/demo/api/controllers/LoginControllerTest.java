@@ -16,17 +16,17 @@ public class LoginControllerTest {
 
     LoginController l = new LoginController();
     DatabaseManager db;
-    @Before
+
     void setUp() throws Exception {
         db = new DatabaseManager();
         db.dropAllTables();
         db = new DatabaseManager();
-        db.createNewUser("tommytrojan", "password", "Tommy");
+        db.insertIntoUser("tommytrojan", "password");
         db.close();
     }
     @Test
     void testLogin() throws Exception {
-
+        setUp();
         LoginRequest rq = new LoginRequest();
         rq.setPassword("password");
         rq.setUsername("tommytrojan");
@@ -42,7 +42,7 @@ public class LoginControllerTest {
 
     @Test
     void loginMismatchPw() throws Exception {
-
+        setUp();
         LoginRequest rq = new LoginRequest();
         rq.setPassword("wrongpassword");
         rq.setUsername("tommytrojan");
@@ -58,6 +58,7 @@ public class LoginControllerTest {
 
     @Test
     void loginMismatchUser() throws Exception {
+        setUp();
         LoginRequest rq = new LoginRequest();
         rq.setPassword("password");
         rq.setUsername("trojan");

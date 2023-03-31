@@ -50,7 +50,7 @@ public class DatabaseManager {
      * @param username username (encrypted).
      * @param password password (encrypted).
      */
-    private void insertIntoUser(String username, String password) {
+    public void insertIntoUser(String username, String password) {
         try {
             PreparedStatement pst = c.prepareStatement("insert into users (username, password) values(?,?)");
             pst.setString(1, username);
