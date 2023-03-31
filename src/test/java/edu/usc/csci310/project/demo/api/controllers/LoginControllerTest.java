@@ -20,6 +20,7 @@ public class LoginControllerTest {
     void setUp() throws Exception {
         db = new DatabaseManager();
         db.dropAllTables();
+        db.close();
         db = new DatabaseManager();
         db.insertIntoUser("tommytrojan", "password");
         db.close();
