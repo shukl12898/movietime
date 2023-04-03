@@ -1,0 +1,20 @@
+Akanksha, Hiro, Adit (In-Persion)
+Devika, Oscar (Zoom)
+
+Feedback on Scrums:
+We lost points for not having submitted answers for our Scrum Meeting 3, but we completed this meeting over Zoom and will be submitting a regrade request. We will also submit the answers and selfie in one file.  
+
+Feedback on TDD:
+We did not receive points for TDD but we will be submitting a regrade request since we believe we had tests committed within the same commit as our implementation. We will work on creating tests for both our front-end and back-end at the same time as implementation. 
+
+Feedback on Gitflow:
+We did not violate Gitflow and will continue to use our best practices to ensure we do not in the future. 
+
+Feedback on CI:
+We will continue to only push completed builds and ensure that we run the build tests before completing any pull requests. We had one failing merge but this seems to be an isolated incident. 
+
+Feedback on Refactor:
+We lost points on one issue and will ensure that all of our team members complete their respective issues next time and have someone confirmed to approve them. 
+
+Feedback on Coverage:
+We were unable to get Jacobo branch coverage and had very limited statement coverage. Our jest testing was more thorough but we will work to make more methods for both our front and back-end to avoid earn more coverage in the future.
