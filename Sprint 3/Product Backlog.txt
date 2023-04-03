@@ -1,0 +1,28 @@
+Product Backlog 
+1. Search - Search for movies based on various criteria
+	- Search button is input box
+	- Search terms can be customizer with parameters (search term 1 is an actor)
+	- Search: actor OR keyword OR title 
+	- The order is based on the API
+	- Once the user does a search, there are ten results but there is a button to load 10 more results at bottom
+	- Search button and enter work to initiate a search
+2. Provide movie details
+	- When you click on title of movie, you get window with all movie details
+	- Overlay (inline) window - Title, genre, year released, overview with plot, picture, director, production, scrollable list of actors
+3. Login + Database - Create a user account
+	- Creating account - let user put username, password TWICE, create and cancel button
+4. Watchlist + Database - Create and save movie watch lists
+	- Name new list and finalize creation of list, text box next to suggestion box (integers 1 to 10) for size 	of new list
+	- View all watchlists page to hold suggestion and modifying watchlist features
+5. Encryption in the database - Be secure and protect users’ data.
+	- Passwords cannot be stored as plain text (hashed), user information must be stored with encryption, locally hosted (no firebase/third party)
+6. Compare movie lists with other users
+7. Generate suggestions for new movies 
+	- The user can generate a new list based on other lists selected by user, “similar in theme"
+8. Create picture montages based on a list
+9. Client-side in HTML/JavaScript or React and server-side in SpringBoot, and running inside a Docker container.
+10. User interfaces must be attractive
+	- Initial login page should say MOVIE TIME in colorful fun way
+	- Header or footer with team number
+	- All pages must have MOVIE TIME somewhere
+11. Works on Chrome browser and mobile devices

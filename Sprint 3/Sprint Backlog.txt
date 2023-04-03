@@ -1,0 +1,23 @@
+Sprint Backlog
+
+- Configure OR search parameters
+- Generate 10 search results through connection to API
+- Search button and Pressing "Enter" Button Functionality
+- Display details of movie in overlay inline window on search page
+- Front-end page for creating watchlist
+- Back-end for creating / saving watchlist
+- Login landing page
+- Create account page
+- Username, password, create button, cancel button
+- Backend setup for users, including encryption
+- Suggestion backend (function to generate a new list of movies)
+- Creating View all watchlists page
+- Encryption and Securing Details 
+- User interfaces must be attractive
+- Create picture montages based on a list
+
+
+For this sprint, we will be fine-tweaking the basic implementation of the pages we have been working on the past two sprints. We will aim to complete the saving/creating watchlists functionality as well as ensure we meet requirements for viewing movie details, search, and generating suggestions. We have added encryption details, CSS requirements, and montages to our sprint. 
+
+
+Devika Sen, Oscar Clavijo Bernal, Adit Hattikudur, Hiro Miki, Akanksha Shukla
