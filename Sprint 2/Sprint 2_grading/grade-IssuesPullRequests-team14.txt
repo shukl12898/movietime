@@ -1,0 +1,93 @@
+Best Practice IssuesPullRequests Report
+Owner: Team 14
+Grade: 11.0/12
+Comments: 
+	Using commit: https://github.com/CSCI310/20231-project-team-14/commit/8a9c5b58c0c10298a0c27e69eed9f352339ca52e
+		Reviewing issue 15
+			Found refactor/15: +1
+			Found matching PR #34: +1
+			PR created by issue assignee: +1
+			Changes matched: +1
+			Branch merged on time: +1
+			Branch merged by other teammate: +1
+			Issue closed properly: +1
+			Issue score: 7/7
+		Reviewing issue 14
+			Found refactor/14: +1
+			Found matching PR #25: +1
+			PR created by issue assignee: +1
+			Changes matched: +1
+			Branch merged on time: +1
+			Branch merged by other teammate: +1
+			Issue closed properly: +1
+			Issue score: 7/7
+		Reviewing issue 13
+			Found refactor/13: +1
+			Found matching PR #23: +1
+			PR created by issue assignee: +1
+			Changes matched: +1
+			Branch merged on time: +1
+			Branch merged by other teammate: +1
+			Issue closed properly: +1
+			Issue score: 7/7
+		Reviewing issue 12
+			Did not find refactor/12: -1
+			Could not find matching PR : -5
+			Issue closed properly: +1
+			Issue score: 1/7
+		Reviewing issue 11
+			Found refactor/11: +1
+			Found matching PR #32: +1
+			PR created by issue assignee: +1
+			Changes matched: +1
+			Branch merged on time: +1
+			Branch merged by other teammate: +1
+			Issue closed properly: +1
+			Issue score: 7/7
+		Reviewing issue 10
+			Found refactor/10: +1
+			Found matching PR #35: +1
+			PR created by issue assignee: +1
+			Changes matched: +1
+			Branch merged on time: +1
+			Branch merged by other teammate: +1
+			Issue closed properly: +1
+			Issue score: 7/7
+		Reviewing issue 9
+			Found refactor/9: +1
+			Found matching PR #27: +1
+			PR created by issue assignee: +1
+			Changes matched: +1
+			Branch merged on time: +1
+			Branch merged by other teammate: +1
+			Issue closed properly: +1
+			Issue score: 7/7
+		Reviewing issue 8
+			Found refactor/8: +1
+			Found matching PR #24: +1
+			PR created by issue assignee: +1
+			Changes matched: +1
+			Branch merged on time: +1
+			Branch merged by other teammate: +1
+			Issue closed properly: +1
+			Issue score: 7/7
+		Reviewing issue 7
+			Found refactor/7: +1
+			Found matching PR #29: +1
+			PR created by issue assignee: +1
+			Changes matched: +1
+			Branch merged on time: +1
+			Branch merged by other teammate: +1
+			Issue closed properly: +1
+			Issue score: 7/7
+		Reviewing issue 6
+			Found refactor/6: +1
+			Found matching PR #31: +1
+			PR created by issue assignee: +1
+			Changes matched: +1
+			Branch merged on time: +1
+			Branch merged by other teammate: +1
+			Issue closed properly: +1
+			Issue score: 7/7
+		Total issue score count: 64/70
+		Points earned: 11.0
