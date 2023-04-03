@@ -1,0 +1,59 @@
+Best Practice TDD Report
+Owner: Team 14
+Grade: 0.0/12
+Comments: 
+	No test found for: src\components\MultipleWatchlists.jsx\MultipleWatchlists
+		Commit: https://github.com/CSCI310/20231-project-team-14/commit/7489cad7c508cc7b5af25cbf3a0450375d755867
+	No test found for: src\components\OneWatchlist.jsx\OneWatchlist
+		Commit: https://github.com/CSCI310/20231-project-team-14/commit/7489cad7c508cc7b5af25cbf3a0450375d755867
+	No test found for: src\pages\MyWatchlists.jsx\MyWatchlists
+		Commit: https://github.com/CSCI310/20231-project-team-14/commit/7489cad7c508cc7b5af25cbf3a0450375d755867
+	No test found for: src\pages\Login.jsx\Login
+		Commit: https://github.com/CSCI310/20231-project-team-14/commit/7361434e52f6a3fbdcad0651154baa1504b86dad
+	No test found for: src\pages\Login.jsx\handleUsernameChange
+		Commit: https://github.com/CSCI310/20231-project-team-14/commit/7361434e52f6a3fbdcad0651154baa1504b86dad
+	No test found for: src\pages\Login.jsx\handlePasswordChange
+		Commit: https://github.com/CSCI310/20231-project-team-14/commit/7361434e52f6a3fbdcad0651154baa1504b86dad
+	Test method was not created before method for: databasemanager.dropalltables
+		Method commit on 2023-03-30 03:57:34+00:00 UTC: https://github.com/CSCI310/20231-project-team-14/commit/7361434e52f6a3fbdcad0651154baa1504b86dad
+		Test commit on 2023-03-31 01:51:29+00:00 UTC: https://github.com/CSCI310/20231-project-team-14/commit/44711fcd8bda899d34c7297da54a6360448f29f5
+	Test method was not created before method for: databasemanager.createnewuser
+		Method commit on 2023-03-30 03:57:34+00:00 UTC: https://github.com/CSCI310/20231-project-team-14/commit/7361434e52f6a3fbdcad0651154baa1504b86dad
+		Test commit on 2023-03-31 02:51:55+00:00 UTC: https://github.com/CSCI310/20231-project-team-14/commit/1512c31cedce764239ddcab1acc60bb5b16c8913
+	Test method was not created before method for: encryption.hash
+		Method commit on 2023-03-30 03:57:34+00:00 UTC: https://github.com/CSCI310/20231-project-team-14/commit/7361434e52f6a3fbdcad0651154baa1504b86dad
+		Test commit on 2023-03-31 01:51:29+00:00 UTC: https://github.com/CSCI310/20231-project-team-14/commit/44711fcd8bda899d34c7297da54a6360448f29f5
+	Test method was not created before method for: logincontroller.verifylogin
+		Method commit on 2023-03-30 03:57:34+00:00 UTC: https://github.com/CSCI310/20231-project-team-14/commit/7361434e52f6a3fbdcad0651154baa1504b86dad
+		Test commit on 2023-03-31 02:51:55+00:00 UTC: https://github.com/CSCI310/20231-project-team-14/commit/1512c31cedce764239ddcab1acc60bb5b16c8913
+	No test found for: src\pages\Search.jsx\Search
+		Commit: https://github.com/CSCI310/20231-project-team-14/commit/365aed641bf056cce118041e598654e7528d9068
+	No test found for: src\pages\Search.jsx\Home
+		Commit: https://github.com/CSCI310/20231-project-team-14/commit/350fb31f8071c3b12ea0ee5b80801929ce56b487
+	No test found for: src\components\CreateAccount.jsx\CreateAccount
+		Commit: https://github.com/CSCI310/20231-project-team-14/commit/44711fcd8bda899d34c7297da54a6360448f29f5
+	No test found for: src\components\CreateAccount.jsx\handleUsernameChange
+		Commit: https://github.com/CSCI310/20231-project-team-14/commit/44711fcd8bda899d34c7297da54a6360448f29f5
+	No test found for: src\components\CreateAccount.jsx\handlePasswordChange
+		Commit: https://github.com/CSCI310/20231-project-team-14/commit/44711fcd8bda899d34c7297da54a6360448f29f5
+	No test found for: src\components\CreateAccount.jsx\handleNameChange
+		Commit: https://github.com/CSCI310/20231-project-team-14/commit/44711fcd8bda899d34c7297da54a6360448f29f5
+	No test found for: src\components\CreateAccount.jsx\handleSubmit
+		Commit: https://github.com/CSCI310/20231-project-team-14/commit/44711fcd8bda899d34c7297da54a6360448f29f5
+	No test found for: src\components\LoginComponent.jsx\LoginComponent
+		Commit: https://github.com/CSCI310/20231-project-team-14/commit/44711fcd8bda899d34c7297da54a6360448f29f5
+	No test found for: src\components\LoginComponent.jsx\handleUsernameChange
+		Commit: https://github.com/CSCI310/20231-project-team-14/commit/44711fcd8bda899d34c7297da54a6360448f29f5
+	No test found for: src\components\LoginComponent.jsx\handlePasswordChange
+		Commit: https://github.com/CSCI310/20231-project-team-14/commit/44711fcd8bda899d34c7297da54a6360448f29f5
+	No test found for: dmain.main
+		Commit: https://github.com/CSCI310/20231-project-team-14/commit/44711fcd8bda899d34c7297da54a6360448f29f5
+	No test found for: databasemanager.insertintouser
+		Commit: https://github.com/CSCI310/20231-project-team-14/commit/44711fcd8bda899d34c7297da54a6360448f29f5
+	No test found for: createusercontroller.verifylogin
+		Commit: https://github.com/CSCI310/20231-project-team-14/commit/44711fcd8bda899d34c7297da54a6360448f29f5
+	No test found for: databasemanager.close
+		Commit: https://github.com/CSCI310/20231-project-team-14/commit/1512c31cedce764239ddcab1acc60bb5b16c8913
+Correct TDD methods: 0
+Incorrect TDD methods: 24
+Total methods evaluated for TDD: 24
