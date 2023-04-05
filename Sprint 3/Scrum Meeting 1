@@ -1,0 +1,23 @@
+What have you done since the last meeting? 
+
+Akanksha: Been trying to restandardize movie details to only show 10 results for all filters
+Oscar: Worked on create account page and modifying UI across the app.
+Adit: I have added more functionality to the adding/saving watchlists with starting the “+”, “I”, and “$” buttons. I have implemented the hover feature on the buttons and gotten it to work with each movie.
+Devika: Begun working on search button and enter button to submit a search
+Hiroaki: Worked on suggesting movies and pulling from API to suggest
+
+What do you plan to do for the next meeting? 
+
+Akanksha: I hope to have ensured only 10 results are ever shown
+Oscar: Complete UI changes and complete create account requirements
+Adit: I am working on connecting the front-end watchlist to the schema with JSON.
+Devika: I plan to have the search button functionality finished
+Hiroaki: Connecting the movie suggestions to a watchlist format
+
+Anything blocking your progress?
+
+Akanksha: I am working towards understanding how to limit the number of results shown
+Oscar: Struggling to understand how to include external UI kits
+Adit: I am having trouble understanding how to construct the schema and use the API.
+Devika: No blocks
+Hiroaki: No blocks
