@@ -1,0 +1,23 @@
+What have you done since the last meeting? 
+
+Akanksha: Trying to figure out how to ensure movie details only populates 10 movies
+Oscar: Looked at documentation and did more research on UI kits. 
+Adit: I have been working on the creating/saving watchlists backend and am currently working on debugging the SQL queries. I have to learn how to convert the SQL result set into JSON for my components. 
+Devika: Integrating the boolean parameters for search with the API; Front-end of the search pages.
+Hiroaki: I have been working on the stepdefinitions of the suggestion, and the algorithm 
+
+What do you plan to do for the next meeting? 
+
+Akanksha: Finish off the movie details overpopulating page
+Oscar: Complete login and create user. Add UI components.
+Adit: I will learn to connect the front-end to the back-end and create Jest and Unit tests for them. 
+Devika: Work on the feasability report for the "load 10 more search results" infinite times requirement, and set a different limit for that. 
+Hiroaki: Finish off the Jtest and stepdefinitions of suggestsion
+
+Anything blocking your progress?
+
+Akanksha: Struggling to modify component to work for different API results
+Oscar: Other classes. 
+Adit: I am having trouble understanding what degree of depth the tests need. 
+Devika: Managing the workload with assignments/midterms from other classes.
+Hiroaki: Creating acceptance tests.
