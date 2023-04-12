@@ -1,0 +1,23 @@
+What have you done since the last meeting? 
+
+Akanksha: Still been working on having MovieDetails only show 10 results for cast.
+Oscar: Been adding UI components and completing create user.
+Adit: I’ve roughly finished my DatabaseManager methods, the WatchlistModel, and components, as well as started the JUnit, Jest, and acceptance tests for the MyWatchlists page.
+Devika: Integrating boolean parameters for search and feasibility report for infinite load more results.
+Hiroaki: I have been working on the stepdefinitions of my feature.
+
+What do you plan to do for the next meeting? 
+
+Akanksha: I hope to get some implementation and testing established for the picture montage, and finish off only 10 results for cast. 
+Oscar: Add login consistency thoughout the site.
+Adit: I will work on connecting the JSON to the WatchlistModel to the database.
+Devika: Finish off the feasibility report.
+Hiroaki: Finish off the Jtest and stepdefinitions of suggestsion
+
+Anything blocking your progress?
+
+Akanksha: A little lost on how to implement picture montage.
+Oscar: No blocks.
+Adit: I am having trouble with implementing and using the API to connect the front-end and back-end.
+Devika: No blocks.
+Hiroaki: Creating acceptance tests, and managing workload
