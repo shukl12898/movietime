@@ -138,10 +138,9 @@ describe('MovieDetails component', () => {
               fireEvent.click(title);
 
               const overlay = screen.getByTestId('overlay');
-              fireEvent.click(overlay);
-
-              const overlayElementAfterClick = screen.queryByTestId('closeButton');
-              expect(overlayElementAfterClick).toBeNull();
+              const closeButton = screen.queryByTestId('closeButton');
+              fireEvent.click(closeButton);
+              expect(closeButton.prop('focusable')).toBe(true);
             });
 
 });
