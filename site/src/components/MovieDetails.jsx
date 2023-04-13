@@ -109,7 +109,7 @@ function MovieDetails(props) {
 
         {showOverlay && selectedMovieID && (
 
-        <Modal isOpen={showOverlay} onClose={setShowOverlay}>
+        <Modal isOpen={showOverlay} onClose={setShowOverlay} data-testid="overlay">
             <ModalOverlay />
                 <ModalContent>
                   <ModalHeader>
