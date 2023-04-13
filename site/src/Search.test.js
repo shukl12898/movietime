@@ -10,7 +10,7 @@ test("full app rendering", async () => {
     render(<App />, { wrapper: BrowserRouter });
 
     // verify page content for default route
-    expect(screen.getByText(/Search/)).toBeInTheDocument();
+    expect(screen.getByText(/MovieTime/)).toBeInTheDocument();
 });
 
 describe('SearchBox', ()=>{
@@ -21,15 +21,15 @@ describe('SearchBox', ()=>{
 
     it('should update the value of the input element when props change', () => {
         const { getByPlaceholderText, rerender } = render(<SearchBox value="" setQuery={() => {}} />);
-        expect(getByPlaceholderText('Enter search term...').value).toBe('');
+        expect(getByPlaceholderText('Search here...').value).toBe('');
         rerender(<SearchBox value="test" setQuery={() => {}} />);
-        expect(getByPlaceholderText('Enter search term...').value).toBe('test');
+        expect(getByPlaceholderText('Search here...').value).toBe('test');
     });
 
     it('should call the setQuery function with the input value when input changes', () => {
         const setQueryMock = jest.fn();
         const { getByPlaceholderText } = render(<SearchBox value="" setQuery={setQueryMock} />);
-        fireEvent.change(getByPlaceholderText('Enter search term...'), { target: { value: 'test' } });
+        fireEvent.change(getByPlaceholderText('Search here...'), { target: { value: 'test' } });
         expect(setQueryMock).toHaveBeenCalledWith('test');
     });
 });

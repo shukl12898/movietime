@@ -55,7 +55,6 @@ function Search() {
       getSearchResults(query,selectedFilter)
   },[query,selectedFilter]);
 
-  // Anything returned will be rendered in React
   return (
 
     <div>
