@@ -8,7 +8,7 @@ function Montage() {
   const navigate = useNavigate();
 
   const movieImages = [
-  'https://m.media-amazon.com/images/M/MV5BMzFkMWUzM2ItZWFjMi00NDY0LTk2MDMtZDhkMDE2MjRlYmZlXkEyXkFqcGdeQXVyNTAzNzgwNTg@._V1_FMjpg_UX1000_.jpg',
+  'https://www.gannett-cdn.com/-mm-/3a88e5a2883dc8a0c1df935cbca0abe66c9b8f17/c=0-38-2832-1638/local/-/media/2016/01/26/USATODAY/USATODAY/635894208377967792-kung-fu-panda-3-KFP3-sq500-s75-3-f106-RGB-FIN-rgb.jpg?width=2832&height=1600&fit=crop&format=pjpg&auto=webp',
   'https://m.media-amazon.com/images/M/MV5BMjk3NTYyMzc4Nl5BMl5BanBnXkFtZTcwODU3ODMzMw@@._V1_.jpg',
   ]
 

@@ -1,35 +1,26 @@
 .montage {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .montage img {
   position: absolute;
-  top: 0;
-  left: 0;
-  object-fit: cover;
-}
-
-/* Give each image a unique z-index to stack them on top of each other */
-.montage img:nth-child(1) {
+  top: calc(-50% + (20px * (random() - 0.5) * index)); /* Apply a random vertical offset based on the image index */
+  left: calc(-50% + (20px * (random() - 0.5) * index)); /* Apply a random horizontal offset based on the image index */
   z-index: 1;
-  transform: translate(50vw, 50vh) rotate(30deg);
+  transform: rotate(calc(-45deg + (90deg * random()))); /* Apply a random rotation between -45 and 45 degrees */
 }
 
 .montage img:nth-child(2) {
   z-index: 2;
-  transform: translate(20vw, 20vh) rotate(-30deg);
 }
 
 .montage img:nth-child(3) {
   z-index: 3;
-  transform: translate(70vw, 10vh) rotate(20deg);
 }
 
-/* Add more styles for additional images */
+.montage img:nth-child(4) {
+  z-index: 4;
+}
