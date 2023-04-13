@@ -9,7 +9,7 @@ const SearchBox = (props) => {
                 <Input
                     type="text"
                     id="searchBar"
-                    placeholder = "Search Here..."
+                    placeholder = "Search here..."
                     value = {props.value}
                     onChange = {(event)=>props.setQuery(event.target.value)}
                     variant='filled'
