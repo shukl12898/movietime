@@ -3,6 +3,13 @@ import { useNavigate } from "react-router-dom";
 import MovieResult from '../components/MovieResult';
 import SearchBox from '../components/SearchBox';
 import SearchFilter from '../components/SearchFilter';
+import NavBar from '../components/NavBar';
+import Footer from '../components/Footer';
+import {
+Stack, HStack, VStack, Box,
+Card, CardHeader, CardBody, Heading,
+Flex, Spacer,StackDivider,
+} from '@chakra-ui/react'
 
 // This page provides a button with a redirect to "/other"
 function Search() {
@@ -54,27 +61,38 @@ function Search() {
 
   // Anything returned will be rendered in React
   return (
-    <div>
-        <h1>Search</h1>
-        <button
-                      onClick={() => {
-                        navigate("/Home");
-                      }}
-                    >
-                      Click to go to Home page
-                    </button>
-        <div className = "row">
-            <div className="col">
-                <SearchFilter options = {options} onSelect={handleSelectFilter}/>
-            </div>
-            <div className = "col">
-                <SearchBox query ={query} setQuery = {setQuery}/>
-            </div>
 
-        </div>
+    <div>
+    <NavBar/>
+    <br/>
+    <br/>
+ <Flex>
+ <Spacer />
+        <Card variant='elevated' size='md'>
+          <CardHeader>
+              <Heading size='md'>Search</Heading>
+          </CardHeader>
+          <CardBody>
+            <HStack>
+              <SearchFilter options = {options} onSelect={handleSelectFilter}/>
+              <SearchBox query ={query} setQuery = {setQuery} />
+            </HStack>
+
+          </CardBody>
+        </Card>
+        <Spacer />
+        </Flex>
+<VStack
+  divider={<StackDivider borderColor='gray.200' />}
+  spacing={4}
+  align='center'
+>
         <MovieResult movies = {movies} filter = {selectedFilter} numResults = {resultCount}/>
         <button onClick={getMoreResults}>Load More</button>
-    </div>
+
+</VStack>
+
+</div>
   );
 }
 
