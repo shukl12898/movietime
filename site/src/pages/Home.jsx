@@ -1,8 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
 import NavBar from '../components/NavBar';
-import Footer from '../components/Footer';
 
 // This page provides a button with a redirect to "/other"
 function Home() {

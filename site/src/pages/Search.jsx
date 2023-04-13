@@ -4,17 +4,14 @@ import MovieResult from '../components/MovieResult';
 import SearchBox from '../components/SearchBox';
 import SearchFilter from '../components/SearchFilter';
 import NavBar from '../components/NavBar';
-import Footer from '../components/Footer';
 import {
-Stack, HStack, VStack, Box,
+HStack, VStack,
 Card, CardHeader, CardBody, Heading,
 Flex, Spacer,StackDivider,
 } from '@chakra-ui/react'
 
 // This page provides a button with a redirect to "/other"
 function Search() {
-  // Calling navigate() will allow us to redirect the webpage
-  const navigate = useNavigate();
 
   //empty array for movie results
   const [movies, assignMovies] = useState([]);

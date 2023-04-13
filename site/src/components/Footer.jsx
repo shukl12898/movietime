@@ -1,5 +1,5 @@
 import React from 'react';
-import { Flex, Spacer, Button, ButtonGroup, Box, Heading } from '@chakra-ui/react';
+import { Flex, Box, Heading } from '@chakra-ui/react';
 
 // This page provides a button with a redirect to "/other"
 function Footer() {

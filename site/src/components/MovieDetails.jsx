@@ -12,13 +12,11 @@ import {
   ModalCloseButton,
   Image,
   Badge,
-  Stack,
    Accordion,
     AccordionItem,
     AccordionButton,
     AccordionPanel,
     AccordionIcon,
-    Divider,
     Box,
 } from '@chakra-ui/react';
 
@@ -92,11 +90,6 @@ function MovieDetails(props) {
     const showDetails = (movieID) => {
         setShowOverlay(true);
         setSelectedMovieID(movieID);
-    }
-
-    const hideDetails = () => {
-        setShowOverlay(false);
-        setSelectedMovieID(null);
     }
 
     return (

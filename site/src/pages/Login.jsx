@@ -1,14 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import NavBar from '../components/NavBar';
-import Footer from '../components/Footer';
 import {
-Stack, HStack, VStack, Box,
 Card, CardHeader, CardBody, Heading,CardFooter,
-Flex, Spacer,StackDivider, FormControl,
-                             FormLabel,
-                             FormErrorMessage,
-                             FormHelperText, Input, Button
+Flex, Spacer, FormControl,
+                             FormLabel,Input, Button
 } from '@chakra-ui/react'
 function Login() {
   const [username, setUsername] = useState("");

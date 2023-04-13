@@ -1,6 +1,5 @@
 import React from 'react';
-import MovieDetails from '../components/MovieDetails'
-import { Box } from '@chakra-ui/react'
+import MovieDetails from '../components/MovieDetails';
 
 const MovieResult = (props) => {
     return (
