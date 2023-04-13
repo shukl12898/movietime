@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import MovieResult from '../components/MovieResult';
 import SearchBox from '../components/SearchBox';
 import SearchFilter from '../components/SearchFilter';
