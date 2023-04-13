@@ -140,7 +140,7 @@ describe('MovieDetails component', () => {
               const overlay = screen.getByTestId('overlay');
               fireEvent.click(overlay);
 
-              const overlayElementAfterClick = screen.queryByTestId('overlay');
+              const overlayElementAfterClick = screen.queryByTestId('closeButton');
               expect(overlayElementAfterClick).toBeNull();
             });
 

@@ -118,7 +118,7 @@ function MovieDetails(props) {
                     <Badge>Released {movieDetails.filter((movie) =>
                      movie.id === selectedMovieID)[0].release_date.toString().substring(0, 4)} </Badge >
                   </ModalHeader>
-                  <ModalCloseButton/>
+                  <ModalCloseButton data-testid="closeButton"/>
                   <ModalBody>
                     <br />
                       <Image src={imageURL + movieDetails.filter((movie) => movie.id === selectedMovieID)[0].poster_path} />
