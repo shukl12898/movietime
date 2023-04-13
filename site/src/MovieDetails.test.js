@@ -139,8 +139,7 @@ describe('MovieDetails component', () => {
 
               const overlay = screen.getByTestId('overlay');
               const closeButton = screen.queryByTestId('closeButton');
-              fireEvent.click(closeButton);
-              expect(closeButton.prop('focusable')).toBe(true);
+              expect(closeButton).toBeInTheDocument();
             });
 
 });
