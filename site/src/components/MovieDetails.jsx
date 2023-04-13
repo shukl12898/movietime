@@ -109,9 +109,9 @@ function MovieDetails(props) {
 
         {showOverlay && selectedMovieID && (
 
-        <Modal isOpen={showOverlay} onClose={setShowOverlay} data-testid="overlay">
+        <Modal isOpen={showOverlay} onClose={setShowOverlay} >
             <ModalOverlay />
-                <ModalContent>
+                <ModalContent data-testid="overlay">
                   <ModalHeader>
                     {movieDetails.filter((movie) => movie.id === selectedMovieID)[0].original_title}
                     <br />
