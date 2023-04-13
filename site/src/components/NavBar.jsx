@@ -19,15 +19,15 @@ function NavBar() {
                                        navigate("/Home");
                                      }}>Home</Button>
       <Button bg='white' onClick={() => {
-                                       navigate("/Login");
-                                     }}
-                                   >Login</Button>
-      <Button bg='white' onClick={() => {
                                           navigate("/Search");
                                         }}>Search</Button>
       <Button bg='white' onClick={() => {
                                           navigate("/MyWatchlists");
                                         }}>Watchlists</Button>
+     <Button bg='white' onClick={() => {
+                                           navigate("/Login");
+                                         }}
+                                       >Login</Button>
     </ButtonGroup>
   </Flex>
   </>
