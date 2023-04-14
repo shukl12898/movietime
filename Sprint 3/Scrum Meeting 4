@@ -1,0 +1,22 @@
+https://usc.zoom.us/rec/play/qeOmCKLZL86zjhiMxdShi8GyZ-pAo9-NHqM77Ev5GOXIRT3Wu93vIs1CEWrwzDUA3JBEIzwZwP_D3U1Z.TXt_Yel23Cs9uAwQ?canPlayFromShare=true&from=share_recording_detail&continueMode=true&componentName=rec-play&originRequestUrl=https%3A%2F%2Fusc.zoom.us%2Frec%2Fshare%2F0GzA3oOBrqR7xPRRXuYB9cCZhMjjCkNTXCoJAzZix54ivIasWtuSxlI-jhqIa5hc.zJegdSbuJo1XiNy2
+
+1. What have you done since the last meeting?
+Oscar: Finished revamping UI across the page, getting rid of initial placeholder things. 
+Akanksha: Worked on tests and basic implementation of picture montage.
+Devika: Implemented search button and load more feature and testing for that
+Hiro: Working on test cases, almost done with white box coverage.
+Adit: I have finished a rough back and front end for viewing all watchlists, with the API and database manager included, and started JUnit and Jest tests for them.
+
+2. What do you plan to have done?
+Oscar: Make new UI more consistent for future implementation
+Akanksha: Plan to have all acceptance tests passing for movie details.
+Hiro: Hope to get 100% coverage 
+Devika: Finish feasibility reports for load more functionality and finish use cases for comparing watchlists and start implementation and testing.
+Adit: I am finishing tests right now and hoping I can get them to pass before the sprint ends.
+
+3. Any blocks?
+Oscar: Not messing up tests that other people have written.
+Akanksha: Cucumber tests aren't running on my device.
+Devika: Or parameters and integrating that with movie details function.
+Blocks: Understanding test cases.
+Adit: I am having trouble with mocking and getting my tests to pass.
