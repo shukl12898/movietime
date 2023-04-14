@@ -1,37 +1,45 @@
 import React from "react";
-import { render, screen, waitFor, fireEvent } from "@testing-library/react";
-import App from "./App";
+import { render, screen, fireEvent } from "@testing-library/react";
+import Search from "./pages/Search";
 import { BrowserRouter } from "react-router-dom";
-import userEvent from "@testing-library/user-event";
 import SearchBox from './components/SearchBox'
 import SearchFilter from './components/SearchFilter';
 test("full app rendering", async () => {
-    const user = userEvent.setup();
-    render(<App />, { wrapper: BrowserRouter });
+    render(<Search />, { wrapper: BrowserRouter });
 
     // verify page content for default route
     expect(screen.getByText(/MovieTime/)).toBeInTheDocument();
 });
 
 describe('SearchBox', ()=>{
-    const defaultProps = {
-        value: '',
-        setQuery: jest.fn(),
-    };
+    test('renders SearchBox component', () => {
+        render(<SearchBox />);
+    });
+    
+    test('submitting search form triggers onSearch function with current query', () => {
+        const onSearchMock = jest.fn();
+        const { getByTestId } = render(<SearchBox onSearch={onSearchMock} />);
+        const searchInput = getByTestId('search-input');
+        const searchForm = getByTestId('search-form');
+        const query = 'example query';
+        fireEvent.change(searchInput, { target: { value: query } });
+        fireEvent.submit(searchForm);
 
-    it('should update the value of the input element when props change', () => {
-        const { getByPlaceholderText, rerender } = render(<SearchBox value="" setQuery={() => {}} />);
-        expect(getByPlaceholderText('Search here...').value).toBe('');
-        rerender(<SearchBox value="test" setQuery={() => {}} />);
-        expect(getByPlaceholderText('Search here...').value).toBe('test');
+        expect(onSearchMock).toHaveBeenCalledTimes(1);
+        expect(onSearchMock).toHaveBeenCalledWith(query);
+
+    });
+    
+    test('changing search input updates current query state', () => {
+        const { getByTestId } = render(<SearchBox />);
+        const searchInput = getByTestId('search-input');
+        const query = 'example query';
+
+        fireEvent.change(searchInput, { target: { value: query } });
+
+        expect(searchInput.value).toBe(query);
     });
 
-    it('should call the setQuery function with the input value when input changes', () => {
-        const setQueryMock = jest.fn();
-        const { getByPlaceholderText } = render(<SearchBox value="" setQuery={setQueryMock} />);
-        fireEvent.change(getByPlaceholderText('Search here...'), { target: { value: 'test' } });
-        expect(setQueryMock).toHaveBeenCalledWith('test');
-    });
 });
 
 describe('SearchFilter', () => {
