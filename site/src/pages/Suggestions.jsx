@@ -6,7 +6,7 @@ function Suggestions() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
     const APIkey = '?api_key=7ed8d4771870299ac266b6147ba2fa76';
-    const baseImageUrl = "https://image.tmdb.org/t/p/w500";
+ //   const baseImageUrl = "https://image.tmdb.org/t/p/w500";
     const {num} = useParams();
     const numMovies = parseInt(num);
 
