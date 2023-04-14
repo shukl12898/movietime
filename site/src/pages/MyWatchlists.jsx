@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import MultipleWatchlists from "../components/MultipleWatchlists";
-
+import SuggestionButton from "../components/SuggestionButton";
 // This page provides a button with a redirect to "/other"
 
 
@@ -71,6 +71,8 @@ function MyWatchlists() {
         {/* }<OneWatchlist movies = {moviesList} /> */}
         <MultipleWatchlists watchlistsArr = {multiList} />
       </div>
+
+      <SuggestionButton />
     </div>
   );
 }
