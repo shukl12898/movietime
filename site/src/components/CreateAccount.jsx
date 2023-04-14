@@ -1,10 +1,15 @@
 import React from "react";
 import { useState } from 'react';
+import {
+Card, CardHeader, CardBody, Heading,CardFooter,
+Flex, Spacer, FormControl,FormLabel,Input, Button
+} from '@chakra-ui/react'
 
 function CreateAccount() {
 
      const [username, setUsername] = useState("");
      const [password, setPassword] = useState("");
+     const [confirmPassword, setConfPassword] = useState("");
      const [name, setName] = useState("");
      const [user, setUser] = useState();
 
@@ -19,6 +24,10 @@ function CreateAccount() {
 
      function handleNameChange(event) {
          setName(event.target.value);
+     }
+
+     function handlePasswordConf(event) {
+        setConfPassword(event.target.value);
      }
 
      function handleSubmit() {
@@ -45,34 +54,46 @@ function CreateAccount() {
      };
 
      return (
-          <form onSubmit={handleSubmit}>
-               <label htmlFor="username">Username: </label>
-               <input
-                 type="text"
-                 value={username}
-                 placeholder="enter a username"
-                 onChange={handleUsernameChange}
-               />
-               <div>
-                 <label htmlFor="password">Password: </label>
-                 <input
-                   type="password"
-                   value={password}
-                   placeholder="enter a password"
-                   onChange={handlePasswordChange}
-                 />
-               </div>
-               <div>
-                <label htmlFor="name">Name: </label>
-                <input
-                  value={name}
-                  placeholder="enter a name"
-                  onChange={handleNameChange}
-                />
-              </div>
-               <button type="submit">Create Account</button>
-             </form>
-     )
+      <div>
+         <Flex>
+              <Spacer />
+             <Card variant='elevated' size='lg'>
+               <CardHeader>
+                   <Heading size='md'>Create Account</Heading>
+               </CardHeader>
+               <CardBody>
+
+                   <FormControl isRequired>
+                     <FormLabel htmlFor="username">Username</FormLabel>
+                     <Input
+                     placeholder='Enter a username' type="text" value={username} onChange={handleUsernameChange}
+                     />
+                      </FormControl>
+                      <FormControl isRequired>
+                      <FormLabel htmlFor="password">Password</FormLabel>
+                      <Input placeholder='Enter a password' type="password" value={password} onChange={handlePasswordChange}/>
+                       </FormControl>
+
+                     <FormControl isRequired>
+                     <FormLabel htmlFor="confirmPassword">Confirm Password</FormLabel>
+                     <Input placeholder='Retype password' type="password" value={confirmPassword} onChange={handlePasswordConf}/>
+                      </FormControl>
+
+                      <FormControl isRequired>
+                   <FormLabel htmlFor="displayName">Display Name</FormLabel>
+                   <Input placeholder='Enter display name' type="text" value={name} onChange={handleNameChange}/>
+                    </FormControl>
+               </CardBody>
+               <CardFooter>
+                <Spacer/>
+                <Button onClick={handleSubmit}>Create Account</Button>
+                <Spacer/>
+               </CardFooter>
+             </Card>
+             <Spacer />
+             </Flex>
+             </div>
+     );
 
 }
 

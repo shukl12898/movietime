@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { Input } from '@chakra-ui/react'
+import { Input, Button, Spacer } from '@chakra-ui/react'
 
 
 // functional component
@@ -24,7 +24,7 @@ const SearchBox = ({onSearch}) => {
                     width='auto'
                     data-testid="search-input"
                 ></Input>
-                <button type = "submit">Search</button>
+                <button type="submit">Search</button>
             </form >
         </div>
     )
