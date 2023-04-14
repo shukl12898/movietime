@@ -1,22 +1,31 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Input } from '@chakra-ui/react'
 
+
 // functional component
-const SearchBox = (props) => {
+const SearchBox = ({onSearch}) => {
+    const [currentQuery, setCurrentQuery] = useState("");
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        onSearch(currentQuery);
+    }
+
     return (
         <div key = "0">
-            <form>
+            <form onSubmit={handleSubmit} data-testid="search-form">
                 <Input
                     type="text"
                     id="searchBar"
                     placeholder = "Search here..."
-                    value = {props.value}
-                    onChange = {(event)=>props.setQuery(event.target.value)}
+                    value = {currentQuery}
+                    onChange = {(event) => setCurrentQuery(event.target.value)}
                     variant='filled'
                     width='auto'
+                    data-testid="search-input"
                 ></Input>
-
-            </form>
+                <button type = "submit">Search</button>
+            </form >
         </div>
     )
 }
