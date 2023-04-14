@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import MultipleWatchlists from "../components/MultipleWatchlists";
+import SuggestionButton from "../components/SuggestionButton";
 import NavBar from '../components/NavBar';
 
 const multiList = [
@@ -69,9 +70,8 @@ function MyWatchlists() {
         {/* }<OneWatchlist movies = {moviesList} /> */}
         <MultipleWatchlists watchlistsArr = {multiList} />
       </div>
-      <footer>
 
-      </footer>
+      <SuggestionButton />
     </div>
   );
 }
