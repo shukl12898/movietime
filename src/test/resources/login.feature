@@ -1,5 +1,5 @@
 Feature: testing login functionality
-  Scenario: an existing user logs in.
+  Scenario: an existing user logs in
     Given I am on the login page
     When I enter "oclavijo" in the username box
     And I enter "1234abcd" in the password box
