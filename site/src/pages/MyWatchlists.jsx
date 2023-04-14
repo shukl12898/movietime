@@ -1,10 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import MultipleWatchlists from "../components/MultipleWatchlists";
-
-// This page provides a button with a redirect to "/other"
-
-
+import NavBar from '../components/NavBar';
 
 const multiList = [
 {
@@ -59,6 +56,7 @@ function MyWatchlists() {
   // Anything returned will be rendered in React
   return (
     <div>
+    <NavBar/>
       <div>MyWatchlists Page</div>
       <button
         onClick={() => {
@@ -71,6 +69,9 @@ function MyWatchlists() {
         {/* }<OneWatchlist movies = {moviesList} /> */}
         <MultipleWatchlists watchlistsArr = {multiList} />
       </div>
+      <footer>
+
+      </footer>
     </div>
   );
 }

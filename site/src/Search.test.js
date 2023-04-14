@@ -15,19 +15,21 @@ describe('SearchBox', ()=>{
     test('renders SearchBox component', () => {
         render(<SearchBox />);
     });
+    
     test('submitting search form triggers onSearch function with current query', () => {
         const onSearchMock = jest.fn();
         const { getByTestId } = render(<SearchBox onSearch={onSearchMock} />);
         const searchInput = getByTestId('search-input');
         const searchForm = getByTestId('search-form');
         const query = 'example query';
-
         fireEvent.change(searchInput, { target: { value: query } });
         fireEvent.submit(searchForm);
 
         expect(onSearchMock).toHaveBeenCalledTimes(1);
         expect(onSearchMock).toHaveBeenCalledWith(query);
+
     });
+    
     test('changing search input updates current query state', () => {
         const { getByTestId } = render(<SearchBox />);
         const searchInput = getByTestId('search-input');
