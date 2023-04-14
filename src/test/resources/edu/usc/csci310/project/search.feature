@@ -29,14 +29,14 @@ Feature: testing out the search function
   Scenario: open the page and see 10 results
     Given I am on the search page
     When I select "title" in the dropdown menu
-    And I enter "Don't Worry Darling" in the search bar
+    And I enter "Ocean" in the search bar
     And I press the search button
     Then I should see 10 results in the page
 
   Scenario: open the page and load more results
     Given I am on the search page
     When I select "title" in the dropdown menu
-    And I enter "Don't Worry Darling" in the search bar
+    And I enter "Ocean" in the search bar
     And I press the search button
     And I press the load more button
     Then I should see 20 results in the page

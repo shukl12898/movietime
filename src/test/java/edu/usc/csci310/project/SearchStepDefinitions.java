@@ -15,8 +15,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import java.util.List;
+
+import static org.junit.Assert.*;
 
 public class SearchStepDefinitions {
     private static final String ROOT_URL = "http://localhost:8080/";
@@ -51,32 +52,35 @@ public class SearchStepDefinitions {
 
     @And("I press the search button")
     public void iPressTheSearchButton() {
-
+        driver.findElement(By.xpath("/html/body/div[1]/div/div/div[2]/div[2]/div[2]/div/div[2]/form/button")).click();
     }
 
     @When("I select {string} in the dropdown menu")
     public void iSelectInTheDropdownMenu(String arg0) {
         switch (arg0){
             case "Movie Title":
-                driver.findElement(By.xpath("/html/body/div/div/div/div[1]/div[1]/div/select/option[1]")).click();
+                driver.findElement(By.xpath("/html/body/div[1]/div/div/div[2]/div[2]/div[2]/div/div[1]/div/select/option[1]")).click();
                 break;
             case "Keyword":
-                driver.findElement(By.xpath("/html/body/div/div/div/div[1]/div[1]/div/select/option[2]")).click();
+                driver.findElement(By.xpath("/html/body/div[1]/div/div/div[2]/div[2]/div[2]/div/div[1]/div/select/option[2]")).click();
                 break;
             case "Actor/Actress":
-                driver.findElement(By.xpath("/html/body/div/div/div/div[1]/div[1]/div/select/option[3]")).click();
+                driver.findElement(By.xpath("/html/body/div[1]/div/div/div[2]/div[2]/div[2]/div/div[1]/div/select/option[3]")).click();
                 break;
         }
     }
 
     @Then("I should see {int} results in the page")
-    public void iShouldSeeResultsInThePage() {
+    public void iShouldSeeResultsInThePage(int arg0) {
+        List<WebElement> elements = driver.findElements(By.id("movie-title"));
+        int num = elements.size();
 
+        assertEquals(arg0, num);
     }
 
     @And("I press the load more button")
     public void iPressTheLoadMoreButton() {
-        driver.findElement(By.xpath("/html/body/div/div/div/button[2]")).click();
+        driver.findElement(By.xpath("/html/body/div[1]/div/div/div[3]/button")).click();
     }
 
     @And("I press the enter key")
@@ -84,8 +88,22 @@ public class SearchStepDefinitions {
     }
 
     @And("I click on the {string} movie title")
-    public void iClickOnTheMovieTitle() {
+    public void iClickOnTheMovieTitle(String arg0) {
+//        driver.switchTo().frame("frame-id");
+        System.out.println("STACK IS:");
 
+        WebElement stack = driver.findElement(By.xpath("/html/body/div[1]/div/div/div[3]"));
+
+        System.out.println(stack);
+        List<WebElement> movies = stack.findElements(By.id("movie-title"));
+
+        boolean foundMatch = false;
+        for (WebElement movie : movies) {
+            String movieTitle = movie.findElement(By.id("movie-title")).getText();
+            if (movieTitle.contains(arg0)) {
+                movie.findElement(By.id("movie-title")).click();
+            }
+        }
     }
 
     @Then("I should be able to scroll through cast in {string}")
@@ -115,7 +133,19 @@ public class SearchStepDefinitions {
 
     @Then("I should see {string} in the page")
     public void iShouldSeeInThePage(String arg0) {
-        assertTrue(driver.getPageSource().contains(arg0));
+        WebElement stack = driver.findElement(By.xpath("/html/body/div[1]/div/div/div[3]"));
+        List<WebElement> movies = stack.findElements(By.id("movie-title"));
+
+        boolean foundMatch = false;
+        for (WebElement movie : movies) {
+            String movieTitle = movie.findElement(By.id("movie-title")).getText();
+            if (movieTitle.contains(arg0)) {
+                foundMatch = true;
+                break;
+            }
+        }
+
+        assertTrue("Should see " + arg0 + " in the page", foundMatch);
     }
 
     @After
