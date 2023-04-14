@@ -3,28 +3,28 @@ Feature: testing out the search function
     Given I am on the search page
     When I enter "Don't Worry Darling" in the search bar
     And I press the search button
-    Then I should see "Don't Worry Darling" on the page
+    Then I should see "Don't Worry Darling" in the page
 
   Scenario: open the page and search by an actor
     Given I am on the search page
     When I select "actor" in the dropdown menu
     And I enter "Harry Styles" in the search bar
     And I press the search button
-    Then I should see "Don't Worry Darling" on the page
+    Then I should see "Don't Worry Darling" in the page
 
   Scenario: open the page and search by keyword
     Given I am on the search page
     When I select "keyword" in the dropdown menu
     And I enter "drama" in the search bar
     And I press the search button
-    Then I should see "Interstellar" on the page
+    Then I should see "Interstellar" in the page
 
   Scenario: open the page and search by title
     Given I am on the search page
     When I select "title" in the dropdown menu
     And I enter "Don't Worry Darling" in the search bar
     And I press the search button
-    Then I should see "Don't Worry Darling" on the page
+    Then I should see "Don't Worry Darling" in the page
 
   Scenario: open the page and see 10 results
     Given I am on the search page

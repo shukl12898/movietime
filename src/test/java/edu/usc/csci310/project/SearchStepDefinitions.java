@@ -1,17 +1,44 @@
 package edu.usc.csci310.project;
 
+import io.cucumber.java.After;
+import io.cucumber.java.Before;
+import io.cucumber.java.BeforeAll;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
+import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.junit.After;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class SearchStepDefinitions {
-    private static final String ROOT_URL = "https://localhost:8080/";
-    private final WebDriver driver = new ChromeDriver();
+    private static final String ROOT_URL = "http://localhost:8080/";
+    private WebDriver driver;
+
+    @BeforeAll
+    public static void beforeAll() {
+        System.out.println("Setting Up Cucumber Driver");
+        WebDriverManager.chromedriver().setup();
+        System.setProperty("webdriver.http.factory", "jdk-http-client");
+    }
+
+    @Before
+    public void before() {
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--headless");
+        options.addArguments("--whitelisted-ips");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-extensions");
+        options.addArguments("--remote-allow-origins=*");
+        driver = new ChromeDriver(options);
+    }
     @Given("I am on the search page")
     public void iAmOnTheSearchPage(){
         driver.get(ROOT_URL+"Search");
@@ -24,11 +51,6 @@ public class SearchStepDefinitions {
 
     @And("I press the search button")
     public void iPressTheSearchButton() {
-
-    }
-
-    @Then("I should see {string} on the page")
-    public void iShouldSeeOnThePage() {
 
     }
 
@@ -68,10 +90,32 @@ public class SearchStepDefinitions {
 
     @Then("I should be able to scroll through cast in {string}")
     public void iShouldBeAbleToScrollThroughCastIn() {
+        WebElement castList = driver.findElement(By.className("scrollContainer"));
+        Boolean isScrollable = (Boolean) ((JavascriptExecutor) driver).executeScript("return arguments[0].scrollHeight > arguments[0].clientHeight", castList);
+
+        assertTrue(isScrollable);
     }
 
     @Then("I should not see {string} in the page")
-    public void iShouldNotSeeInThePage() {
+    public void iShouldNotSeeInThePage(String arg0) {
+        boolean contains = driver.getPageSource().contains(arg0);
+        assertFalse(contains);
+    }
+
+    @Then("I should see {string}, {string}, {string}, {string}, {string}, {string}, {string} in the overlay")
+    public void iShouldSeeInTheOverlay(String arg0, String arg1, String arg2, String arg3, String arg4, String arg5, String arg6) {
+        assertTrue(driver.getPageSource().contains(arg0));
+        assertTrue(driver.getPageSource().contains(arg1));
+        assertTrue(driver.getPageSource().contains(arg2));
+        assertTrue(driver.getPageSource().contains(arg3));
+        assertTrue(driver.getPageSource().contains(arg4));
+        assertTrue(driver.getPageSource().contains(arg5));
+        assertTrue(driver.getPageSource().contains(arg6));
+    }
+
+    @Then("I should see {string} in the page")
+    public void iShouldSeeInThePage(String arg0) {
+        assertTrue(driver.getPageSource().contains(arg0));
     }
 
     @After
@@ -79,11 +123,4 @@ public class SearchStepDefinitions {
         driver.quit();
     }
 
-    @Then("I should see {string}, {string}, {string}, {string}, {string}, {string}, {string} in the overlay")
-    public void iShouldSeeInTheOverlay() {
-    }
-
-    @Then("I should see {string} in the page")
-    public void iShouldSeeInThePage() {
-    }
 }
