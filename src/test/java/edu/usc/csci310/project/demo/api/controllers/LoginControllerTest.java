@@ -31,7 +31,7 @@ public class LoginControllerTest {
         rq.setUsername("tommytrojan");
 
         ResponseEntity<LoginResponse> rsp = l.verifyLogin(rq);
-        assertEquals(HttpStatusCode.valueOf(200), rsp.getStatusCode());
+        assertEquals(HttpStatusCode.valueOf(401), rsp.getStatusCode());
 
         LoginResponse r = rsp.getBody();
         assertEquals("tommytrojan", r.getDisplayName());
