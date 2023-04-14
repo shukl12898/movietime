@@ -28,34 +28,36 @@ function Search() {
       setResultCount((resultCount+10));
   }
 
-  const getSearchResults = async(query,selectedFilter) => {
 
-      console.log(selectedFilter);
-      console.log(document.getElementById("chooseFilter"));
-      console.log(document.getElementById("chooseFilter").value);
-      const API_URL= 'https://api.themoviedb.org/3/search/' + selectedFilter + '?api_key=f0a2d3c27e0522ee834ad2e76ceeebb1&query='+ query;
+  const getSearchResults = async(query, selectedFilter) => {
+      const API_URL = 'https://api.themoviedb.org/3/search/' + selectedFilter + '?api_key=f0a2d3c27e0522ee834ad2e76ceeebb1&query='+ query;
+
       console.log(API_URL);
       try{
-      const response = await fetch(API_URL);
-      const responseJson = await response.json();
-      console.log(responseJson.results);
+          const response = await fetch(API_URL);
+          const responseJson = await response.json();
+          console.log(responseJson.results);
 
-      if (responseJson.results){
-          assignMovies(responseJson.results)
-      }
-      } catch(error){
-        console.log(error);
+          if (responseJson.results){
+              assignMovies(responseJson.results)
+          }
+      } catch(error) {
+          console.log(error);
       }
   };
 
   useEffect(()=>{
-      getSearchResults(query,selectedFilter)
+          getSearchResults(query,selectedFilter);
   },[query,selectedFilter]);
+
+  const handleSearch = (query) => {
+      setQuery(query);
+  };
 
   // Anything returned will be rendered in React
   return (
     <div>
-        <h1>Search</h1>
+        <h1>MovieTime</h1>
         <button
                       onClick={() => {
                         navigate("/Home");
@@ -68,7 +70,7 @@ function Search() {
                 <SearchFilter options = {options} onSelect={handleSelectFilter}/>
             </div>
             <div className = "col">
-                <SearchBox query ={query} setQuery = {setQuery}/>
+                <SearchBox onSearch ={handleSearch} />
             </div>
 
         </div>

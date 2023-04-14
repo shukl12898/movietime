@@ -1,20 +1,27 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 // functional component
-const SearchBox = (props) => {
+const SearchBox = ({onSearch}) => {
+    const [currentQuery, setCurrentQuery] = useState("");
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        onSearch(currentQuery);
+    }
+
     return (
         <div key = "0">
-            <form>
+            <form onSubmit={handleSubmit} data-testid="search-form">
                 <input
                     type="text"
                     id="searchBar"
-                    placeholder = "Enter search term..."
-                    value = {props.value}
-                    onChange = {(event)=>props.setQuery(event.target.value)}
-
+                    placeholder = "Search here..."
+                    value = {currentQuery}
+                    onChange = {(event) => setCurrentQuery(event.target.value)}
+                    data-testid="search-input"
                 ></input>
-
-            </form>
+                <button type = "submit">Search</button>
+            </form >
         </div>
     )
 }
