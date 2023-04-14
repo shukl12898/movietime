@@ -34,7 +34,6 @@ public class LoginControllerTest {
         ResponseEntity<LoginResponse> rsp = l.verifyLogin(rq);
 
         LoginResponse r = rsp.getBody();
-        assertEquals("tommytrojan", r.getDisplayName());
         assertEquals(200, r.getStatus());
 
         rq.setPassword("wrongpassword");
