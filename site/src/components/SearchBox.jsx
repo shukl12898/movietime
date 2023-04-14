@@ -1,18 +1,20 @@
 import React from 'react';
+import { Input } from '@chakra-ui/react'
 
 // functional component
 const SearchBox = (props) => {
     return (
         <div key = "0">
             <form>
-                <input
+                <Input
                     type="text"
                     id="searchBar"
-                    placeholder = "Enter search term..."
+                    placeholder = "Search here..."
                     value = {props.value}
                     onChange = {(event)=>props.setQuery(event.target.value)}
-
-                ></input>
+                    variant='filled'
+                    width='auto'
+                ></Input>
 
             </form>
         </div>
