@@ -15,6 +15,7 @@ public class DatabaseManager {
     private static final String USERS_TABLE = "CREATE TABLE IF NOT EXISTS " +
             "users (user_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
             "username VARCHAR(255) NOT NULL, password VARCHAR(255) NOT NULL)";
+
     Connection c;
 
     /**
@@ -37,14 +38,9 @@ public class DatabaseManager {
     /**
      * Drops all tables created. Helper function.
      */
-    public void dropAllTables() {
-        try {
-            PreparedStatement pst = c.prepareStatement("DROP TABLE IF EXISTS users");
-            pst.executeUpdate();
-        } catch (SQLException sqle) {
-            System.out.println(sqle);
-            System.err.println("Could not drop tables.");
-        }
+    public void dropAllTables() throws Exception {
+        PreparedStatement pst = c.prepareStatement("DROP TABLE IF EXISTS users");
+        pst.executeUpdate();
     }
 
     /**
@@ -54,7 +50,7 @@ public class DatabaseManager {
      * @param username username (encrypted).
      * @param password password (encrypted).
      */
-    public void createNewUser(String username, String password) {
+    public void insertIntoUser(String username, String password) {
         try {
             PreparedStatement pst = c.prepareStatement("insert into users (username, password) values(?,?)");
             pst.setString(1, username);
@@ -63,6 +59,7 @@ public class DatabaseManager {
         } catch (SQLException sqle) {
             System.out.println(sqle);
             System.err.println("Could not set new user.");
+
         }
     }
 
@@ -122,21 +119,30 @@ public class DatabaseManager {
     }
 
     public UserModel getUser(String username, String password) throws Exception {
-        int userId = -1;
+        PreparedStatement pst = c.prepareStatement("SELECT user_id from users " +
+                "WHERE username = ? AND password = ? ");
+        pst.setString(1, username);
+        pst.setString(2, password);
+        ResultSet resultSet = pst.executeQuery();
+        if (resultSet.next()) {
+            int userId = resultSet.getInt("user_id");
+            UserModel u = new UserModel(userId, username);
+            return u;
+        } else {
+            throw new Exception("No user with that username and password.");
+        }
+    }
 
-            PreparedStatement pst = c.prepareStatement("SELECT user_id from users " +
-                    "WHERE username = ? AND password = ? ");
-            pst.setString(1, username);
-            pst.setString(2, password);
-            ResultSet resultSet = pst.executeQuery();
-            if (resultSet.next()) {
-                userId = resultSet.getInt("user_id");
-            } else {
-                throw new Exception("No such user!");
-            }
-
-        UserModel u = new UserModel(userId, username);
+    public UserModel createNewUser(String username, String password, String name) throws Exception
+    {
+        insertIntoUser(username, password);
+        UserModel u = getUser(username, password);
+        u.setDisplayName(name);
         return u;
+    }
+
+    public void close() throws SQLException {
+        c.close();
     }
 
 
