@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import MovieResult from '../components/MovieResult';
 import SearchBox from '../components/SearchBox';
 import SearchFilter from '../components/SearchFilter';
+import NavBar from '../components/NavBar';
+import {
+HStack, VStack,
+Card, CardHeader, CardBody, Heading,
+Flex, Spacer,StackDivider,
+} from '@chakra-ui/react'
 
 // This page provides a button with a redirect to "/other"
 function Search() {
-  // Calling navigate() will allow us to redirect the webpage
-  const navigate = useNavigate();
 
   //empty array for movie results
   const [movies, assignMovies] = useState([]);
@@ -28,53 +31,65 @@ function Search() {
       setResultCount((resultCount+10));
   }
 
-  const getSearchResults = async(query,selectedFilter) => {
 
-      console.log(selectedFilter);
-      console.log(document.getElementById("chooseFilter"));
-      console.log(document.getElementById("chooseFilter").value);
-      const API_URL= 'https://api.themoviedb.org/3/search/' + selectedFilter + '?api_key=f0a2d3c27e0522ee834ad2e76ceeebb1&query='+ query;
+  const getSearchResults = async(query, selectedFilter) => {
+      const API_URL = 'https://api.themoviedb.org/3/search/' + selectedFilter + '?api_key=f0a2d3c27e0522ee834ad2e76ceeebb1&query='+ query;
+
       console.log(API_URL);
       try{
-      const response = await fetch(API_URL);
-      const responseJson = await response.json();
-      console.log(responseJson.results);
+          const response = await fetch(API_URL);
+          const responseJson = await response.json();
+          console.log(responseJson.results);
 
-      if (responseJson.results){
-          assignMovies(responseJson.results)
-      }
-      } catch(error){
-        console.log(error);
+          if (responseJson.results){
+              assignMovies(responseJson.results)
+          }
+      } catch(error) {
+          console.log(error);
       }
   };
 
   useEffect(()=>{
-      getSearchResults(query,selectedFilter)
+          getSearchResults(query,selectedFilter);
   },[query,selectedFilter]);
 
-  // Anything returned will be rendered in React
-  return (
-    <div>
-        <h1>Search</h1>
-        <button
-                      onClick={() => {
-                        navigate("/Home");
-                      }}
-                    >
-                      Click to go to Home page
-                    </button>
-        <div className = "row">
-            <div className="col">
-                <SearchFilter options = {options} onSelect={handleSelectFilter}/>
-            </div>
-            <div className = "col">
-                <SearchBox query ={query} setQuery = {setQuery}/>
-            </div>
 
-        </div>
+  const handleSearch = (query) => {
+      setQuery(query);
+  };
+  return (
+
+<div>
+    <NavBar/>
+    <br/>
+    <br/>
+ <Flex>
+ <Spacer />
+        <Card variant='elevated' size='md'>
+          <CardHeader>
+              <Heading size='md'>Search</Heading>
+          </CardHeader>
+          <CardBody>
+            <HStack>
+              <SearchFilter options = {options} onSelect={handleSelectFilter}/>
+              <SearchBox onSearch ={handleSearch} />
+            </HStack>
+
+          </CardBody>
+        </Card>
+        <Spacer />
+        </Flex>
+<VStack
+  divider={<StackDivider borderColor='gray.200' />}
+  spacing={4}
+  align='center'
+>
         <MovieResult movies = {movies} filter = {selectedFilter} numResults = {resultCount}/>
         <button onClick={getMoreResults}>Load More</button>
-    </div>
+
+</VStack>
+
+</div>
   );
 }
 
