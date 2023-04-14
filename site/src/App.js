@@ -7,10 +7,14 @@ import MyWatchlists from "./pages/MyWatchlists";
 import Search from "./pages/Search";
 import Suggestions from "./pages/Suggestions";
 
+import { ChakraProvider } from '@chakra-ui/react'
+
 function App() {
   return (
-    <div>
-      <Routes>
+
+    <ChakraProvider>
+        <div>
+         <Routes>
         {/* Root pages, located in /pages/ */}
         <Route path="/" element={<Home />} />
         <Route path="/other" element={<Other />} />
@@ -21,7 +25,9 @@ function App() {
         {/* 404 page not found redirect */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
-    </div>
+        </div>
+    </ChakraProvider>
+
   );
 }
 
