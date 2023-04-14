@@ -1,25 +1,18 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import NavBar from '../components/NavBar';
 import {
-Card, CardHeader, CardBody, Heading,CardFooter,
-Flex, Spacer, FormControl,FormLabel,Input, Button, HStack
+Flex, Spacer, Button
 } from '@chakra-ui/react'
 
 import LoginComponent from '../components/LoginComponent';
 import CreateAccount from '../components/CreateAccount';
 
 function Login() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
- // const [fetchResponse, handleFetchResponse] = useState();
 
+ // const [fetchResponse, handleFetchResponse] = useState();
   const [signUp, setSignUp] = useState(false);
 
-  function handlePasswordChange(event) {
-      setPassword(event.target.value);
-    }
-  const navigate = useNavigate();
+
      if (!signUp) {
         return (
         <>
