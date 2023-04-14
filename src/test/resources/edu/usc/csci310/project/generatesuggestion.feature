@@ -4,7 +4,7 @@ Feature: Generate Suggestions
     When I select "The Hunger Games" on "Action" Watchlist
     And I enter 7 on the textbox
     And I click the Generate button
-    Then I should see 7 similar movies suggested and it should not contain "The Hunger Games" itself
+    Then I should see 7 suggestions which shouldn't contain "The Hunger Games"
 
   Scenario: Hovering over the tooltip
     Given I am on endpoint "Watchlist"
@@ -17,4 +17,19 @@ Feature: Generate Suggestions
     And I select "SMILE" on "Horror Watchlist
     And I enter 3 on the textbox
     And I click the Generate button
-    Then I should see 3 movies that are related to both 'The Hunger Games" and "SMILE"
+    Then I should see 3 movies related to 'The Hunger Games" AND "SMILE"
+
+  Scenario:Enter a number that's bigger than 10
+    Given I am on endpoint "Watchlist"
+    When I enter 100 on the textbox
+    Then I should see an error message
+
+  Scenario:Enter a number that's less than 1
+    Given I am on endpoint "Watchlist"
+    When I enter 0 on the textbox
+    Then I should see an error message
+
+  Scenario: Create a new watchlist based on suggested movies
+    Given I am endpoint "Suggested movies"
+    When I press the create new watchlist button from the list
+    Then I should see a new watchlist based on the suggested movies
