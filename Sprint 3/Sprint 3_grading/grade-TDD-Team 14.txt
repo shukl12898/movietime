@@ -1,0 +1,15 @@
+Best Practice TDD Report
+Owner: Team 14
+Grade: 2.4/12
+Comments: 
+	No test found for: src.components.Footer.jsx.Footer
+		Commit: https://github.com/CSCI310/20231-project-team-14/commit/68ecf5b27bcf2c000fed1963ed5d7e9b81ec90e7
+	No test found for: src.components.NavBar.jsx.NavBar
+		Commit: https://github.com/CSCI310/20231-project-team-14/commit/68ecf5b27bcf2c000fed1963ed5d7e9b81ec90e7
+	No test found for: src.components.CreateAccount.jsx.handlePasswordConf
+		Commit: https://github.com/CSCI310/20231-project-team-14/commit/23465a2f7dfa1a413d99847d6235b099e6e141ee
+	No test found for: src.pages.Montage.jsx.Montage
+		Commit: https://github.com/CSCI310/20231-project-team-14/commit/07216fcf0114d6624256759d937c7d566a8e72dd
+Correct TDD methods: 1
+Incorrect TDD methods: 4
+Total methods evaluated for TDD: 5
