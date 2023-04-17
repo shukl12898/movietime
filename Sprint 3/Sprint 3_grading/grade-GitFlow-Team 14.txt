@@ -1,0 +1,6 @@
+Best Practice GitFlow Report
+Owner: Team 14
+Grade: 11.5/12
+Comments: 
+
+	Pull request #53 did not follow gitflow branch merge rules [main <- refactor/48] (https://github.com/CSCI310/20231-project-team-14/pull/53)
