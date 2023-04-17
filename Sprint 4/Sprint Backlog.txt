@@ -1,0 +1,16 @@
+Sprint Backlog
+
+- Update Watchlist Use Cases
+- Front-end page for creating watchlist
+- Back-end for creating/saving watchlist
+- Creating View all watchlists page
+- Hover Functionality for View My Watchlists Page
+- Encryption and Securing Details 
+- User interfaces must be attractive
+- Comparing Watchlists 
+- Create picture montages based on a list 
+
+
+For this sprint, we are attempting to finish the watchlist functionality by tomorrow (4/18). We have added UI to all of our mostly complete features and will continue to add as features finish. Once the watchlist functionality is complete, we will be able to connect the Adding to Watchlist through Search feature. Then, we will be able to link users as a foreign key to the watchlist DB. Since many features are dependent on the watchlist functionality, we have prioritized that. 
+
+Devika Sen, Oscar Clavijo Bernal, Adit Hattikudur, Hiro Miki, Akanksha Shukla
