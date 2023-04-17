@@ -1,0 +1,75 @@
+Best Practice IssuesPullRequests Report
+Owner: Team 14
+Grade: 9.9/12
+Comments: 
+	Using commit: https://github.com/CSCI310/20231-project-team-14/commit/d3d3507dfdaee0ee04e2f5de7557573e8b3548ae
+		Reviewing issue 48
+			Found refactor/48: +1
+			Found matching PR #53: +1
+			PR created by issue assignee: +1
+			Changes matched: +1
+			Branch merged on time: +1
+			Branch merged by other teammate: +1
+			Issue not closed: -1
+			Issue score: 6/7
+		Reviewing issue 47
+			Found refactor/47: +1
+			Found matching PR #63: +1
+			PR created by issue assignee: +1
+			Changes matched: +1
+			Branch merged on time: +1
+			Branch merged by other teammate: +1
+			Issue closed properly: +1
+			Issue score: 7/7
+		Reviewing issue 45
+			Found refactor/45: +1
+			Found matching PR #58: +1
+			PR created by issue assignee: +1
+			Changes matched: +1
+			Branch merged on time: +1
+			Branch merged by issue assignee: -1
+			Issue closed properly: +1
+			Issue score: 6/7
+		Reviewing issue 44
+			Found refactor/44: +1
+			Found matching PR #57: +1
+			PR created by issue assignee: +1
+			Changes matched: +1
+			Branch merged on time: +1
+			Branch merged by other teammate: +1
+			Issue closed properly: +1
+			Issue score: 7/7
+		Reviewing issue 42
+			Found refactor/42: +1
+			Found matching PR #62: +1
+			PR created by issue assignee: +1
+			Changes matched: +1
+			Branch merged on time: +1
+			Branch merged by other teammate: +1
+			Issue closed properly: +1
+			Issue score: 7/7
+		Reviewing issue 41
+			Found refactor/41: +1
+			Found matching PR #55: +1
+			PR created by issue assignee: +1
+			Changes matched: +1
+			Branch merged on time: +1
+			Branch merged by other teammate: +1
+			Issue closed properly: +1
+			Issue score: 7/7
+		Reviewing issue 40
+			Found refactor/40: +1
+			Found matching PR #60: +1
+			PR created by issue assignee: +1
+			Changes matched: +1
+			Branch merged on time: +1
+			Branch merged by issue assignee: -1
+			Issue closed properly: +1
+			Issue score: 6/7
+		Reviewing issue 39
+			Did not find refactor/39: -1
+			Could not find matching PR : -5
+			Issue not closed: -1
+			Issue score: 0/7
+		Total issue score count: 46/56
+		Points earned: 9.9
