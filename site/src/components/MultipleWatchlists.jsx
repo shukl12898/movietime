@@ -14,7 +14,7 @@ export default function MultipleWatchlists(props) {
     key={watchlist.wName}
     >
         {watchlist.wName}
-        <OneWatchlist movies={watchlist.list}/>
+        <OneWatchlist movies={watchlist.moviesInW}/>
     </li>
   );
 

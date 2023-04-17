@@ -33,6 +33,13 @@ function Home() {
            }}>
               Click to go to Search page
        </button>
+       <button
+           onClick={() => {
+             navigate("/MyWatchlists");
+           }}>
+              Click to go to MyWatchlists page
+       </button>
+
     </div>
   );
 }

@@ -6,6 +6,7 @@ import Other from "./pages/Other";
 import MyWatchlists from "./pages/MyWatchlists";
 import Search from "./pages/Search";
 
+
 function App() {
   return (
     <div>
@@ -16,6 +17,8 @@ function App() {
         <Route path="/Login" element={<Login />} />
         <Route path="/MyWatchlists" element={<MyWatchlists />} />
         <Route path="/Search" element={<Search />} />
+
+
         {/* 404 page not found redirect */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

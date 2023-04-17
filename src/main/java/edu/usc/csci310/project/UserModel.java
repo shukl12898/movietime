@@ -1,5 +1,7 @@
 package edu.usc.csci310.project;
 
+import java.util.ArrayList;
+
 public class UserModel {
     private int user_id;
     private String displayName;
