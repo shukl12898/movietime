@@ -1,0 +1,21 @@
+			Grading Table - Team Team 14
+
+| Section                  | Grade               | Note                                          |
+|--------------------------|---------------------|-----------------------------------------------|
+| Sprint Planning          | 8.0/8               |                                               |
+| Scrums                   | 22.0/24             | Scrum 1:Combine 3 questions and selfie in one |
+|                          |                     | Scrum 2:                                      |
+|                          |                     | Scrum 3:                                      |
+|                          |                     | Scrum 4:No Task Chart                         |
+| Retrospective            | TBD                 |                                               |
+| TDD                      | 2.4/12              |                                               |
+| GitFlow                  | 11.5/12             |                                               |
+| Continuous Integration   | 12.0/12             |                                               |
+| Refactor                 | 9.9/12              |                                               |
+| Coverage                 | 7.0/12              |                                               |
+| ------------------------ | ------------------- |                                               |
+| Total                    | 72.8                |                                               |
+| ------------------------ | ------------------- |                                               |
+| Implementation Score     | 135.5/400           |                                               |
+| Sustainable Pace Penalty | 7.25                |                                               |
+|                          |                     |                                               |
