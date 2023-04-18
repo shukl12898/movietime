@@ -5,6 +5,7 @@ import Login from "./pages/Login";
 import Other from "./pages/Other";
 import MyWatchlists from "./pages/MyWatchlists";
 import Search from "./pages/Search";
+import NavBar from './components/NavBar';
 
 import { ChakraProvider } from '@chakra-ui/react'
 
@@ -14,8 +15,7 @@ function App() {
         <div>
           <Routes>
             {/* Root pages, located in /pages/ */}
-            <Route path="/" element={<Home />} />
-            <Route path="/other" element={<Other />} />
+            <Route path="/" element={<Login />} />
             <Route path="/Login" element={<Login />} />
             <Route path="/MyWatchlists" element={<MyWatchlists />} />
             <Route path="/Search" element={<Search />} />

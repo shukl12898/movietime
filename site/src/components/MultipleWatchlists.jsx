@@ -1,5 +1,6 @@
 import React from "react";
 import OneWatchlist from "../components/OneWatchlist";
+
 //import { useNavigate } from "react-router-dom";
 
 // function MultipleWatchlists() {
@@ -8,17 +9,20 @@ import OneWatchlist from "../components/OneWatchlist";
 // export default MultipleWatchlists;
 
 export default function MultipleWatchlists(props) {
-
-  const listItems = props.watchlistsArr.map(watchlist =>
-    <li
-    key={watchlist.wName}
-    >
-        {watchlist.wName}
-        <OneWatchlist movies={watchlist.list}/>
-    </li>
-  );
+//
+//   const listItems = props.watchlistsArr.map(watchlist =>
+//     <li
+//     key={watchlist.watchlistName}
+//     >
+//         {watchlist.watchlistName} :
+//         {"\n"}
+//         isPublic: {watchlist.isPublic}
+//
+//         <OneWatchlist movies={watchlist.moviesInW}/>
+//     </li>
+//   );
 
   return (
-    <ul>{listItems}</ul>
+    <ul><div>No List</div></ul>
   );
 }

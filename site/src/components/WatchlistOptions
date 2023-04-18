@@ -1,7 +1,0 @@
-import React from "react";
-import OneWatchlist from "../components/OneWatchlist";
-
-export default function WatchlistOptions(props) {
-
-
-}
