@@ -1,6 +1,7 @@
 import React from "react";
 import {useState, useEffect} from "react";
 import '../styles/movie-details.css';
+import HoverButtons from '../components/HoverButtons';
 
 import {
   Modal,
@@ -23,6 +24,7 @@ import {
 function MovieDetails(props) {
 
   const [movieDetails, setMovieDetails] = useState({});
+  const [isHovering, setIsHovering] = useState(false);
   const [castDetails, setCastDetails] = useState({});
   const [showOverlay, setShowOverlay] = useState(false);
   const [movieID, setMovieID] = useState({});
@@ -84,24 +86,34 @@ function MovieDetails(props) {
         }
     }, [movieID]);
 
-        console.log(castDetails);
-
-
     const showDetails = (movieID) => {
         setShowOverlay(true);
         setSelectedMovieID(movieID);
     }
 
+    const handleMouseEnter = () => {
+        setIsHovering(true);
+      };
+
+      const handleMouseLeave = () => {
+        setIsHovering(false);
+      };
+
     return (
       <div className="background">
         {movieDetails.length > 0 ? (
           movieDetails.map((movie) => (
-            <div className="movie-title"  data-testid="movie-title" key={movie.id} onClick={() => {
-            showDetails(movie.id) }}
-            ><Box p={3}>
+            <Box p={3} id="movie-name" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} key={movie.id} >
+            <div className="movie-title"  data-testid="movie-title" onClick={(event) => {
+                                showDetails(movie.id);
+                        }}
+                        >
               {movie.original_title}
+                          </div>
+              {isHovering && (
+               <HoverButtons/>
+              )}
             </Box>
-            </div>
           ))
         ) : (
           <div>No movies found</div>
@@ -111,7 +123,7 @@ function MovieDetails(props) {
 
         <Modal isOpen={showOverlay} onClose={setShowOverlay} >
             <ModalOverlay />
-                <ModalContent data-testid="overlay">
+                <ModalContent data-testid="overlay" id="overlay-content">
                   <ModalHeader>
                     {movieDetails.filter((movie) => movie.id === selectedMovieID)[0].original_title}
                     <br />
@@ -140,7 +152,7 @@ function MovieDetails(props) {
                              <AccordionIcon />
                            </AccordionButton>
                          </h2>
-                         <AccordionPanel >
+                         <AccordionPanel maxH="200px" overflowY="scroll" id="scrollContainer">
                            {Array.isArray(castDetails) && castDetails.find((cast) => cast.id === selectedMovieID) && castDetails.find((cast) => cast.id === selectedMovieID).cast.map((member,index) =>
                               <li key={index}>{member.name}</li>
                             )}

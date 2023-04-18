@@ -4,7 +4,7 @@ Feature: testing out the movie details feature
     When I enter "fight club" in the search bar
     And I press the search button
     And I click on the "Fight Club" movie title
-    Then I should see "Fight Club", "Brad Pitt", "1999", "Drama", "David Fincher", "Regency Enterprises", "A ticking time bomb" in the overlay
+    Then I should see "Fight Club", "Brad Pitt", "1999", "Drama", "David Fincher", "Regency Enterprises", "A ticking-time-bomb" in the overlay
 
   Scenario: open the page and don't click on any title
     Given I am on the search page
@@ -17,4 +17,4 @@ Feature: testing out the movie details feature
     When I enter "fight club" in the search bar
     And I press the search button
     And I click on the "Fight Club" movie title
-    Then I should be able to scroll through cast in "Fight Club"
+    Then I should be able to scroll through cast

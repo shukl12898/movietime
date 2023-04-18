@@ -141,5 +141,4 @@ describe('MovieDetails component', () => {
               const closeButton = screen.queryByTestId('closeButton');
               expect(closeButton).toBeInTheDocument();
             });
-
 });
