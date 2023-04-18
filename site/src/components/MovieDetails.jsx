@@ -28,10 +28,15 @@ function MovieDetails(props) {
   const [movieID, setMovieID] = useState({});
   const [selectedMovieID, setSelectedMovieID] = useState(null);
   const imageURL = "https://image.tmdb.org/t/p/w500/";
-  const APIkey = '?api_key=5e9de98263d160a232935f6d95ab878d';
+  const APIkey = '?api_key=';
   const movie = props.data;
   const filter = props.filter;
   const baseurl = 'https://api.themoviedb.org/3/movie/';
+  const [keyVal, setKeyVal] = useState("");
+
+useEffect(() => {
+    fetchAPIKey();
+  }, []);
 
     useEffect(() => {
       if (filter === "movie") {
@@ -47,7 +52,9 @@ function MovieDetails(props) {
     }, [filter, movie]);
 
     useEffect(() => {
+
       if (Array.isArray(movieID)) {
+
         const promises = movieID.map((id) => {
           const fullurl = baseurl + id + APIkey;
           return fetch(fullurl).then((response) => response.json());
@@ -66,9 +73,10 @@ function MovieDetails(props) {
     }, [movieID]);
 
     useEffect(() => {
+
         if (Array.isArray(movieID)) {
             const promises = movieID.map((id) => {
-            const casturl = baseurl + id + '/credits' + APIkey;
+            const casturl = baseurl + id + '/credits' + APIkey + keyVal;
             return fetch(casturl).then((response) => response.json());
         });
 
@@ -76,7 +84,7 @@ function MovieDetails(props) {
         .then((data) => setCastDetails(data))
         .catch((error) => console.log(error));
         } else if (movieID) {
-            const casturl = baseurl + movieID + '/credits' + APIkey;
+            const casturl = baseurl + movieID + '/credits' + APIkey + keyVal;
             fetch(casturl)
             .then((response) => response.json())
             .then((data) => setCastDetails(data))
@@ -90,6 +98,24 @@ function MovieDetails(props) {
     const showDetails = (movieID) => {
         setShowOverlay(true);
         setSelectedMovieID(movieID);
+    }
+
+    const fetchAPIKey = () => {
+    fetch("/api/getKey", {
+                  method: "GET",
+                  headers: {
+                    Accept: "application/json"
+                  }
+                })
+              .then((res) => res.json())
+              .then((response) => {
+                console.log("API Responded With: ");
+                console.log(response);
+                setKeyVal(response.getKey);
+              })
+              .catch((error) => {
+                console.log(error);
+              });
     }
 
     return (
