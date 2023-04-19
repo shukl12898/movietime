@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import MultipleWatchlists from "../components/MultipleWatchlists";
-import WatchlistOptions from "../components/WatchlistOptions";
-import NavBar from "../components/NavBar";
+import SuggestionButton from "../components/SuggestionButton";
+import NavBar from '../components/NavBar';
+
 const multiList = [
 {
   user_id: 1,
@@ -118,6 +119,11 @@ return (
 
       </div>
 
+
+      <SuggestionButton />
+    </div>
+  );
+}
 
     </div>
   ); */}
