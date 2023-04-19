@@ -2,19 +2,41 @@ package edu.usc.csci310.project;
 
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.After;
 import org.openqa.selenium.By;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class SearchStepDefinitions {
     private static final String ROOT_URL = "https://localhost:8080/";
-    private final WebDriver driver = new ChromeDriver();
+
+    private static final String ROOT_URL_UNSECURE = "http://localhost:8080/";
+
+    private WebDriverWait wait;
+    private final WebDriver driver;
+
+    public SearchStepDefinitions() {
+        WebDriverManager.chromedriver().setup();
+        ChromeOptions options = new ChromeOptions ();
+        options.addArguments("--remote-allow-origins=*");
+        driver = new ChromeDriver (options);
+        wait = new WebDriverWait(driver, Duration.ofSeconds (7));
+    }
     @Given("I am on the search page")
     public void iAmOnTheSearchPage(){
         driver.get(ROOT_URL+"Search");
+    }
+
+    @Given("I am on the search page using HTTP")
+    public void iAmOnTheSearchPageUsingHTTP(){
+        driver.get(ROOT_URL_UNSECURE+"Search");
     }
 
     @When("I enter {string} in the search bar")
