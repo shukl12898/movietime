@@ -309,34 +309,6 @@ public class DatabaseManager {
         }
     }
 
-    public WatchlistModel getWatchlist(int userID, String watchlistName) throws Exception {
-        int userId = -1;
-        ArrayList<String> moviesInW = new ArrayList<String>();
-        PreparedStatement pst;
-        if (userID != -1) {
-            pst = c.prepareStatement("SELECT * from watchlists " +
-                    "WHERE userID = ? AND watchlistName = ? ");
-            pst.setInt(1, userID);
-            pst.setString(2, watchlistName);
-        } else {
-            pst = c.prepareStatement("SELECT * from watchlists " +
-                    "WHERE watchlistName = ? ");
-            pst.setString(2, watchlistName);
-        }
-
-        ResultSet resultSet = pst.executeQuery();
-        String movieName;
-        int isPublic = 1;
-        while (resultSet.next()) {
-            movieName = resultSet.getString("movieName");
-            isPublic = resultSet.getInt("isPublic");
-            moviesInW.add(movieName);
-        }
-
-        WatchlistModel w = new WatchlistModel(userId, watchlistName, moviesInW, isPublic);
-        return w;
-    }
-
 
 
 }
