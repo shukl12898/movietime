@@ -1,5 +1,7 @@
 package edu.usc.csci310.project;
 
+import io.cucumber.java.Before;
+import io.cucumber.java.BeforeAll;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -14,20 +16,25 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
+import static org.junit.Assert.assertTrue;
+
 public class SearchStepDefinitions {
     private static final String ROOT_URL = "https://localhost:8080/";
 
     private static final String ROOT_URL_UNSECURE = "http://localhost:8080/";
 
-    private WebDriverWait wait;
-    private final WebDriver driver;
+    private WebDriver driver;
 
-    public SearchStepDefinitions() {
+    @BeforeAll
+    public static void beforeAll() {
         WebDriverManager.chromedriver().setup();
+        System.setProperty("webdriver.http.factory", "jdk-http-client");
+    }
+    @Before
+    public void before() {
         ChromeOptions options = new ChromeOptions ();
         options.addArguments("--remote-allow-origins=*");
         driver = new ChromeDriver (options);
-        wait = new WebDriverWait(driver, Duration.ofSeconds (7));
     }
     @Given("I am on the search page")
     public void iAmOnTheSearchPage(){
@@ -50,8 +57,8 @@ public class SearchStepDefinitions {
     }
 
     @Then("I should see {string} on the page")
-    public void iShouldSeeOnThePage() {
-
+    public void iShouldSeeOnThePage(String arg0) {
+        assertTrue(driver.getPageSource().contains(arg0));
     }
 
     @When("I select {string} in the dropdown menu")
