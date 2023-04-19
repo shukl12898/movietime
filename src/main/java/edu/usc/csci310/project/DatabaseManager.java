@@ -15,7 +15,17 @@ public class DatabaseManager {
     private static final String USERS_TABLE = "CREATE TABLE IF NOT EXISTS " +
             "users (user_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
             "username VARCHAR(255) NOT NULL, password VARCHAR(255) NOT NULL)";
-    Connection c;
+
+    private static final String WATCHLIST_USER_TABLE = "CREATE TABLE IF NOT EXISTS " +
+            "watchlists (watchlist_id INTEGER PRIMARY KEY AUTOINCREMENT, list_name VARCHAR(255) NOT NULL, " +
+            " user_id INTEGER NOT NULL)";
+    private static final String WATCHLIST_CONTENT = "CREATE TABLE IF NOT EXISTS " +
+            "contentsOfLists (watchlist_id INTEGER, " + "movie_id INTEGER NOT NULL, " +
+            "FOREIGN KEY (watchlist_id) REFERENCES watchlists(watchlist_id) ON DELETE CASCADE)";
+
+    private static final String AUTHENTICATION = "CREATE TABLE IF NOT EXISTS " +
+            "auth (user_id INTEGER, " + "attempts INTEGER, token VARCHAR(255), " +
+            "FOREIGN KEY (user_id) REFERENCES users(user_id))";
 
     /**
      * Initializer for the manager class. Creates necessary tables
@@ -23,12 +33,12 @@ public class DatabaseManager {
      * @throws Exception sqle if the database could not be created.
      */
     public DatabaseManager() throws Exception {
-        try {
-            c = DriverManager.getConnection(SQLITE_CONNECTION_STRING);
+        try (Connection c = DriverManager.getConnection(SQLITE_CONNECTION_STRING)){
             Statement statement = c.createStatement();
             statement.executeUpdate(USERS_TABLE);
-        }
-        catch (SQLException sqle) {
+            statement.executeUpdate(WATCHLIST_USER_TABLE);
+            statement.executeUpdate(WATCHLIST_CONTENT);
+        } catch (SQLException sqle) {
             System.err.println(sqle);
             throw new Exception("Could not create the Database");
         }
@@ -38,8 +48,12 @@ public class DatabaseManager {
      * Drops all tables created. Helper function.
      */
     public void dropAllTables() {
-        try {
+        try (Connection c = DriverManager.getConnection(SQLITE_CONNECTION_STRING)){
             PreparedStatement pst = c.prepareStatement("DROP TABLE IF EXISTS users");
+            pst.executeUpdate();
+            pst = c.prepareStatement("DROP TABLE IF EXISTS watchlists");
+            pst.executeUpdate();
+            pst = c.prepareStatement("DROP TABLE IF EXISTS contentsOfLists");
             pst.executeUpdate();
         } catch (SQLException sqle) {
             System.out.println(sqle);
@@ -55,7 +69,7 @@ public class DatabaseManager {
      * @param password password (encrypted).
      */
     public void createNewUser(String username, String password) {
-        try {
+        try (Connection c = DriverManager.getConnection(SQLITE_CONNECTION_STRING)){
             PreparedStatement pst = c.prepareStatement("insert into users (username, password) values(?,?)");
             pst.setString(1, username);
             pst.setString(2, password);
@@ -74,7 +88,7 @@ public class DatabaseManager {
      */
     public List<String> getAllUsers(int limit) {
         List<String> userNames = new ArrayList<>();
-        try {
+        try (Connection c = DriverManager.getConnection(SQLITE_CONNECTION_STRING)){
             PreparedStatement pst = c.prepareStatement("SELECT * from users LIMIT ?");
             pst.setInt(1, limit);
             ResultSet resultSet = pst.executeQuery();
@@ -108,7 +122,7 @@ public class DatabaseManager {
             return 0;
         }
 
-        try {
+        try (Connection c = DriverManager.getConnection(SQLITE_CONNECTION_STRING)){
             PreparedStatement pst = c.prepareStatement("SELECT COUNT(?) FROM ?");
             pst.setString(1, attribute);
             pst.setString(2, table);
@@ -121,24 +135,180 @@ public class DatabaseManager {
         return -1;
     }
 
-    public UserModel getUser(String username, String password) throws Exception {
-        int userId = -1;
-
+    public UserModel getUser(String username, String password) {
+        try (Connection c = DriverManager.getConnection(SQLITE_CONNECTION_STRING)){
             PreparedStatement pst = c.prepareStatement("SELECT user_id from users " +
                     "WHERE username = ? AND password = ? ");
             pst.setString(1, username);
             pst.setString(2, password);
             ResultSet resultSet = pst.executeQuery();
             if (resultSet.next()) {
-                userId = resultSet.getInt("user_id");
-            } else {
-                throw new Exception("No such user!");
+                int userId = resultSet.getInt("user_id");
+                return new UserModel(userId, username);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
+    /**
+     * Retrieves all lists for a given user.
+     * first, gets all the watchlists for the userId.
+     * Then, in an inner loop, queries for the movies in
+     * a certain watchlist and builds a list of ListModel(s).
+     *
+     * If the list is empty, there were no watchlists stored for the user.
+     * @param userId
+     * @return
+     */
+    public ArrayList<ListModel> getListsForUser(int userId) {
+
+        ArrayList<ListModel> l = new ArrayList<>();
+        try (Connection c = DriverManager.getConnection(SQLITE_CONNECTION_STRING)) {
+
+            String queryForLists = "SELECT * FROM watchlists WHERE user_id = ?";
+            PreparedStatement pst = c.prepareStatement(queryForLists);
+            pst.setInt(1, userId);
+            ResultSet listIdsForUser = pst.executeQuery();
+
+            while (listIdsForUser.next()) {
+
+                String queryForMovies = "SELECT * FROM contentsOfLists WHERE watchlist_id = ? ";
+                PreparedStatement pst2 = c.prepareStatement(queryForMovies);
+                pst2.setInt(1, listIdsForUser.getInt(1));
+                ResultSet moviesInList = pst2.executeQuery();
+
+                ListModel curr = new ListModel();
+                curr.setListId(listIdsForUser.getInt("watchlist_id"));
+                curr.setListName(listIdsForUser.getString("list_name"));
+                curr.setUserId(listIdsForUser.getInt("user_id"));
+                curr.setMovies(new ArrayList<>());
+                while (moviesInList.next()) {
+                    ArrayList<Integer> temp = curr.getMovies();
+                    temp.add(moviesInList.getInt("movie_id"));
+                    curr.setMovies(temp);
+                } // end while
+                l.add(curr);
+            } // end while
+        } catch (Exception e) {
+            System.out.println("Error in getListsForUses(): "+e.toString());
+        }
+        return l;
+    } // end getListsForUser
+
+    /**
+     * Creates a new watchlist and assigns it to a given user.
+     * checks for duplicates. therefore, if a list with the
+     * same name exists for the user, then the function will
+     * return -1. Otherwise, returns the watchlist_id of this
+     * new watchlist. Case sensitive.
+     * @param listName
+     * @param forUser
+     * @return
+     */
+    public int newWatchlist(String listName, int forUser) {
+        int watchlistId = -1;
+        try (Connection c = DriverManager.getConnection(SQLITE_CONNECTION_STRING)){
+            PreparedStatement queryForId = c.prepareStatement("SELECT watchlist_id FROM watchlists WHERE " +
+                    "user_id = ? and list_name = ? ");
+            queryForId.setInt(1, forUser);
+            queryForId.setString(2, listName);
+            ResultSet rs = queryForId.executeQuery();
+
+            // a list under "listName" exists forUser
+            if (rs.next()) {
+                return -1;
             }
 
-        UserModel u = new UserModel(userId, username);
-        return u;
+            PreparedStatement pst = c.prepareStatement("insert into watchlists (list_name, user_id) " +
+                    "values(?,?)");
+            pst.setString(1, listName);
+            pst.setInt(2, forUser);
+            pst.executeUpdate();
+
+            rs = queryForId.executeQuery();
+            while (rs.next()) {
+                watchlistId = rs.getInt("watchlist_id");
+                break;
+            }
+        } catch (SQLException sqle) {
+            System.out.println(sqle);
+            System.err.println("Could not create new list.");
+        }
+        return watchlistId;
+    }
+
+    /**
+     * Inserts a given movieId into an existing watchlist,
+     * identified by a watchlistId. Assumes the list exists.
+     * Will NOT update or throw an error if otherwise.
+     *
+     * Use newWatchList() to create a new watchlist
+     * or getWatchList(String name) or getWatchlist (int id) to
+     * retrieve one.
+     *
+     * returns a message in the event the movie exists already.
+     * @param movieId
+     * @param watchlistId
+     * @return
+     */
+    public String insertIntoWatchlist(int movieId, int watchlistId) {
+
+        try (Connection c = DriverManager.getConnection(SQLITE_CONNECTION_STRING)){
+
+            PreparedStatement pst = c.prepareStatement("insert into contentsOfLists (watchlist_id, movie_id) " +
+                    "values(?,?)");
+            pst.setInt(1, watchlistId);
+            pst.setInt(2, movieId);
+            pst.executeUpdate();
+
+        } catch (Exception e) {
+            System.out.println(e);
+            return "Error " + e.toString();
+        }
+        return "SUCCESS";
+
+    }
+
+    public int getWatchList(String listName) {
+        int id = -1;
+
+        try (Connection c = DriverManager.getConnection(SQLITE_CONNECTION_STRING)){
+            PreparedStatement queryForId = c.prepareStatement("SELECT watchlist_id FROM watchlists WHERE " +
+                    "list_name = ? ");
+            queryForId.setString(1, listName);
+            ResultSet rs = queryForId.executeQuery();
+
+            if (rs.next()) {
+                return rs.getInt("watchlist_id");
+            }
+        } catch (SQLException sqle) {
+            System.out.println(sqle);
+            System.err.println("Such list does not exist.");
+        }
+
+        return id;
+    }
+
+    public void deleteWatchlist(int watchlistId) {
+        try (Connection conn = DriverManager.getConnection(SQLITE_CONNECTION_STRING)) {
+            String query = "DELETE FROM watchlists WHERE watchlist_id = ?";
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, watchlistId);
+            pstmt.executeUpdate();
+            String query2 = "DELETE FROM contentsOfLists WHERE watchlist_id = ?";
+            PreparedStatement pst2 = conn.prepareStatement(query2);
+            pst2.setInt(1, watchlistId);
+            pst2.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
     }
 
 
 
+
+
 }
+
