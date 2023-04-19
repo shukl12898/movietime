@@ -1,0 +1,23 @@
+What have you done since the last meeting? 
+
+Akanksha: All step definitions done for current implementation of Search and Movie Details. Basic frontend of Photo Montage and TDD done.
+Oscar: Setup backend of Watchlists and finalized session storage when a user logs in.
+Adit: Created keystone and SSL Certificate, enabled HTTPS on web app and wrote acceptance test with use case for “Attempting to access page using HTTP”.
+Devika: Finished OR Parameters and Year Picker function with TDD and unit tests completed.
+Hiroaki: Worked on acceptance tests of tooltip, textbox of suggestions.
+
+What do you plan to do for the next meeting? 
+
+Akanksha: I will work on integrating photo montage with the backend of watchlists, and fixing bugs in Movie Details.
+Oscar: I plan to finalize the front end of watchlists.
+Adit: I will work on the JUnit, Jest, and Acceptance tests for watchlists
+Devika: Will work on fixing bugs between search results and seeing movie details and moving API calls to backend instead of front end. 
+Hiroaki: Finish off the rest of suggestion acceptance tests and jtest 
+
+Anything blocking your progress?
+
+Akanksha: API calls are very inconsistent and difficult to debug.
+Oscar: Authentication tokens.
+Adit: I’m having some trouble with mocking the database connection.
+Devika: The API is very finicky and inconsistent with what information it provides for each movie - information for search results are missing sometimes which leads to poor UI.
+Hiroaki: Some trouble in changing the jtest.
