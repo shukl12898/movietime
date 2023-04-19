@@ -2,6 +2,7 @@ package edu.usc.csci310.project.login.api.responses;
 
 public class LoginResponse {
 
+    private int status;
     private String displayName;
     private int userId;
     private String message;
@@ -26,5 +27,13 @@ public class LoginResponse {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+    
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 }

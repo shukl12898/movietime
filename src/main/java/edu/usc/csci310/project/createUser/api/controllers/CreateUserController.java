@@ -1,9 +1,9 @@
-package edu.usc.csci310.project.login.api.controllers;
+package edu.usc.csci310.project.createUser.api.controllers;
 
 import edu.usc.csci310.project.DatabaseManager;
 import edu.usc.csci310.project.UserModel;
-import edu.usc.csci310.project.login.api.requests.LoginRequest;
-import edu.usc.csci310.project.login.api.responses.LoginResponse;
+import edu.usc.csci310.project.createUser.api.requests.CreateUserRequest;
+import edu.usc.csci310.project.createUser.api.responses.CreateUserResponse;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,16 +12,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/login")
-public class LoginController {
+@RequestMapping("/api/createUser")
+public class CreateUserController {
 
     @PostMapping
-    public ResponseEntity<LoginResponse> verifyLogin(@RequestBody LoginRequest request) {
-        LoginResponse response = new LoginResponse();
+    public ResponseEntity<CreateUserResponse> verifyLogin(@RequestBody CreateUserRequest request) {
+        CreateUserResponse response = new CreateUserResponse();
         try {
             DatabaseManager db = new DatabaseManager();
-            UserModel u = db.getUser(request.getUsername(), request.getPassword());
-            db.close();
+            UserModel u = db.createNewUser(request.getUsername(), request.getPassword(), request.getName());
             response.setUserId(u.getUser_id());
             response.setDisplayName(u.getDisplayName());
             response.setStatus(200); // ok

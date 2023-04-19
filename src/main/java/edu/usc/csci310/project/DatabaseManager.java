@@ -36,6 +36,7 @@ public class DatabaseManager {
         try (Connection c = DriverManager.getConnection(SQLITE_CONNECTION_STRING)){
             Statement statement = c.createStatement();
             statement.executeUpdate(USERS_TABLE);
+
             statement.executeUpdate(WATCHLIST_USER_TABLE);
             statement.executeUpdate(WATCHLIST_CONTENT);
         } catch (SQLException sqle) {
@@ -68,6 +69,7 @@ public class DatabaseManager {
      * @param username username (encrypted).
      * @param password password (encrypted).
      */
+
     public void createNewUser(String username, String password) {
         try (Connection c = DriverManager.getConnection(SQLITE_CONNECTION_STRING)){
             PreparedStatement pst = c.prepareStatement("insert into users (username, password) values(?,?)");
@@ -77,6 +79,7 @@ public class DatabaseManager {
         } catch (SQLException sqle) {
             System.out.println(sqle);
             System.err.println("Could not set new user.");
+
         }
     }
 
@@ -306,7 +309,33 @@ public class DatabaseManager {
         }
     }
 
+    public WatchlistModel getWatchlist(int userID, String watchlistName) throws Exception {
+        int userId = -1;
+        ArrayList<String> moviesInW = new ArrayList<String>();
+        PreparedStatement pst;
+        if (userID != -1) {
+            pst = c.prepareStatement("SELECT * from watchlists " +
+                    "WHERE userID = ? AND watchlistName = ? ");
+            pst.setInt(1, userID);
+            pst.setString(2, watchlistName);
+        } else {
+            pst = c.prepareStatement("SELECT * from watchlists " +
+                    "WHERE watchlistName = ? ");
+            pst.setString(2, watchlistName);
+        }
 
+        ResultSet resultSet = pst.executeQuery();
+        String movieName;
+        int isPublic = 1;
+        while (resultSet.next()) {
+            movieName = resultSet.getString("movieName");
+            isPublic = resultSet.getInt("isPublic");
+            moviesInW.add(movieName);
+        }
+
+        WatchlistModel w = new WatchlistModel(userId, watchlistName, moviesInW, isPublic);
+        return w;
+    }
 
 
 

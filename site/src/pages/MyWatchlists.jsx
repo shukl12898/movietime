@@ -1,63 +1,76 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import MultipleWatchlists from "../components/MultipleWatchlists";
-
-// This page provides a button with a redirect to "/other"
-
-
-
-const multiList = [
-{
-  wName: "watchlist1",
-  list: [{
-    id: 0, // Used in JSX as a key
-    title: 'Flight',
-    des: 'mathematician',
-  }, {
-    id: 1, // Used in JSX as a key
-    title: 'Train',
-    des: 'chemist',
-  }, {
-    id: 2, // Used in JSX as a key
-    title: 'Plane',
-    des: 'physicist',
-  }, {
-    id: 3, // Used in JSX as a key
-    title: 'Boat',
-    des: 'chemist',
-  }]
- },
-{
-  wName: "watchlist2",
-  list: [{
-      id: 4, // Used in JSX as a key
-      title: 'Owl',
-      des: 'mathematician',
-    }, {
-      id: 5, // Used in JSX as a key
-      title: 'Bird',
-      des: 'chemist',
-    }, {
-      id: 6, // Used in JSX as a key
-      title: 'Eagle',
-      des: 'physicist',
-    }, {
-      id: 7, // Used in JSX as a key
-      title: 'Parrot',
-      des: 'chemist',
-    }]
-}
-];
+import NavBar from "../components/NavBar";
 
 function MyWatchlists() {
-  // fetchResponse is a constant in this component's state. Use handleFetchResponse(newValue)
-  // to update the value of fetchResponse
+  const [user_id, setUserID] = useState("");
+  const [responseHold, setResponseHold] = useState("");
+ //const [fetchResponse, handleFetchResponse] = useState();
 
-  // Calling navigate() will allow us to redirect the webpage
+  function handleUserIDChange(event) {
+    setUserID(event.target.value);
+  }
+
   const navigate = useNavigate();
 
   // Anything returned will be rendered in React
-  return (
+return (
+    <div>
+    <NavBar/>
+      <h2>MyWatchlists</h2>
+      <button
+              onClick={() => {
+                navigate("/Home");
+              }}
+            >
+              Click to go to Home page
+            </button>
+
+        <div>
+          <label>UserID:</label>
+          <input type="text" value={user_id} onChange={handleUserIDChange}/>
+        </div>
+
+        <div>
+        <button onClick={() => {
+                fetch("/api/watchlist", {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json"
+                  },
+                  body: JSON.stringify({
+                   "user_id" : user_id,
+                   "watchlistName" : ""
+                   })
+                })
+                  .then(res => {return res.json()})
+                  .then((response) => {
+                      console.log("API Responded With: ");
+                      console.log(response);
+                      setResponseHold(response);
+                  })
+                  .catch(error => {
+                    console.log(error)
+                  });
+              }}
+              >See My Watchlist</button>
+              if (responseHold == null) ternary
+             <div>
+
+                <MultipleWatchlists watchlistsArr = {responseHold} />
+
+             </div>
+
+        </div>
+    </div>
+  );
+}
+
+export default MyWatchlists;
+
+/*{
+return (
     <div>
       <div>MyWatchlists Page</div>
       <button
@@ -68,11 +81,17 @@ function MyWatchlists() {
         Click to go to Home page
       </button>
       <div>
-        {/* }<OneWatchlist movies = {moviesList} /> */}
+
         <MultipleWatchlists watchlistsArr = {multiList} />
+
       </div>
+
+
+      <SuggestionButton />
     </div>
   );
 }
 
-export default MyWatchlists;
+    </div>
+  ); }
+  */
