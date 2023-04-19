@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import MultipleWatchlists from "../components/MultipleWatchlists";
-import WatchlistOptions from "../components/WatchlistOptions";
 import NavBar from "../components/NavBar";
 
 function MyWatchlists() {
