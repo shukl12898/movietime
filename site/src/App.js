@@ -1,18 +1,14 @@
 import React from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import Home from "./pages/Home";
 import Login from "./pages/Login";
-import Other from "./pages/Other";
 import MyWatchlists from "./pages/MyWatchlists";
 import Search from "./pages/Search";
-import NavBar from './components/NavBar';
 import Suggestions from "./pages/Suggestions";
 
 import { ChakraProvider } from '@chakra-ui/react'
 
 function App() {
   return (
-
     <ChakraProvider>
         <div>
           <Routes>

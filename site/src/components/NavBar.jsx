@@ -4,11 +4,10 @@ import { Flex, Spacer, Button, ButtonGroup, Box, Heading,
   PopoverTrigger,
   PopoverContent,
   PopoverHeader,
-  PopoverBody,
   PopoverFooter,
   PopoverArrow,
-  PopoverCloseButton,
-  PopoverAnchor,} from '@chakra-ui/react';
+  PopoverCloseButton
+  } from '@chakra-ui/react';
 import { useNavigate } from "react-router-dom";
 import {useState, useEffect} from "react";
 

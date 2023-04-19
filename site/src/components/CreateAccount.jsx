@@ -16,7 +16,7 @@ function CreateAccount() {
 
     const matchingPw = password != confirmPassword;
 
-    const [validUser, setValid] = useState(true);
+    //const [validUser, setValid] = useState(true);
 
     function handleUsernameChange(event) {
         setUsername(event.target.value);
@@ -75,12 +75,12 @@ function CreateAccount() {
                </CardHeader>
                <CardBody>
 
-                   <FormControl isRequired isInvalid={!validUser}>
+                   <FormControl isRequired isInvalid={false}>
                      <FormLabel htmlFor="username">Username</FormLabel>
                      <Input
                      placeholder='Enter a username' type="text" value={username} onChange={handleUsernameChange}
                      />
-                     {!validUser && (
+                     {false && (
                           <FormHelperText>
                             Username already exists.
                           </FormHelperText>

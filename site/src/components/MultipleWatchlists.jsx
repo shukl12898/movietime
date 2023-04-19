@@ -1,5 +1,4 @@
 import React from "react";
-import OneWatchlist from "../components/OneWatchlist";
 
 //import { useNavigate } from "react-router-dom";
 
@@ -8,7 +7,7 @@ import OneWatchlist from "../components/OneWatchlist";
 // }
 // export default MultipleWatchlists;
 
-export default function MultipleWatchlists(props) {
+export default function MultipleWatchlists() {
 //
 //   const listItems = props.watchlistsArr.map(watchlist =>
 //     <li

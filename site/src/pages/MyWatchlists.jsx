@@ -1,40 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import MultipleWatchlists from "../components/MultipleWatchlists";
-import SuggestionButton from "../components/SuggestionButton";
-import NavBar from '../components/NavBar';
-
-const multiList = [
-{
-  user_id: 1,
-  watchlistName: "Action",
-  isPublic: 1,
-  moviesInW: [{
-    title: 'Flight',
-  }, {
-    title: 'Train',
-  }, {
-    title: 'Plane',
-  }, {
-    title: 'Boat',
-  }]
- },
-{
-  user_id: 1,
-  watchlistName: "Comedy",
-  isPublic: 1,
-  moviesInW: [{
-      title: 'Owl',
-    }, {
-      title: 'Bird',
-    }, {
-      title: 'Eagle',
-    }, {
-      title: 'Parrot',
-
-    }]
-}
-];
+import WatchlistOptions from "../components/WatchlistOptions";
+import NavBar from "../components/NavBar";
 
 function MyWatchlists() {
   const [user_id, setUserID] = useState("");
@@ -102,7 +70,7 @@ return (
 
 export default MyWatchlists;
 
-{/*
+/*{
 return (
     <div>
       <div>MyWatchlists Page</div>
@@ -126,4 +94,5 @@ return (
 }
 
     </div>
-  ); */}
+  ); }
+  */
