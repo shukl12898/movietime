@@ -104,7 +104,7 @@ function MovieDetails(props) {
         {movieDetails.length > 0 ? (
           movieDetails.map((movie) => (
             <Box p={3} id="movie-name" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} key={movie.id} >
-            <div className="movie-title"  data-testid="movie-title" onClick={(event) => {
+            <div className="movie-title"  data-testid="movie-title" onClick={() => {
                                 showDetails(movie.id);
                         }}
                         >
