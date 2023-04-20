@@ -36,7 +36,6 @@ public class DatabaseManager {
         try (Connection c = DriverManager.getConnection(SQLITE_CONNECTION_STRING)){
             Statement statement = c.createStatement();
             statement.executeUpdate(USERS_TABLE);
-
             statement.executeUpdate(WATCHLIST_USER_TABLE);
             statement.executeUpdate(WATCHLIST_CONTENT);
         } catch (SQLException sqle) {
@@ -89,7 +88,7 @@ public class DatabaseManager {
      * @param username username (encrypted).
      * @param password password (encrypted).
      */
-     public UserModel createNewUser(String username, String password, String name) throws Exception {
+     public UserModel createNewUser(String username, String password, String name){
         insertIntoUser(username, password);
         UserModel u = getUser(username, password);
         u.setDisplayName(name);
