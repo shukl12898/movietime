@@ -1,6 +1,5 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import NavBar from '../components/NavBar';
 
 // This page provides a button with a redirect to "/other"
 function Home() {
@@ -10,7 +9,6 @@ function Home() {
   return (
 
 <div>
-<NavBar/>
   <div>Home Page</div>
   <button
     onClick={() => {
