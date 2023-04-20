@@ -12,9 +12,6 @@ import org.junit.After;
 import org.openqa.selenium.By;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.time.Duration;
 
 import static org.junit.Assert.assertTrue;
 
@@ -41,9 +38,9 @@ public class SearchStepDefinitions {
         driver.get(ROOT_URL+"Search");
     }
 
-    @Given("I am on the search page using HTTP")
-    public void iAmOnTheSearchPageUsingHTTP(){
-        driver.get(ROOT_URL_UNSECURE+"Search");
+    @Given("I am on the {string} page using HTTP")
+    public void iAmOnThePageUsingHTTP(String arg0){
+        driver.get(ROOT_URL_UNSECURE+arg0);
     }
 
     @When("I enter {string} in the search bar")
@@ -115,4 +112,5 @@ public class SearchStepDefinitions {
     @Then("I should see {string} in the page")
     public void iShouldSeeInThePage() {
     }
+
 }
