@@ -1,15 +1,10 @@
 import React, { useState, useEffect } from "react";
 import NavBar from '../components/NavBar';
 import {
-HStack, VStack,
 Card, CardHeader, CardBody, Heading,
-Flex, Spacer,StackDivider,Button, Popover, PopoverArrow, PopoverCloseButton,
+Flex, Spacer,Button, Popover, PopoverArrow, PopoverCloseButton,
 PopoverFooter, PopoverContent, PopoverTrigger, PopoverBody,
- Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionPanel,
-  AccordionIcon, Box, SimpleGrid,Text,CardFooter, ButtonGroup, Input, Badge
+ Box, SimpleGrid,Text,CardFooter, ButtonGroup, Input, Badge
 } from '@chakra-ui/react';
 import { useNavigate } from "react-router-dom";
 
