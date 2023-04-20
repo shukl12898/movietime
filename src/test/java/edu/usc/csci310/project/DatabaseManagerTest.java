@@ -22,7 +22,7 @@ class DatabaseManagerTest {
 
     @Test
     void testWatchListsOneUser() {
-        db.createNewUser("tommytrojan", "traveler");
+        db.createNewUser("tommytrojan", "traveler", "Tommy");
         UserModel u = db.getUser("tommytrojan", "traveler");
         ArrayList<ListModel> l = db.getListsForUser(u.getUser_id());
 
@@ -55,8 +55,8 @@ class DatabaseManagerTest {
 
     @Test
     void testWatchListsTwoUsers() {
-        db.createNewUser("tommytrojan", "traveler");
-        db.createNewUser("tirebiter", "traveler");
+        db.createNewUser("tommytrojan", "traveler", "Tommy");
+        db.createNewUser("tirebiter", "traveler", "Tirebiter");
         UserModel tommy = db.getUser("tommytrojan", "traveler");
         UserModel tirebiter = db.getUser("tirebiter", "traveler");
 
