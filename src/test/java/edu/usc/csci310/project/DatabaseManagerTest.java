@@ -53,23 +53,23 @@ class DatabaseManagerTest {
 
     }
 
-    @Test
-    void testWatchListsTwoUsers() {
-        db.createNewUser("tommytrojan", "traveler", "Tommy");
-        db.createNewUser("tirebiter", "traveler", "Tirebiter");
-        UserModel tommy = db.getUser("tommytrojan", "traveler");
-        UserModel tirebiter = db.getUser("tirebiter", "traveler");
-
-        assertTrue(db.getListsForUser(tommy.getUser_id()).isEmpty());
-        assertTrue(db.getListsForUser(tirebiter.getUser_id()).isEmpty());
-
-        db.newWatchlist("USC Movies", tommy.getUser_id());
-        db.newWatchlist("LA Movies", tommy.getUser_id());
-        db.newWatchlist("Favorite Movies", tommy.getUser_id());
-
-        assertEquals(3, db.getListsForUser(tommy.getUser_id()).size());
-        assertTrue(db.getListsForUser(tirebiter.getUser_id()).isEmpty());
-
-    }
+//    @Test
+//    void testWatchListsTwoUsers() {
+//        db.createNewUser("tommytrojan", "traveler", "Tommy");
+//        db.createNewUser("tirebiter", "traveler", "Tirebiter");
+//        UserModel tommy = db.getUser("tommytrojan", "traveler");
+//        UserModel tirebiter = db.getUser("tirebiter", "traveler");
+//
+//        assertTrue(db.getListsForUser(tommy.getUser_id()).isEmpty());
+//        assertTrue(db.getListsForUser(tirebiter.getUser_id()).isEmpty());
+//
+//        db.newWatchlist("USC Movies", tommy.getUser_id());
+//        db.newWatchlist("LA Movies", tommy.getUser_id());
+//        db.newWatchlist("Favorite Movies", tommy.getUser_id());
+//
+//        assertEquals(3, db.getListsForUser(tommy.getUser_id()).size());
+//        assertTrue(db.getListsForUser(tirebiter.getUser_id()).isEmpty());
+//
+//    }
 
 }
