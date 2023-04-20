@@ -14,11 +14,11 @@ public class DatabaseManager {
     private static final String SQLITE_CONNECTION_STRING = "jdbc:sqlite:src/main/resources/platform.db";
     private static final String USERS_TABLE = "CREATE TABLE IF NOT EXISTS " +
             "users (user_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            "username VARCHAR(255) NOT NULL, password VARCHAR(255) NOT NULL)";
+            "username VARCHAR(255) NOT NULL, password VARCHAR(255) NOT NULL, name VARCHAR(255) NOT NULL)";
 
     private static final String WATCHLIST_USER_TABLE = "CREATE TABLE IF NOT EXISTS " +
             "watchlists (watchlist_id INTEGER PRIMARY KEY AUTOINCREMENT, list_name VARCHAR(255) NOT NULL, " +
-            " user_id INTEGER NOT NULL)";
+            " user_id INTEGER NOT NULL, isPrivate BIT NOT NULL)";
     private static final String WATCHLIST_CONTENT = "CREATE TABLE IF NOT EXISTS " +
             "contentsOfLists (watchlist_id INTEGER, " + "movie_id INTEGER NOT NULL, " +
             "FOREIGN KEY (watchlist_id) REFERENCES watchlists(watchlist_id) ON DELETE CASCADE)";
@@ -68,16 +68,16 @@ public class DatabaseManager {
      * @param username username (encrypted).
      * @param password password (encrypted).
      */
-    public void insertIntoUser(String username, String password) {
+    public void insertIntoUser(String username, String password, String displayName) {
         try (Connection c = DriverManager.getConnection(SQLITE_CONNECTION_STRING)){
-            PreparedStatement pst = c.prepareStatement("insert into users (username, password) values(?,?)");
+            PreparedStatement pst = c.prepareStatement("insert into users (username, password, name) values(?,?,?)");
             pst.setString(1, username);
             pst.setString(2, password);
+            pst.setString(3, displayName);
             pst.executeUpdate();
         } catch (SQLException sqle) {
             System.out.println(sqle);
             System.err.println("Could not set new user.");
-
         }
     }
 
@@ -89,7 +89,7 @@ public class DatabaseManager {
      * @param password password (encrypted).
      */
      public UserModel createNewUser(String username, String password, String name){
-        insertIntoUser(username, password);
+        insertIntoUser(username, password, name);
         UserModel u = getUser(username, password);
         u.setDisplayName(name);
         return u;
@@ -152,14 +152,17 @@ public class DatabaseManager {
 
     public UserModel getUser(String username, String password) {
         try (Connection c = DriverManager.getConnection(SQLITE_CONNECTION_STRING)){
-            PreparedStatement pst = c.prepareStatement("SELECT user_id from users " +
+            PreparedStatement pst = c.prepareStatement("SELECT user_id, name from users " +
                     "WHERE username = ? AND password = ? ");
             pst.setString(1, username);
             pst.setString(2, password);
             ResultSet resultSet = pst.executeQuery();
             if (resultSet.next()) {
                 int userId = resultSet.getInt("user_id");
-                return new UserModel(userId, username);
+                String name = resultSet.getString("name");
+                UserModel u = new UserModel(userId, username);
+                u.setDisplayName(name);
+                return u;
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -198,6 +201,7 @@ public class DatabaseManager {
                 curr.setListId(listIdsForUser.getInt("watchlist_id"));
                 curr.setListName(listIdsForUser.getString("list_name"));
                 curr.setUserId(listIdsForUser.getInt("user_id"));
+                curr.setPrivate(listIdsForUser.getBoolean("isPrivate"));
                 curr.setMovies(new ArrayList<>());
                 while (moviesInList.next()) {
                     ArrayList<Integer> temp = curr.getMovies();
@@ -222,7 +226,7 @@ public class DatabaseManager {
      * @param forUser
      * @return
      */
-    public int newWatchlist(String listName, int forUser) {
+    public int newWatchlist(String listName, int forUser, boolean isPrivate) {
         int watchlistId = -1;
         try (Connection c = DriverManager.getConnection(SQLITE_CONNECTION_STRING)){
             PreparedStatement queryForId = c.prepareStatement("SELECT watchlist_id FROM watchlists WHERE " +
@@ -236,10 +240,11 @@ public class DatabaseManager {
                 return -1;
             }
 
-            PreparedStatement pst = c.prepareStatement("insert into watchlists (list_name, user_id) " +
-                    "values(?,?)");
+            PreparedStatement pst = c.prepareStatement("insert into watchlists (list_name, user_id, isPrivate) " +
+                    "values(?,?,?)");
             pst.setString(1, listName);
             pst.setInt(2, forUser);
+            pst.setBoolean(3, isPrivate);
             pst.executeUpdate();
 
             rs = queryForId.executeQuery();

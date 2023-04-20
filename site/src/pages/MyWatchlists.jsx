@@ -63,7 +63,8 @@ function MyWatchlists() {
                },
                body: JSON.stringify({
                    watchListName: newListName,
-                   forUser: userId
+                   forUser: userId,
+                   isPrivate: true
                })
            });
            const result = await response.json();

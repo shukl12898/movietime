@@ -42,7 +42,7 @@ public class WatchlistController {
         NewWatchlistResponse response = new NewWatchlistResponse();
         try {
             DatabaseManager db = new DatabaseManager();
-            db.newWatchlist(request.getWatchListName(), request.getForUser());
+            db.newWatchlist(request.getWatchListName(), request.getForUser(), request.isPrivate());
             response.setStatus(200);
             response.setMessage("Successfully created list.");
         } catch (Exception e) {

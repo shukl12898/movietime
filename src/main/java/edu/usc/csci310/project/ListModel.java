@@ -7,6 +7,7 @@ public class ListModel {
     private String listName;
     private int userId;
     private int listId;
+    private boolean isPrivate;
     private ArrayList<Integer> movies;
 
     public String getListName() {
@@ -40,5 +41,13 @@ public class ListModel {
 
     public void setMovies(ArrayList<Integer> movies) {
         this.movies = movies;
+    }
+
+    public boolean isPrivate() {
+        return isPrivate;
+    }
+
+    public void setPrivate(boolean aPrivate) {
+        isPrivate = aPrivate;
     }
 }

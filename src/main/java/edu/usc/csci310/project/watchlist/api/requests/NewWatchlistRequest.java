@@ -4,6 +4,7 @@ public class NewWatchlistRequest {
 
     private String watchListName;
     private int forUser;
+    private boolean isPrivate;
 
     public String getWatchListName() {
         return watchListName;
@@ -19,5 +20,13 @@ public class NewWatchlistRequest {
 
     public void setForUser(int forUser) {
         this.forUser = forUser;
+    }
+
+    public boolean isPrivate() {
+        return isPrivate;
+    }
+
+    public void setPrivate(boolean aPrivate) {
+        isPrivate = aPrivate;
     }
 }
