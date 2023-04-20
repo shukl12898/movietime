@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import NestedComponent from "../components/NestedComponent";
+import Backend from "../components/Backend";
 
 // Use a nested component with provided props to redirect the user to "/"
 // and a counter which is modified by a set of buttons
@@ -15,6 +16,8 @@ function Other() {
 
   return (
     <div>
+
+        <Backend id={550} />
       {/* Use a nested component to return the user to the url we specify here. */}
       <NestedComponent url={"/"} />
 
