@@ -61,16 +61,15 @@ public class DatabaseManager {
             System.err.println("Could not drop tables.");
         }
     }
-
-    /**
+    
+     /**
      * Inserts a new user into the necessary tables.
      * Automatically assigns a user id for the entry.
      *
      * @param username username (encrypted).
      * @param password password (encrypted).
      */
-
-    public void createNewUser(String username, String password) {
+    public void insertIntoUser(String username, String password) {
         try (Connection c = DriverManager.getConnection(SQLITE_CONNECTION_STRING)){
             PreparedStatement pst = c.prepareStatement("insert into users (username, password) values(?,?)");
             pst.setString(1, username);
@@ -81,6 +80,20 @@ public class DatabaseManager {
             System.err.println("Could not set new user.");
 
         }
+    }
+
+    /**
+     * Inserts a new user into the necessary tables.
+     * Automatically assigns a user id for the entry.
+     *
+     * @param username username (encrypted).
+     * @param password password (encrypted).
+     */
+     public UserModel createNewUser(String username, String password, String name) throws Exception {
+        insertIntoUser(username, password);
+        UserModel u = getUser(username, password);
+        u.setDisplayName(name);
+        return u;
     }
 
     /**
