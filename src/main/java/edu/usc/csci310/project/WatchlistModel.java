@@ -4,10 +4,10 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class WatchlistModel {
-        private int user_id;
-        private String watchlistName;
-        private ArrayList<String> moviesInW;
-        private int isPublic;
+    private int user_id;
+    private String watchlistName;
+    private ArrayList<String> moviesInW;
+    private int isPublic;
 
     public WatchlistModel(int user_id, String watchlistName, ArrayList<String> moviesInW, int isPublic) {
         this.user_id = user_id;
