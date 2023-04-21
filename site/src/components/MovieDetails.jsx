@@ -30,19 +30,25 @@ function MovieDetails(props) {
   const imageURL = "https://image.tmdb.org/t/p/w500/";
   const APIkey = '?api_key=5e9de98263d160a232935f6d95ab878d';
   const movie = props.data;
-  const filter = props.filter;
+  const filter = props.filter[0];
   const baseurl = 'https://api.themoviedb.org/3/movie/';
 
+
+  console.log("FILTER IS:", filter);
     useEffect(() => {
       if (filter === "movie") {
         setMovieID(movie.id);
       } else if (filter === "keyword") {
           setMovieID(movie.id);
       } else if (filter === "person") {
-        if (movie.known_for.length > 0) {
-          const knownForIDs = movie.known_for.map((movie)=>movie.id);
-          setMovieID(knownForIDs);
-        }
+          console.log("MOVIE");
+          console.log(movie);
+          if (movie.known_for !== undefined) {
+              if (movie.known_for.length > 0) {
+                  const knownForIDs = movie.known_for.map((movie) => movie.id);
+                  setMovieID(knownForIDs);
+              }
+          }
       }
     }, [filter, movie]);
 
