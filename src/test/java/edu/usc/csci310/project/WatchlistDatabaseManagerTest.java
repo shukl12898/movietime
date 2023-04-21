@@ -1,5 +1,5 @@
 package edu.usc.csci310.project;
-
+/*
 import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
@@ -14,7 +14,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 class WatchlistDatabaseManagerTest {
-    /*
+
     //@Test
     void addToWatchlist() {
 
@@ -57,6 +57,7 @@ class WatchlistDatabaseManagerTest {
 
         list.assertEquals(testList);
     }
+
     @Test
     void getAllUserWatchlists() {
         ArrayList<WatchlistModel> testList =
@@ -77,5 +78,7 @@ class WatchlistDatabaseManagerTest {
     void getWatchlist() {
 
     }
-    */
+
 }
+*/
+ 

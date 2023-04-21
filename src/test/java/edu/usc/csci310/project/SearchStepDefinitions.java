@@ -17,6 +17,11 @@ public class SearchStepDefinitions {
         driver.get(ROOT_URL+"Search");
     }
 
+    @Given("I am on the {string} page")
+    public void iAmOnTheSearchPage(String arg0){
+        driver.get(ROOT_URL+arg0);
+    }
+
     @When("I enter {string} in the search bar")
     public void iEnterInTheSearchBar(String arg0) {
         driver.findElement(By.id("searchBar")).sendKeys(arg0);
