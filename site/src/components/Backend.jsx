@@ -12,6 +12,8 @@ function Backend(props) {
             .catch(error => console.error(error));
     }, [props.id]);
 
+    console.log(movieDetails);
+
     if (!movieDetails) {
         return <div>Loading...</div>;
     }
@@ -34,6 +36,7 @@ function Backend(props) {
                 <div key={selectedMovieID}>
                   <p>Movie Details</p>
                   <p>{movieDetails.overview}</p>
+                  <img src={movieDetails.poster} />
                 </div>
               </div>
             )}

@@ -27,6 +27,18 @@ public class MovieDetailsService {
 
         movieDetails.setTitle((String) responseMap.get("original_title"));
         movieDetails.setOverview((String) responseMap.get("overview"));
+        movieDetails.setPoster((String) responseMap.get("poster_path"));
+        movieDetails.setYear((String) responseMap.get("release_date"));
+        movieDetails.setGenres(responseMap.get("genres").toString());
+        movieDetails.setProductionCompanies(responseMap.get("production_companies").toString());
+
+        String castUrl = "https://api.themoviedb.org/3/movie/" + movieId + "/credits?api_key=" + apiKey;
+        System.out.println("Sending request to URL: " + castUrl);
+        ResponseEntity<Map> responseEntity2 = restTemplate.getForEntity(castUrl, Map.class);
+        Map<String, Object> responseMap2 = responseEntity2.getBody();
+
+        movieDetails.setCast(responseMap2.get("cast").toString());
+
         return movieDetails;
     }
 }

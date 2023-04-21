@@ -1,4 +1,5 @@
 package edu.usc.csci310.project.moviedetails.controllers;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import edu.usc.csci310.project.moviedetails.responses.MovieDetailsResponse;
 import edu.usc.csci310.project.moviedetails.service.MovieDetailsService;
 import org.springframework.http.HttpStatus;
@@ -16,7 +17,7 @@ public class MovieDetailsController {
     }
 
     @GetMapping("/movies/{id}")
-    public ResponseEntity<MovieDetailsResponse> getMovieTitle(@PathVariable int id) {
+    public ResponseEntity<MovieDetailsResponse> getMovieTitle(@PathVariable int id){
         MovieDetailsResponse response = service.getMovieDetails(id);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
