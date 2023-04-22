@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import PictureMontage from '../components/PictureMontage';
+import NavBar from '../components/NavBar';
 
 // This page provides a button with a redirect to "/other"
 function Montage() {
@@ -14,24 +15,12 @@ function Montage() {
 
   // Anything returned will be rendered in React
   return (
+
     <div>
-      <div>Montage Page</div>
-       <button
-           onClick={() => {
-             navigate("/Search");
-           }}>
-              Click to go to Search page
-       </button>
-       <button
-           onClick={() => {
-             navigate("/MyWatchlists");
-           }}>
-              Click to go to MyWatchlists page
-       </button>
-
-       <PictureMontage movieImages = {movieImages}/>
-
+        <NavBar/>
+        <PictureMontage movieImages = {movieImages}/>
     </div>
+
   );
 }
 
