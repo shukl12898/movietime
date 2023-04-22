@@ -7,7 +7,12 @@ function Backend(props) {
 
     useEffect(() => {
         fetch(`/movies/${props.id}`)
-            .then(response => response.json())
+            .then(response => {
+                if(response.status === 400) {
+                    throw new Error(response.json());
+                }
+                return response.json();
+            })
             .then(data => setMovieDetails(data))
             .catch(error => console.error(error));
     }, [props.id]);

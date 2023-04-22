@@ -1,20 +1,33 @@
 package edu.usc.csci310.project.moviedetails.responses;
 
 import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class MovieDetailsResponse {
-    private String title;
-    private String overview;
-    private String poster;
-    private String year;
+    private String title = null;
+    private String overview = null;
+    private String poster = null;
+    private String year = null;
 
-    private ArrayList<String> genres;
+    private String director = null;
 
-    private ArrayList<String> productionCompanies;
+    private ArrayList<String> genres = new ArrayList<>();
 
-    private ArrayList<String> cast;
+    private ArrayList<String> productionCompanies = new ArrayList<>();
+
+    private ArrayList<String> cast = new ArrayList<>();
+
+    public boolean isValid() {
+        boolean validTitle = (title != null);
+        boolean validOverview = (overview != null);
+        boolean validPoster = (poster != null);
+        boolean validYear = (poster != null);
+        boolean validDirector = (director != null);
+        boolean validGenres = (!genres.isEmpty());
+        boolean validProduction = (!productionCompanies.isEmpty());
+        boolean validCast = (!cast.isEmpty());
+
+        return validTitle & validOverview & validPoster & validYear & validDirector & validGenres & validProduction & validCast;
+    }
 
     public String getTitle() {
         return title;
@@ -31,6 +44,8 @@ public class MovieDetailsResponse {
 
     public ArrayList<String> getCast() {return cast;}
 
+    public String getDirector() {return director;}
+
     public ArrayList<String> getProductionCompanies() {return productionCompanies;}
 
     public void setTitle(String original_title) {
@@ -43,51 +58,11 @@ public class MovieDetailsResponse {
 
     public void setYear(String date) {this.year = date.substring(0, 4);}
 
-    public void setGenres(String genres) {
+    public void setGenres(ArrayList genres) { this.genres = genres; }
 
-        Pattern pattern = Pattern.compile("name=([^,}]+)");
-        Matcher matcher = pattern.matcher(genres);
+    public void setProductionCompanies(ArrayList productionCompanies) {this.productionCompanies = productionCompanies;}
 
-        this.genres = new ArrayList<>();
+    public void setCast(ArrayList cast) { this.cast = cast; }
 
-        while (matcher.find()) {
-            this.genres.add(matcher.group(1));
-        }
-
-    }
-
-    public void setProductionCompanies(String productionCompanies) {
-        Pattern pattern = Pattern.compile("name=([^,}]+)");
-        Matcher matcher = pattern.matcher(productionCompanies);
-
-        this.productionCompanies = new ArrayList<>();
-
-        while (matcher.find()) {
-            this.productionCompanies.add(matcher.group(1));
-        }
-    }
-
-    public void setCast(String cast) {
-        String[] actors = cast.split("\\{\\s*\"adult\"");
-        this.cast = new ArrayList<>();
-        for (String actor : actors) {
-            if (actor.contains("\"known_for_department\":\"Acting\"")) {
-                String[] fields = actor.split(",");
-                String name = "";
-                for (String field : fields) {
-                    if (field.contains("\"name\":\"")) {
-                        name = field.substring(field.indexOf("\"name\":\"") + 8, field.indexOf("\",\"original_name\""));
-                        break;
-                    }
-                }
-                System.out.println(name);
-                this.cast.add(name);
-            }
-        }
-        System.out.println("received");
-        for (String actorName : this.cast) {
-            System.out.println(actorName);
-        }
-    }
-
+    public void setDirector(String director) { this.director = director; }
 }
