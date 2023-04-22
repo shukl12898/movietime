@@ -4,6 +4,7 @@ import Login from "./pages/Login";
 import MyWatchlists from "./pages/MyWatchlists";
 import Search from "./pages/Search";
 import Suggestions from "./pages/Suggestions";
+import Montage from "./pages/Montage";
 
 import { ChakraProvider } from '@chakra-ui/react'
 
@@ -18,6 +19,7 @@ function App() {
             <Route path="/MyWatchlists" element={<MyWatchlists />} />
             <Route path="/Search" element={<Search />} />
              <Route path ="/Suggestions/:num" element ={<Suggestions />} />
+             <Route path = "/Montage" element={<Montage />} />
             {/* 404 page not found redirect */}
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
