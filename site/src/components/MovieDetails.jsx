@@ -1,10 +1,30 @@
 import React from "react";
 import {useState, useEffect} from "react";
 import '../styles/movie-details.css';
+import HoverButtons from '../components/HoverButtons';
+
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  Image,
+  Badge,
+   Accordion,
+    AccordionItem,
+    AccordionButton,
+    AccordionPanel,
+    AccordionIcon,
+    Box,
+} from '@chakra-ui/react';
 
 function MovieDetails(props) {
 
   const [movieDetails, setMovieDetails] = useState({});
+  const [isHovering, setIsHovering] = useState(false);
   const [castDetails, setCastDetails] = useState({});
   const [showOverlay, setShowOverlay] = useState(false);
   const [movieID, setMovieID] = useState({});
@@ -66,62 +86,98 @@ function MovieDetails(props) {
         }
     }, [movieID]);
 
-        console.log(castDetails);
-
-
     const showDetails = (movieID) => {
         setShowOverlay(true);
         setSelectedMovieID(movieID);
     }
 
-    const hideDetails = () => {
-        setShowOverlay(false);
-        setSelectedMovieID(null);
-    }
+    const handleMouseEnter = () => {
+        setIsHovering(true);
+      };
+
+      const handleMouseLeave = () => {
+        setIsHovering(false);
+      };
 
     return (
       <div className="background">
         {movieDetails.length > 0 ? (
           movieDetails.map((movie) => (
-            <div className="movie-title"  data-testid="movie-title" key={movie.id} onClick={() => showDetails(movie.id)}>
+            <Box p={3} id="movie-name" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} key={movie.id} >
+            <div className="movie-title"  data-testid="movie-title" onClick={() => {
+                                showDetails(movie.id);
+                        }}
+                        >
               {movie.original_title}
-            </div>
+                          </div>
+              {isHovering && (
+               <HoverButtons/>
+              )}
+            </Box>
           ))
         ) : (
           <div>No movies found</div>
         )}
 
         {showOverlay && selectedMovieID && (
-              <div className="overlay" data-testid="overlay" onClick={hideDetails}>
-                <div key={selectedMovieID}>
-                  <p>Movie Details</p>
-                  <h1>{movieDetails.filter((movie) => movie.id === selectedMovieID)[0].original_title}</h1>
-                  <h2>{movieDetails.filter((movie) => movie.id === selectedMovieID)[0].release_date.toString().substring(0, 4)}</h2>
-                  <h2>{movieDetails.filter((movie) => movie.id === selectedMovieID)[0].genres && movieDetails.filter((movie) => movie.id === selectedMovieID)[0].genres.map((genre) => genre.name).join(", ")}</h2>
-                  <img src={imageURL + movieDetails.filter((movie) => movie.id === selectedMovieID)[0].poster_path} />
-                  {castDetails && (
-                  <h2 className="scrollContainer">
-                    Cast List
-                    <ul className="scrollable">
-                      {Array.isArray(castDetails) && castDetails.find((cast) => cast.id === selectedMovieID) && castDetails.find((cast) => cast.id === selectedMovieID).cast.map((member,index) =>
-                        <li key={index}>{member.name}</li>
-                      )}
-                      {!Array.isArray(castDetails) && castDetails.cast.map((member,index) =>
-                        <li key={index} data-testid="cast">{member.name}</li>
-                      )}
-                    </ul>
-                  </h2>
-                  )}
-                  <h3 className="afterScroll">
-                  {Array.isArray(castDetails) && castDetails.find((cast) => cast.id === selectedMovieID) && castDetails.find((cast) => cast.id === selectedMovieID).crew.find((member) => member.job === "Director").name}
+
+        <Modal isOpen={showOverlay} onClose={setShowOverlay} >
+            <ModalOverlay />
+                <ModalContent data-testid="overlay" id="overlay-content">
+                  <ModalHeader>
+                    {movieDetails.filter((movie) => movie.id === selectedMovieID)[0].original_title}
+                    <br />
+                    <Badge>Released {movieDetails.filter((movie) =>
+                     movie.id === selectedMovieID)[0].release_date.toString().substring(0, 4)} </Badge >
+                  </ModalHeader>
+                  <ModalCloseButton data-testid="closeButton"/>
+                  <ModalBody>
+                    <br />
+                      <Image src={imageURL + movieDetails.filter((movie) => movie.id === selectedMovieID)[0].poster_path} />
+                    <br />
+                        {movieDetails.filter((movie) => movie.id === selectedMovieID)[0].overview}
+                    <br />
+                      Genres:
+                                          {movieDetails.filter((movie) => movie.id === selectedMovieID)[0].genres && movieDetails.filter((movie) => movie.id === selectedMovieID)[0].genres.map((genre) => genre.name).join(", ")}
+
+                    <br />
+                    <br />
+                    <Accordion>
+                       <AccordionItem>
+                         <h2>
+                           <AccordionButton>
+
+                               Cast List
+
+                             <AccordionIcon />
+                           </AccordionButton>
+                         </h2>
+                         <AccordionPanel maxH="200px" overflowY="scroll" id="scrollContainer">
+                           {Array.isArray(castDetails) && castDetails.find((cast) => cast.id === selectedMovieID) && castDetails.find((cast) => cast.id === selectedMovieID).cast.map((member,index) =>
+                              <li key={index}>{member.name}</li>
+                            )}
+                            {!Array.isArray(castDetails) && castDetails.cast.map((member,index) =>
+                              <li key={index} data-testid="cast">{member.name}</li>
+                            )}
+                         </AccordionPanel>
+                       </AccordionItem>
+
+                    </Accordion>
+                    <br />
+
+                 {Array.isArray(castDetails) && castDetails.find((cast) => cast.id === selectedMovieID) && castDetails.find((cast) => cast.id === selectedMovieID).crew.find((member) => member.job === "Director").name}
                   {!Array.isArray(castDetails) && castDetails.crew.find((member)=>member.job === "Director").name}
-                  </h3>
-                  <h4>{movieDetails.filter((movie) => movie.id === selectedMovieID)[0].production_companies.map((company) => company.name).join(", ")}</h4>
-                  <p>{movieDetails.filter((movie) => movie.id === selectedMovieID)[0].overview}</p>
-                </div>
-              </div>
+                  {movieDetails.filter((movie) => movie.id === selectedMovieID)[0].production_companies.map((company) => company.name).join(", ")}
+
+                      </ModalBody>
+                      <ModalFooter>
+                      </ModalFooter>
+                    </ModalContent>
+             </Modal>
+
+
             )}
-          </div>
+            </div>
     );
 }
 export default MovieDetails

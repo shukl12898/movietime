@@ -4,6 +4,7 @@ import edu.usc.csci310.project.DatabaseManager;
 import edu.usc.csci310.project.UserModel;
 import edu.usc.csci310.project.login.api.requests.LoginRequest;
 import edu.usc.csci310.project.login.api.responses.LoginResponse;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,20 +23,10 @@ public class LoginController {
             UserModel u = db.getUser(request.getUsername(), request.getPassword());
             response.setUserId(u.getUser_id());
             response.setDisplayName(u.getDisplayName());
+            response.setStatus(200); // ok
         } catch (Exception e) {
-            if (e.getMessage().contains("such")) {
-                response.setUserId(0000);
-                response.setDisplayName("WRONG MISMATCH");
-            } if (e.getMessage().contains("error")) {
-                response.setUserId(404);
-                response.setDisplayName("query");
-            }
-
-            else {
-                response.setUserId(1);
-                response.setDisplayName("WRONG with " + request.getUsername() + request.getPassword());
-            }
-            return ResponseEntity.ok().body(response);
+            response.setStatus(401);
+            return ResponseEntity.status(HttpStatusCode.valueOf(401)).body(response);
         } // end catch
         return ResponseEntity.ok().body(response);
     }
