@@ -1,9 +1,8 @@
 import React from 'react';
-import '../styles/picture-montage.css';
 
-const PictureMontage = ({ movieImages, className }) => {
+const PictureMontage = ({ movieImages }) => {
   return (
-    <div className={`montage ${className}`}>
+    <div className="montage">
       {movieImages.map((image, index) => (
         <img
           key={index}
@@ -14,6 +13,8 @@ const PictureMontage = ({ movieImages, className }) => {
             left: `calc(-50% + (${20 * (Math.random() - 0.5) * index}px))`,
             transform: `rotate(${Math.floor(Math.random() * 91) - 45}deg)`,
             position: 'absolute',
+            width: '500px',
+            height: '400px',
           }}
         />
       ))}
