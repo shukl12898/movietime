@@ -6,10 +6,10 @@ const MovieResult = (props) => {
         <>
             {props.movies.slice(0, props.numResults).map((movie, index) => (
 
-                    <div key={index}>
+                    <div key={index} id="movie-title">
 
 
-                          <MovieDetails data = {movie} filter = {props.filter}/>
+                          <MovieDetails data = {movie.id} filter = {props.filter}/>
 
 
                     </div>

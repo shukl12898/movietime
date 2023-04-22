@@ -7,10 +7,12 @@ PopoverFooter, PopoverContent, PopoverTrigger, PopoverBody,
  Box, SimpleGrid,Text,CardFooter, ButtonGroup, Input, Badge
 } from '@chakra-ui/react';
 import { useNavigate } from "react-router-dom";
+import MovieDetails from '../components/MovieDetails';
 
 function MyWatchlists() {
 
     const [watchlists, assignLists] = useState([]);
+    const [movieDetails, setMovieDetails] = useState([]);
     const [userId, setId] = useState(0);
     const navigate = useNavigate();
     const [newListName, setNewListName] = useState("");
@@ -103,36 +105,36 @@ function MyWatchlists() {
               <Spacer />
               <ButtonGroup gap='3'>
                 <Popover>
-                                    <PopoverTrigger>
-                                      <Button>Create a New List</Button>
-                                    </PopoverTrigger>
-                                    <PopoverContent>
-                                      <PopoverArrow />
-                                      <PopoverCloseButton />
-                                      <PopoverBody>
-                                      <Input
-                                      placeholder='Watchlist Name'
-                                      variant='filled'
-                                      width='auto'
-                                      value={newListName}
-                                      onChange={(e) => setNewListName(e.target.value)}/>
-                                      </PopoverBody>
-                                      <PopoverFooter>
-                                          <Button
-                                          colorScheme='green'
-                                          onClick={listCreated}
-                                          >Done</Button>
-                                      </PopoverFooter>
-                                    </PopoverContent>
-                                  </Popover>
+                <PopoverTrigger>
+                  <Button>Create a New List</Button>
+                </PopoverTrigger>
+                <PopoverContent>
+                  <PopoverArrow />
+                  <PopoverCloseButton />
+                  <PopoverBody>
+                  <Input
+                  placeholder='Watchlist Name'
+                  variant='filled'
+                  width='auto'
+                  value={newListName}
+                  onChange={(e) => setNewListName(e.target.value)}/>
+                  </PopoverBody>
+                  <PopoverFooter>
+                      <Button
+                      colorScheme='green'
+                      onClick={listCreated}
+                      >Done</Button>
+                  </PopoverFooter>
+                </PopoverContent>
+              </Popover>
 
                 <Button> Find a List</Button>
               </ButtonGroup>
             </Flex>
 
                 <SimpleGrid spacing={4} p={10} templateColumns='repeat(auto-fill, minmax(500px, 1fr))'>
-                {watchlists.slice(0).map((movie, index) => (
-                                    <div key={index}>
+                 {watchlists.slice(0).map((watchlist, index) => (
+                        <div key={index}>
                                          <Card>
                                              <CardHeader>
                                                <Heading size='md'>
@@ -147,7 +149,12 @@ function MyWatchlists() {
                                                </Heading>
                                              </CardHeader>
                                              <CardBody>
-                                               <Text>{watchlists[index].listId}</Text>
+                                               {
+                                              // Render movie details from the movieDetails state variable
+                                              watchlists[index].movies.forEach((movieId) => (
+                                               <MovieDetails data = {movieId} filter = "movie"/>
+                                              ))
+                                              }
                                              </CardBody>
                                              <CardFooter>
                                                <Button
