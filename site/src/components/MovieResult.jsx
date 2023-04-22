@@ -9,7 +9,7 @@ const MovieResult = (props) => {
                     <div key={index} id="movie-title">
 
 
-                          <MovieDetails data = {movie} filter = {props.filter}/>
+                          <MovieDetails data = {movie.id} filter = {props.filter}/>
 
 
                     </div>

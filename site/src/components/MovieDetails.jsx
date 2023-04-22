@@ -31,22 +31,22 @@ function MovieDetails(props) {
   const [selectedMovieID, setSelectedMovieID] = useState(null);
   const imageURL = "https://image.tmdb.org/t/p/w500/";
   const APIkey = '?api_key=5e9de98263d160a232935f6d95ab878d';
-  const movie = props.data;
+  const movieId = props.data;
   const filter = props.filter;
   const baseurl = 'https://api.themoviedb.org/3/movie/';
 
     useEffect(() => {
       if (filter === "movie") {
-        setMovieID(movie.id);
+        setMovieID(movieId);
       } else if (filter === "keyword") {
-          setMovieID(movie.id);
+          setMovieID(movieId);
       } else if (filter === "person") {
-        if (movie.known_for.length > 0) {
-          const knownForIDs = movie.known_for.map((movie)=>movie.id);
-          setMovieID(knownForIDs);
-        }
+//         if (movie.known_for.length > 0) {
+//           const knownForIDs = movie.known_for.map((movie)=>movieId);
+//           setMovieID(knownForIDs);
+//         }
       }
-    }, [filter, movie]);
+    }, [filter, movieId]);
 
     useEffect(() => {
       if (Array.isArray(movieID)) {
@@ -103,15 +103,15 @@ function MovieDetails(props) {
       <div className="background">
         {movieDetails.length > 0 ? (
           movieDetails.map((movie) => (
-            <Box p={3} id="movie-name" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} key={movie.id} >
+            <Box p={3} id="movie-name" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} key={movieId} >
             <div className="movie-title"  data-testid="movie-title" onClick={() => {
-                                showDetails(movie.id);
+                                showDetails(movieId);
                         }}
                         >
               {movie.original_title}
                           </div>
               {isHovering && (
-               <HoverButtons/>
+               <HoverButtons movieTitle={movie.original_title} movieId={movieId}/>
               )}
             </Box>
           ))
@@ -125,20 +125,20 @@ function MovieDetails(props) {
             <ModalOverlay />
                 <ModalContent data-testid="overlay" id="overlay-content">
                   <ModalHeader>
-                    {movieDetails.filter((movie) => movie.id === selectedMovieID)[0].original_title}
+                    {movieDetails.filter((movie) => movieId === selectedMovieID)[0].original_title}
                     <br />
                     <Badge>Released {movieDetails.filter((movie) =>
-                     movie.id === selectedMovieID)[0].release_date.toString().substring(0, 4)} </Badge >
+                     movieId === selectedMovieID)[0].release_date.toString().substring(0, 4)} </Badge >
                   </ModalHeader>
                   <ModalCloseButton data-testid="closeButton"/>
                   <ModalBody>
                     <br />
-                      <Image src={imageURL + movieDetails.filter((movie) => movie.id === selectedMovieID)[0].poster_path} />
+                      <Image src={imageURL + movieDetails.filter((movie) => movieId === selectedMovieID)[0].poster_path} />
                     <br />
-                        {movieDetails.filter((movie) => movie.id === selectedMovieID)[0].overview}
+                        {movieDetails.filter((movie) => movieId === selectedMovieID)[0].overview}
                     <br />
                       Genres:
-                                          {movieDetails.filter((movie) => movie.id === selectedMovieID)[0].genres && movieDetails.filter((movie) => movie.id === selectedMovieID)[0].genres.map((genre) => genre.name).join(", ")}
+                                          {movieDetails.filter((movie) => movieId === selectedMovieID)[0].genres && movieDetails.filter((movie) => movie.id === selectedMovieID)[0].genres.map((genre) => genre.name).join(", ")}
 
                     <br />
                     <br />
@@ -167,7 +167,7 @@ function MovieDetails(props) {
 
                  {Array.isArray(castDetails) && castDetails.find((cast) => cast.id === selectedMovieID) && castDetails.find((cast) => cast.id === selectedMovieID).crew.find((member) => member.job === "Director").name}
                   {!Array.isArray(castDetails) && castDetails.crew.find((member)=>member.job === "Director").name}
-                  {movieDetails.filter((movie) => movie.id === selectedMovieID)[0].production_companies.map((company) => company.name).join(", ")}
+                  {movieDetails.filter((movie) => movieId === selectedMovieID)[0].production_companies.map((company) => company.name).join(", ")}
 
                       </ModalBody>
                       <ModalFooter>
