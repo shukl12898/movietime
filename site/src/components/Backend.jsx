@@ -42,6 +42,12 @@ function Backend(props) {
                   <p>Movie Details</p>
                   <p>{movieDetails.overview}</p>
                   <img src={movieDetails.poster} />
+                  <h2>Genres:</h2>
+                        <ul>
+                          {movieDetails.genres.map((genre, index) => (
+                            <li key={index}>{genre}</li>
+                          ))}
+                        </ul>
                 </div>
               </div>
             )}
