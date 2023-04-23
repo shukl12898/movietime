@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Tooltip from './Tooltip';
+import { Tooltip ,Button } from '@chakra-ui/react';
 
 const SuggestionButton = () => {
   const [num, setNum] = useState('');
@@ -27,17 +27,19 @@ const SuggestionButton = () => {
         <label>
           How many movies do you want to be suggested for you?
           <input
+            id = "SuggestionInputBox"
             type="number"
             value={num}
             min="1"
             max="10"
             onChange={handleInputChange}
+
           />
         </label>
-        <Tooltip text="Maximum 10, Minimum 1">
-          <button>?</button>
+        <Tooltip label="Maximum 10, Minimum 1" aria-label="Maximum 10, Minimum 1">
+          <Button  id = "TooltipButton" size="xs" variant="outline">?</Button>
         </Tooltip>
-        <button type="submit">Generate Suggestions</button>
+        <Button type="submit" colorScheme="blue">Generate Suggestions</Button>
       </form>
       {error && <div style={{ color: 'red' }}>{error}</div>}
     </div>
@@ -45,4 +47,3 @@ const SuggestionButton = () => {
 };
 
 export default SuggestionButton;
-

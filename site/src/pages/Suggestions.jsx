@@ -1,5 +1,8 @@
 import React, {useState, useEffect} from "react";
 import { useParams } from "react-router-dom";
+import SuggestionResult from "../components/SuggestionResult";
+import NavBar from '../components/NavBar';
+
 
 function Suggestions() {
     const [movies, setMovies] = useState([]);
@@ -35,7 +38,9 @@ function Suggestions() {
 
 
     return (
+
         <div>
+          <NavBar />
           {loading && <div>Loading...</div>}
           {error && <div>These are the 0 movies that we suggest!</div>}
           {!loading && !error && (
@@ -45,13 +50,16 @@ function Suggestions() {
             </div>
           )}
 
-          {movies.slice(0, numMovies).map((movie) => (
+          {/*movies.slice(0, numMovies).map((movie) => (
                 <div key={movie.id}>
                   <h2>{movie.title}</h2>
                   <img src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} alt={movie.title} />
                   <p>{movie.overview}</p>
                 </div>
-          ))}
+          ))*/}
+
+         <SuggestionResult movies = {movies} filter =  {"movie"} numResults = {numMovies}/>
+
         </div>
     );
 }

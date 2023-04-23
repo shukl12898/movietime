@@ -70,8 +70,9 @@ function MyWatchlists() {
         {/* }<OneWatchlist movies = {moviesList} /> */}
         <MultipleWatchlists watchlistsArr = {multiList} />
       </div>
-
-      <SuggestionButton />
+      <div>
+        <SuggestionButton />
+      </div>
     </div>
   );
 }
