@@ -72,4 +72,16 @@ class DatabaseManagerTest {
 //
 //    }
 
+    @Test
+    public void insertIntoList() {
+        db.createNewUser("tommytrojan", "traveler", "Tommy");
+        UserModel u = db.getUser("tommytrojan", "traveler");
+        ArrayList<ListModel> l = db.getListsForUser(u.getUser_id());
+
+        assertTrue(l.isEmpty());
+
+        //int listOne = db.newWatchlist("Shrek Films", u.getUser_id());
+        l = db.getListsForUser(u.getUser_id());
+        assertEquals(1, l.size());
+    }
 }

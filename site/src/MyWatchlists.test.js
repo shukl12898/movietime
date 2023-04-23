@@ -1,53 +1,35 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
-import { act } from 'react-dom/test-utils';
-import MultipleWatchlists from './components/MultipleWatchlists';
+import { render, fireEvent } from '@testing-library/react';
+import MyWatchlists from './MyWatchlists';
 
-describe('MultipleWatchlists component', () => {
+describe('MyWatchlists', () => {
+  test('Clicking "Add new list" button should open a form to create a new list', () => {
+    const { getByText, getByTestId } = render(<MyWatchlists />);
 
-const mockMultiList = {
-"watchlists" : [{
-	"user_id": 1,
-	"watchlistName": "Hi",
-	"moviesInW": [
-		"FightOn",
-		"USC"
-	],
-	"isPublic": 1
-}, {
-   	"user_id": 1,
-   	"watchlistName": "Hello",
-    "moviesInW": [{
-        title: 'Flight',
-      }, {
-        title: 'Train',
-      }, {
-        title: 'Plane',
-      }, {
-        title: 'Boat',
-      }],
-   	"isPublic": 1
-   }]
-}
+    // Check that the "Add new list" button is present
+    const addButton = getByText('Add new list');
+    expect(addButton).toBeInTheDocument();
 
+    // Check that the form to create a new list is initially hidden
+    const form = getByTestId('new-list-form');
+    expect(form).not.toBeVisible();
 
+    // Click the "Add new list" button
+    fireEvent.click(addButton);
 
-  afterEach(() => {
-    global.fetch.mockRestore();
+    // Check that the form to create a new list is now visible
+    expect(form).toBeVisible();
+
+    // Fill in the form and submit it
+    // (This assumes that the form has input fields and a submit button)
+    const nameInput = getByTestId('list-name-input');
+    const submitButton = getByTestId('submit-button');
+
+    fireEvent.change(nameInput, { target: { value: 'My New List' } });
+    fireEvent.click(submitButton);
+
+    // Check that the new list has been added to the page
+    const newList = getByText('My New List');
+    expect(newList).toBeInTheDocument();
   });
-
-  it('should render the saved watchlists of user_id 1', async () => {
-
-    jest.spyOn(global, 'fetch').mockResolvedValue({
-          ok: true,
-          json: () => Promise.resolve(mockMultiList)
-        });
-
-  await act(async()=>{
-    await render(<MultipleWatchlists watchlistsArr={mockMultiList} />);
-    });
-
-    expect(screen.getByText(mockMultiList.watchlistName)).toBeInTheDocument();
-  });
-
 });
