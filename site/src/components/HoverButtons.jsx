@@ -18,7 +18,7 @@ function HoverButtons() {
 
   return (
     <>
-      <HStack spacing={4}>
+      <HStack spacing={4} data-testid= "hover-buttons">
         <IconButton
           icon={<BsFillEyeFill style={{ color: "#3e5936" }} />}
           aria-label="Like"

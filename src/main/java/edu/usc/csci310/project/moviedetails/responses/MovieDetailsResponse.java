@@ -16,17 +16,36 @@ public class MovieDetailsResponse {
 
     private ArrayList<String> cast = new ArrayList<>();
 
-    public boolean isValid() {
-        boolean validTitle = (title != null);
-        boolean validOverview = (overview != null);
-        boolean validPoster = (poster != null);
-        boolean validYear = (poster != null);
-        boolean validDirector = (director != null);
-        boolean validGenres = (!genres.isEmpty());
-        boolean validProduction = (!productionCompanies.isEmpty());
-        boolean validCast = (!cast.isEmpty());
+    private boolean isValid;
 
-        return validTitle & validOverview & validPoster & validYear & validDirector & validGenres & validProduction & validCast;
+    public void isValid() {
+        boolean validTitle = (title != null);
+        System.out.println("title: " + title);
+        boolean validOverview = (overview != null);
+        System.out.println("overview: " + overview);
+        boolean validPoster = (poster != null);
+        System.out.println("poster: " + poster);
+        boolean validYear = (poster != null);
+        System.out.println("year: " + year);
+        boolean validDirector = (director != null);
+        System.out.println("director: " + director);
+        boolean validGenres = (!genres.isEmpty());
+        System.out.print("genres: ");
+        for (int i = 0; i < genres.size(); i++){
+            System.out.println(genres.get(i));
+        }
+        boolean validProduction = (!productionCompanies.isEmpty());
+        System.out.print("production: ");
+        for (int i = 0; i < productionCompanies.size(); i++){
+            System.out.println(productionCompanies.get(i));
+        }
+        boolean validCast = (!cast.isEmpty());
+        System.out.print("cast: ");
+        for (int i = 0; i < cast.size(); i++){
+            System.out.println(cast.get(i));
+        }
+
+        this.isValid = validTitle & validOverview & validPoster & validYear & validDirector & validGenres & validProduction & validCast;
     }
 
     public String getTitle() {
@@ -45,6 +64,11 @@ public class MovieDetailsResponse {
     public ArrayList<String> getCast() {return cast;}
 
     public String getDirector() {return director;}
+
+    public boolean getIsValid() {
+        isValid();
+        return isValid;
+    }
 
     public ArrayList<String> getProductionCompanies() {return productionCompanies;}
 

@@ -19,8 +19,8 @@ public class MovieDetailsController {
     public ResponseEntity<?> getMovieDetails(@PathVariable int id){
         MovieDetailsResponse response = service.getMovieDetails(id);
         try{
-            if (!response.isValid()) {
-                throw new IllegalArgumentException("Invalid movie details");
+            if (id < 0) {
+                throw new IllegalArgumentException("Invalid movieID");
             }
             return new ResponseEntity<>(response, HttpStatus.OK);
 
