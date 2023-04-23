@@ -2,12 +2,12 @@ import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import MyWatchlists from './MyWatchlists';
 
-describe('MyWatchlists', () => {
-  test('Clicking "Add new list" button should open a form to create a new list', () => {
+describe('MyWatchlists Page', () => {
+  test('Clicking "Create a New List" button should open a form to create a new list', () => {
     const { getByText, getByTestId } = render(<MyWatchlists />);
 
     // Check that the "Add new list" button is present
-    const addButton = getByText('Add new list');
+    const addButton = getByText('Create a New List');
     expect(addButton).toBeInTheDocument();
 
     // Check that the form to create a new list is initially hidden
