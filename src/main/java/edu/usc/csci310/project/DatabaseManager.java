@@ -326,6 +326,34 @@ public class DatabaseManager {
         }
     }
 
+    public void deleteFromWatchlist(int targetMovie, int watchlistId) {
+        try (Connection conn = DriverManager.getConnection(SQLITE_CONNECTION_STRING)) {
+            String query2 = "DELETE FROM contentsOfLists WHERE watchlist_id = ? and movie_id = ?";
+            PreparedStatement pst2 = conn.prepareStatement(query2);
+            pst2.setInt(1, watchlistId);
+            pst2.setInt(2, targetMovie);
+            pst2.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
+    public void renameList(int watchlistId, String newName) {
+
+        try (Connection conn = DriverManager.getConnection(SQLITE_CONNECTION_STRING)) {
+            String query2 = "UPDATE watchlists " +
+                    "SET list_name = ? " +
+                    "WHERE watchlist_id = ?";
+            PreparedStatement pst2 = conn.prepareStatement(query2);
+            pst2.setString(1, newName);
+            pst2.setInt(2, watchlistId);
+            pst2.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+
+    }
+
 
 
 }
