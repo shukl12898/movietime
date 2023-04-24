@@ -43,7 +43,7 @@ const handleButtonClick = () => {
   <>
   <Flex minWidth='max-content' alignItems='center' gap='2' p={4} bg='#3e5936'>
     <Box p='2'>
-      <Heading size='md' color='white'>MovieTime</Heading>
+      <Heading size='md' color='white'>MovieTime - Team 14</Heading>
     </Box>
     <Spacer />
 

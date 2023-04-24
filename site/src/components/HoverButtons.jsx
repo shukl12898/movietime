@@ -11,12 +11,15 @@ import {
   AlertDialogOverlay,
   useDisclosure,
   Select, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton,
-  ModalBody, ModalFooter
+  ModalBody, ModalFooter, useToast, Heading
 } from '@chakra-ui/react';
+import CreateNewList from '../components/CreateNewList';
 
 function HoverButtons(props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef();
+
+  const toast = useToast();
 
   const movieTitle = props.movieTitle;
   const movieId = props.movieId;
@@ -74,6 +77,7 @@ function HoverButtons(props) {
       } catch (error) {
         console.error(error);
       }
+      setShowOverlay(false);
 
   }
 
@@ -154,9 +158,14 @@ function HoverButtons(props) {
                 <option key={lists[index].listId} value={lists[index].listId}>{lists[index].listName}</option>
           ) )}
         </Select>
+         <br/>
+         <Heading size='sm'>Looking for something new?</Heading>
+       <CreateNewList onAlertDialogClose={fetchLists}/>
         </ModalBody>
         <ModalFooter>
-                  <Button onClick={() => addToList(selectedOption, movieId)}>Add</Button>
+                  <Button onClick={() => {
+                  addToList(selectedOption, movieId);
+                  }}>Add</Button>
                 </ModalFooter>
       </ModalContent>
       </Modal>

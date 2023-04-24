@@ -61,6 +61,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "prettier": "^2.8.4",
     "@chakra-ui/react": "^2.5.0",
+    "@chakra-ui/icons": "^1.0.0",
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
     "framer-motion": "^5.3.3"
