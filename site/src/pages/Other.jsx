@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import NestedComponent from "../components/NestedComponent";
 
+
 // Use a nested component with provided props to redirect the user to "/"
 // and a counter which is modified by a set of buttons
 function Other() {

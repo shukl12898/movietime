@@ -26,13 +26,9 @@ function MovieDetails(props) {
   const [movieDetails, setMovieDetails] = useState(null);
   const [isHovering, setIsHovering] = useState(false);
   const [showOverlay, setShowOverlay] = useState(false);
-  const [movieID, setMovieID] = useState({});
   const [selectedMovieID, setSelectedMovieID] = useState(null);
-  const movie = props.data;
+  const movieID = props.data;
 
-    useEffect(() => {
-        setMovieID(movie.id);
-    }, [movie]);
 
     useEffect(() => {
         fetch(`/movies/${movieID}`)
@@ -71,13 +67,13 @@ function MovieDetails(props) {
                 id="movie-name"
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
-                key={movie.id}
+                key={movieID}
               >
                 <div
                   className="movie-title"
                   data-testid="movie-title"
                   onClick={() => {
-                    showDetails(movie.id);
+                    showDetails(movieID);
                   }}
                 >
                   {movieDetails.title}

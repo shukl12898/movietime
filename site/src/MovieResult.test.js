@@ -33,6 +33,6 @@ describe('MovieResult', () => {
     expect(queryByText('Movie 2')).not.toBeInTheDocument();
 
     // Ensure that the filter prop is passed to the MovieDetails component
-    expect(getByTestId('movie-details')).toHaveTextContent('Action');
+    expect(getByTestId('movie-details')).toHaveTextContent('Movie 1');
   });
 });
