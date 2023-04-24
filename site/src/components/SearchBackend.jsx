@@ -21,25 +21,16 @@ function SearchBackend(props) {
         fetch(url)
 
             .then(response => response.json())
-            .then(data => assignMovies(data))
+            .then(data => {
+                const moviesArray = data.movieIDs;
+                assignMovies(moviesArray);
+                props.handleSearch(moviesArray);
+            })
             .catch(error => console.error(error));
     }, [props.query]);
     console.log("MOVIES ARE: ")
     console.log(movies);
 
-    // if (!movies) {
-    //     return null;
-    // }
-
-    // return (
-    //     <div>
-    //         {movies.movieIDs.map((movie, index) => (
-    //             <div key={index}>
-    //                 <h1>{movie}</h1>
-    //             </div>
-    //         ))}
-    //     </div>
-    // );
 }
 
 export default SearchBackend;

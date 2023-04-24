@@ -8,14 +8,14 @@ HStack, VStack,
 Card, CardHeader, CardBody, Heading,
 Flex, Spacer,StackDivider,
 } from '@chakra-ui/react'
-import YearPicker from "../components/YearPicker";
+// import YearPicker from "../components/YearPicker";
 import SearchBackend from "../components/SearchBackend";
 
 // This page provides a button with a redirect to "/other"
 function Search() {
 
   //empty array for movie results
-  // const [movies, assignMovies] = useState([]);
+  const [movies, setMovies] = useState([]);
   const [query, setQuery]= useState('');
   const [resultCount, setResultCount] = useState(10);
   // const [startYear, setStartYear] = useState("");
@@ -30,16 +30,24 @@ function Search() {
       setSelectedFilters(selectedOptions);
   };
 
-  const handleStartYear = (start) =>{
-      setStartYear(start);
-  }
-  const handleEndYear = (end) => {
-      setEndYear(end);
-  }
+  // const handleStartYear = (start) =>{
+  //     setStartYear(start);
+  // }
+  // const handleEndYear = (end) => {
+  //     setEndYear(end);
+  // }
 
 
   const getMoreResults = () => {
       setResultCount((resultCount+10));
+  }
+
+  const handleSearchResults = (resultantMovies) =>{
+      console.log("HELLOOOOO");
+      console.log(resultantMovies)
+      setMovies(resultantMovies);
+
+      console.log(movies);
   }
 
   // const shuffleArray = (array) => {
@@ -115,7 +123,7 @@ function Search() {
           </CardHeader>
           <CardBody>
             <HStack>
-                <YearPicker onStartYearSelect={handleStartYear} onEndYearSelect={handleEndYear}/>
+                {/*<YearPicker onStartYearSelect={handleStartYear} onEndYearSelect={handleEndYear}/>*/}
               <SearchFilter options = {options} onSelect={handleSelectFilter}/>
               <SearchBox onSearch ={handleSearch} />
             </HStack>
@@ -129,8 +137,8 @@ function Search() {
   spacing={4}
   align='center'
 >
-        <SearchBackend query = {query} filters = {selectedFilters}/>
-        <MovieResult movies = {movies} filter = {"keyword"} numResults = {resultCount}/>
+        <SearchBackend query = {query} filters = {selectedFilters} handleSearch = {handleSearchResults} />
+        <MovieResult movies = {movies} numResults = {resultCount}/>
         <button onClick={getMoreResults}>Load More</button>
 
 </VStack>
