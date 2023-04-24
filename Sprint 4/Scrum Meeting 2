@@ -1,0 +1,23 @@
+What have you done since the last meeting? 
+
+Akanksha: Finished moving API calls to backend for movie details and picture montage, integrated movie details with search and full coverage.
+Oscar: Finished creating watchlist feature, hover controls plus button on search page, and move / copy / add on watchlists page.
+Adit: Been working on step defs for watchlists through search and mywatchlists page and finalizing hover testing. Started Jest and JUnit tests.
+Devika: Finished moving API calls to the backend and integrating search backend with the movie details backend
+Hiroaki: Made some progress in watchlist suggestion. 
+
+What do you plan to do for the next meeting? 
+
+Akanksha: I hope to finish integrating movie details with watchlists, and integrating the picture montage with watchlists.
+Oscar: I hope to have fixed warnings and merged creating-watchlits branch to develop by next meeting.
+Adit: Finishing step defs and implementing jest tests for search watchlist functionality and my watchlist watchlist functionality.
+Devika: Make the year picker also do API calls from the backend & fix the select filters functionality
+Hiroaki: I hope to have the suggestion and watchlist integration done by Wednesday.
+
+Anything blocking your progress?
+
+Akanksha: Heavy workload from other classes.
+Oscar: No blocks.
+Adit: Having trouble testing modal and checking response 
+Devika: Time is running out!
+Hiroaki: understanding wathclist feature 
