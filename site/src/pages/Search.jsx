@@ -104,7 +104,7 @@ function Search() {
   return (
 
 <div>
-    <NavBar/>
+<NavBar/>
     <br/>
     <br/>
  <Flex>

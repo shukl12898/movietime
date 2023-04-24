@@ -1,6 +1,7 @@
 import React from "react";
 import {useState, useEffect} from "react";
 import '../styles/movie-details.css';
+import HoverButtons from '../components/HoverButtons';
 
 import {
   Modal,
@@ -22,118 +23,89 @@ import {
 
 function MovieDetails(props) {
 
-  const [movieDetails, setMovieDetails] = useState({});
-  const [castDetails, setCastDetails] = useState({});
+  const [movieDetails, setMovieDetails] = useState(null);
+  const [isHovering, setIsHovering] = useState(false);
   const [showOverlay, setShowOverlay] = useState(false);
   const [movieID, setMovieID] = useState({});
   const [selectedMovieID, setSelectedMovieID] = useState(null);
-  const imageURL = "https://image.tmdb.org/t/p/w500/";
-  const APIkey = '?api_key=5e9de98263d160a232935f6d95ab878d';
   const movie = props.data;
-  const filter = props.filter[0];
-  const baseurl = 'https://api.themoviedb.org/3/movie/';
 
-
-  console.log("FILTER IS:", filter);
     useEffect(() => {
-      if (filter === "movie") {
         setMovieID(movie.id);
-      } else if (filter === "keyword") {
-          setMovieID(movie.id);
-      } else if (filter === "person") {
-          console.log("MOVIE");
-          console.log(movie);
-          if (movie.known_for !== undefined) {
-              if (movie.known_for.length > 0) {
-                  const knownForIDs = movie.known_for.map((movie) => movie.id);
-                  setMovieID(knownForIDs);
-              }
-          }
-      }
-    }, [filter, movie]);
+    }, [movie]);
 
     useEffect(() => {
-      if (Array.isArray(movieID)) {
-        const promises = movieID.map((id) => {
-          const fullurl = baseurl + id + APIkey;
-          return fetch(fullurl).then((response) => response.json());
-        });
-
-        Promise.all(promises)
-          .then((data) => setMovieDetails(data))
-          .catch((error) => console.log(error));
-      } else if (movieID) {
-        const fullurl = baseurl + movieID + APIkey;
-        fetch(fullurl)
-          .then((response) => response.json())
-          .then((data) => setMovieDetails([data]))
-          .catch((error) => console.log(error));
-      }
+        fetch(`/movies/${movieID}`)
+            .then(response => {
+                if(response.status === 400) {
+                    throw new Error(response.json());
+                }
+                return response.json();
+            })
+            .then(data => setMovieDetails(data))
+            .catch(error => console.error(error));
     }, [movieID]);
-
-    useEffect(() => {
-        if (Array.isArray(movieID)) {
-            const promises = movieID.map((id) => {
-            const casturl = baseurl + id + '/credits' + APIkey;
-            return fetch(casturl).then((response) => response.json());
-        });
-
-        Promise.all(promises)
-        .then((data) => setCastDetails(data))
-        .catch((error) => console.log(error));
-        } else if (movieID) {
-            const casturl = baseurl + movieID + '/credits' + APIkey;
-            fetch(casturl)
-            .then((response) => response.json())
-            .then((data) => setCastDetails(data))
-            .catch((error) => console.log(error));
-        }
-    }, [movieID]);
-
-        console.log(castDetails);
-
 
     const showDetails = (movieID) => {
         setShowOverlay(true);
         setSelectedMovieID(movieID);
     }
 
+    const handleMouseEnter = () => {
+        setIsHovering(true);
+      };
+
+      const handleMouseLeave = () => {
+        setIsHovering(false);
+      };
+
+    if (!movieDetails) {
+            return <div>Loading...</div>;
+    }
+
     return (
-      <div className="background">
-        {movieDetails.length > 0 ? (
-          movieDetails.map((movie) => (
-            <div className="movie-title"  data-testid="movie-title" key={movie.id} onClick={() => {
-            showDetails(movie.id) }}
-            ><Box p={3}>
-              {movie.original_title}
-            </Box>
-            </div>
-          ))
-        ) : (
-          <div>No movies found</div>
-        )}
+        <div className="background">
+            {movieDetails.title ?
+              <Box
+                p={3}
+                id="movie-name"
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+                key={movie.id}
+              >
+                <div
+                  className="movie-title"
+                  data-testid="movie-title"
+                  onClick={() => {
+                    showDetails(movie.id);
+                  }}
+                >
+                  {movieDetails.title}
+                </div>
+                {isHovering && <HoverButtons title={movieDetails.title} className="hover" />}
+              </Box>
+              :
+              <div>Loading...</div>
+            }
 
         {showOverlay && selectedMovieID && (
 
         <Modal isOpen={showOverlay} onClose={setShowOverlay} >
             <ModalOverlay />
-                <ModalContent data-testid="overlay">
+                <ModalContent data-testid="overlay" id="overlay-content">
                   <ModalHeader>
-                    {movieDetails.filter((movie) => movie.id === selectedMovieID)[0].original_title}
+                    {movieDetails.title}
                     <br />
-                    <Badge>Released {movieDetails.filter((movie) =>
-                     movie.id === selectedMovieID)[0].release_date.toString().substring(0, 4)} </Badge >
+                    <Badge>Released {movieDetails.year} </Badge >
                   </ModalHeader>
                   <ModalCloseButton data-testid="closeButton"/>
                   <ModalBody>
                     <br />
-                      <Image src={imageURL + movieDetails.filter((movie) => movie.id === selectedMovieID)[0].poster_path} />
+                      <Image src={movieDetails.poster} />
                     <br />
-                        {movieDetails.filter((movie) => movie.id === selectedMovieID)[0].overview}
+                        {movieDetails.overview}
                     <br />
-                      Genres:
-                                          {movieDetails.filter((movie) => movie.id === selectedMovieID)[0].genres && movieDetails.filter((movie) => movie.id === selectedMovieID)[0].genres.map((genre) => genre.name).join(", ")}
-
+                      Genres: {movieDetails.genres.map((genre) => genre).join(", ")}
                     <br />
                     <br />
                     <Accordion>
@@ -146,23 +118,18 @@ function MovieDetails(props) {
                              <AccordionIcon />
                            </AccordionButton>
                          </h2>
-                         <AccordionPanel >
-                           {Array.isArray(castDetails) && castDetails.find((cast) => cast.id === selectedMovieID) && castDetails.find((cast) => cast.id === selectedMovieID).cast.map((member,index) =>
-                              <li key={index}>{member.name}</li>
-                            )}
-                            {!Array.isArray(castDetails) && castDetails.cast.map((member,index) =>
-                              <li key={index} data-testid="cast">{member.name}</li>
+                         <AccordionPanel maxH="200px" overflowY="scroll" id="scrollContainer">
+                            {movieDetails.cast.map((member,index) =>
+                              <li key={index} data-testid="cast">{member}</li>
                             )}
                          </AccordionPanel>
                        </AccordionItem>
-
                     </Accordion>
                     <br />
-
-                 {Array.isArray(castDetails) && castDetails.find((cast) => cast.id === selectedMovieID) && castDetails.find((cast) => cast.id === selectedMovieID).crew.find((member) => member.job === "Director").name}
-                  {!Array.isArray(castDetails) && castDetails.crew.find((member)=>member.job === "Director").name}
-                  {movieDetails.filter((movie) => movie.id === selectedMovieID)[0].production_companies.map((company) => company.name).join(", ")}
-
+                    {movieDetails.director}
+                    <br/>
+                    {movieDetails.productionCompanies.map((company) => company).join(", ")}
+                    <br/>
                       </ModalBody>
                       <ModalFooter>
                       </ModalFooter>

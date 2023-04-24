@@ -1,4 +1,5 @@
 import React from "react";
+import WatchlistOptions from "../components/WatchlistOptions";
 //import { useNavigate } from "react-router-dom";
 
 // function OneWatchlist() {
@@ -15,12 +16,10 @@ import React from "react";
 export default function OneWatchlist(props) {
   const listItems = props.movies.map(movie =>
     <li
-      key={movie.id}
-      style={{
-        color: (movie.id % 2 == 0) ? 'magenta' : 'darkgreen'
-      }}
+      key={movie.title}
     >
-      {movie.title}
+      {/* {movie.title} */}
+      <WatchlistOptions title = {movie.title}/>
     </li>
   );
 
