@@ -11,7 +11,7 @@ import {
   AlertDialogOverlay,
   useDisclosure,
   Select, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton,
-  ModalBody, ModalFooter, useToast, Heading
+  ModalBody, ModalFooter, Heading
 } from '@chakra-ui/react';
 import CreateNewList from '../components/CreateNewList';
 
@@ -19,14 +19,11 @@ function HoverButtons(props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef();
 
-  const toast = useToast();
-
   const movieTitle = props.movieTitle;
   const movieId = props.movieId;
   const [showOverlay, setShowOverlay] = useState(false);
   const [lists, setLists] = useState([]);
 
-  const [toListId, setToListId] = useState(0);
    const [selectedOption, setSelectedOption] = useState(0);
 
     const handleChange = (event) => {
