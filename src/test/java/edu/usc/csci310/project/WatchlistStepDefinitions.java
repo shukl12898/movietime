@@ -7,8 +7,10 @@ import io.cucumber.java.en.When;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.interactions.Actions;
 
 public class WatchlistStepDefinitions {
     private static final String ROOT_URL = "http://localhost:8080/";
@@ -45,7 +47,11 @@ public class WatchlistStepDefinitions {
 
     @When("I hover over the movie")
     public void iHoverOverTheMovie() {
-        
+        WebElement ele = driver.findElement(By.xpath("//*[@id=\"movie-name\"]"));
+//Creating object of an Actions class
+        Actions action = new Actions(driver);
+//Performing the mouse hover action on the target element.
+        action.moveToElement(ele).perform();
     }
 
     @When("I click on the Search Page header")

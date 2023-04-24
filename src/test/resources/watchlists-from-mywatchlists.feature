@@ -1,7 +1,7 @@
 Feature: Watchlist functionality from the MyWatchlists Page
   Scenario: Open the page and click on a movie for details
     Given I am on the "MyWatchlists" page
-    When I click on the {string} movie title
+    When I click on the "Fight Club" movie title
     Then I should see {string}, {string}, {string}, {string}, {string}, {string}, {string} in the overlay
 
   Scenario: Open the page and remove a movie from a watchlist (Sure)
