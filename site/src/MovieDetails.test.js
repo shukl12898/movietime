@@ -1,5 +1,5 @@
 import React from "react";
-import { render, fireEvent, screen, waitFor, rerender } from "@testing-library/react";
+import { render, fireEvent, screen, waitFor } from "@testing-library/react";
 import MovieDetails from "./components/MovieDetails";
 
 describe("MovieDetails component", () => {
@@ -31,7 +31,7 @@ describe("MovieDetails component", () => {
   test("renders loading message before movie details are fetched", async () => {
     render(<MovieDetails data={mockMovieData} filter="movie" />);
     expect(screen.getByText("Loading...")).toBeInTheDocument();
-    expect(global.fetch).toHaveBeenCalledTimes(2);
+    expect(global.fetch).toHaveBeenCalledTimes(1);
   });
 
   test("opens overlay with movie details when movie title is clicked", async () => {
@@ -45,7 +45,7 @@ describe("MovieDetails component", () => {
     expect(screen.getAllByTestId("cast")).toHaveLength(3);
     fireEvent.click(screen.getByTestId("closeButton"));
     expect(screen.queryByTestId("overlay")).not.toBeInTheDocument();
-    expect(global.fetch).toHaveBeenCalledTimes(2);
+    expect(global.fetch).toHaveBeenCalledTimes(1);
   });
 
   test('MovieDetails handles mouse enter and leave events', async () => {
@@ -74,7 +74,7 @@ describe("MovieDetails component", () => {
     );
 
     render(<MovieDetails data={mockMovieData} filter="movie" />);
-    await waitFor(() => expect(fetch).toHaveBeenCalledTimes(2));
+    await waitFor(() => expect(fetch).toHaveBeenCalledTimes(1));
 
     consoleSpy.mockRestore();
     delete global.fetch;
