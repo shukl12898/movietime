@@ -25,12 +25,10 @@ function MovieDetails(props) {
 
   const [movieDetails, setMovieDetails] = useState(null);
   const [isHovering, setIsHovering] = useState(false);
-  const [castDetails, setCastDetails] = useState({});
   const [showOverlay, setShowOverlay] = useState(false);
   const [movieID, setMovieID] = useState({});
   const [selectedMovieID, setSelectedMovieID] = useState(null);
   const movie = props.data;
-  const filter = props.filter;
 
     useEffect(() => {
         setMovieID(movie.id);
