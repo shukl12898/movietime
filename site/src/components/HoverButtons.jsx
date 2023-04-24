@@ -120,19 +120,19 @@ function HoverButtons(props) {
           <AlertDialogContent>
             <div>
               <AlertDialogHeader fontSize='lg' fontWeight='bold'>
-                Free tickets!
+                Buy tickets!
               </AlertDialogHeader>
             </div>
 
             <AlertDialogBody>
-              Do you want to redeem free tickets to this movie?
+              Do you want to buy tickets to this movie?
             </AlertDialogBody>
 
             <AlertDialogFooter>
               <Button ref={cancelRef} onClick={onClose}>
                 Cancel
               </Button>
-              <Button style={{ backgroundColor: "#3e5936", color: 'white' }} onClick={onClose} ml={3}>
+              <Button style={{ backgroundColor: "#3e5936", color: 'white' }} onClick={redirectToTickets} ml={3}>
                 Purchase
               </Button>
             </AlertDialogFooter>
