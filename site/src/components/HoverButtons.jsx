@@ -132,7 +132,7 @@ function HoverButtons(props) {
               <Button ref={cancelRef} onClick={onClose}>
                 Cancel
               </Button>
-              <Button style={{ backgroundColor: "#3e5936", color: 'white' }} onClick={redirectToTickets} ml={3}>
+              <Button style={{ backgroundColor: "#3e5936", color: 'white' }} ml={3}>
                 Purchase
               </Button>
             </AlertDialogFooter>
