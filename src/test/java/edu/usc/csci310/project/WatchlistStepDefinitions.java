@@ -2,15 +2,22 @@ package edu.usc.csci310.project;
 
 import io.cucumber.java.Before;
 import io.cucumber.java.BeforeAll;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
+import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
+import java.util.List;
 
 public class WatchlistStepDefinitions {
     private static final String ROOT_URL = "http://localhost:8080/";
@@ -35,23 +42,10 @@ public class WatchlistStepDefinitions {
         driver = new ChromeDriver(options);
     }
 
-    @Given("I am on the {string} page")
-    public void iAmOnTheSearchPage(String arg0){
-        driver.get(ROOT_URL+arg0);
-    }
 
     @When("I click to delete the watchlist")
     public void iClickToDeleteTheWatchlist() {
         driver.findElement(By.xpath("//*[@id=\"root\"]/div/div/div[3]/div/div/div[3]/button")).click();
-    }
-
-    @When("I hover over the movie")
-    public void iHoverOverTheMovie() {
-        WebElement ele = driver.findElement(By.xpath("//*[@id=\"movie-name\"]"));
-//Creating object of an Actions class
-        Actions action = new Actions(driver);
-//Performing the mouse hover action on the target element.
-        action.moveToElement(ele).perform();
     }
 
     @When("I click on the Search Page header")
@@ -61,6 +55,37 @@ public class WatchlistStepDefinitions {
 
     @When("I click on the Watchlists Page header")
     public void iClickOnTheWatchlistsPageHeader() {
-        driver.findElement(By.xpath("//*[@id=\"root\"]/div/div/div[1]/div[3]/button[2]")).click();
+        driver.findElement(By.name("watchlistHeader")).click();
+    }
+
+    @And("I hover over {string}")
+    public void iHoverOver(String arg0) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+        By movieDetailsSelector = By.id("movie-title");
+        wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(movieDetailsSelector, 9));
+        List<WebElement> movieDetailsList = driver.findElements(movieDetailsSelector);
+
+        for (WebElement movie : movieDetailsList) {
+            String movieTitle = movie.findElement(By.id("movie-name")).getText();
+            if (movieTitle.contains(arg0)) {
+                try {
+                    wait.until(ExpectedConditions.elementToBeClickable(movie.findElement(By.id("movie-name"))));
+                    Actions actions = new Actions(driver);
+                    actions.moveToElement(movie).build().perform();
+                    break;
+                } catch (ElementClickInterceptedException ignored) {
+                }
+            }
+        }
+
+
+    }
+
+    @And("I click to add movie to a watchlist")
+    public void iClickToAddMovieToAWatchlist() {
+        //Through search
+        //Webdriver wait?
+
+        driver.findElement(By.className("chakra-button css-um367a")).click();
     }
 }

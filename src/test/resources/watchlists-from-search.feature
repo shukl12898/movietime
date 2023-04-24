@@ -1,20 +1,20 @@
 Feature: Watchlist functionality from the Search Page
   Scenario: Open the page and add movie to new watchlist (New name)
     Given I am on the "Search" page
-    When I enter "Fight" in the search bar
+    When I enter "Fight Club" in the search bar
     And I press the search button
-    And I hover over the movie
-    And I click to add a movie to a watchlist
+    And I hover over "Fight Club"
+    And I click to add movie to a watchlist
     And I click new watchlist
-    And I enter "Action"
-    Then I should see "You've successfully added a movie to a new watchlist!" in the page
+    And I enter "Action" in the list name
+    Then I should see "You've successfully added a movie to a new watchlist!" in the console
 
   Scenario: Open the page and add movie to new watchlist (Used name)
     Given I am on the "Search" page
-    When I enter "Fight" in the search bar
+    When I enter "Fight Club" in the search bar
     And I press the search button
     And I hover over the movie
-    And I click to add a movie to a watchlist
+    And I click to add movie to a watchlist
     And I click new watchlist
     And I enter "Action"
     Then I should see "Error: A watchlist with the same name already exists." in the page
@@ -47,5 +47,5 @@ Feature: Watchlist functionality from the Search Page
 
   Scenario: Open the page and navigate to MyWatchlists Page
     Given I am on the "Search" page
-    When I click on the Watchlists Page header
+    And I click on the Watchlists Page header
     Then I should see "Your Watchlists" in the page

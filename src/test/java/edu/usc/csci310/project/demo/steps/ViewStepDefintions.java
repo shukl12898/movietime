@@ -14,7 +14,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ViewStepDefintions {
-    private static final String ROOT_URL = "http://localhost:3000/";
+    private static final String ROOT_URL = "http://localhost:8080/";
     private WebDriver driver;
 
     @BeforeAll

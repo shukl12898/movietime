@@ -49,7 +49,7 @@ const handleButtonClick = () => {
 
     <ButtonGroup >
       <Button bg='white' isDisabled={name ? false : true} onClick={() => {navigate("/Search");}}>Search</Button>
-      <Button bg='white' isDisabled={name ? false : true} onClick={() => {navigate("/MyWatchlists");}}>Watchlists</Button>
+      <Button bg='white' name="watchlistHeader" isDisabled={name ? false : true} onClick={() => {navigate("/MyWatchlists");}}>Watchlists</Button>
 
      {!name && (<Button bg='white' onClick={() => {navigate("/");}} >Login</Button>) }
 

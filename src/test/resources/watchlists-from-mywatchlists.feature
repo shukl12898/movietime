@@ -1,43 +1,50 @@
 Feature: Watchlist functionality from the MyWatchlists Page
   Scenario: Open the page and click on a movie for details
     Given I am on the "MyWatchlists" page
-    When I click on the "Fight Club" movie title
-    Then I should see {string}, {string}, {string}, {string}, {string}, {string}, {string} in the overlay
+    And I add "Fight Club" to a new "Action" watchlist
+    And I click on the "Fight Club" movie title
+    Then I should see "Fight Club", "Brad Pitt", "1999", "Drama", "David Fincher", "Regency Enterprises", "A ticking-time-bomb" in the overlay
 
   Scenario: Open the page and remove a movie from a watchlist (Sure)
     Given I am on the "MyWatchlists" page
-    When I hover over the movie
-    And I click to remove the movie
+    When I add "Fight Club" to a new "Action" watchlist
+    And I hover over "Fight Club"
+    And I click to remove "Fight Club" from "Action" watchlist
     And I confirm the removal
-    Then I should see {string} in the page
+    Then I should see "Successfuly removed movie." in the page
 
   Scenario: Open the page and remove a movie from a watchlist (Cancel)
     Given I am on the "MyWatchlists" page
-    When I hover over the movie
+    When I add "Fight Club" to a new "Action" watchlist
+    And I hover over "Fight Club"
     And I click to remove the movie
     And I cancel the removal
-    Then I should see {string} in the page
+    Then I should see "Movie removal cancelled." in the page
 
   Scenario: Open the page and move a movie to new list (New name)
     Given I am on the "MyWatchlists" page
-    When I hover over the movie
+    When I add "Fight Club" to a new "Action" watchlist
+    And I hover over "Fight Club"
     And I click to move the movie to new list
     And I enter a new name
-    Then I should see {string} in the page
+    Then I should see "Successfully moved movie to new list." in the page
 
   Scenario: Open the page and move a movie to new list (Used name)
     Given I am on the "MyWatchlists" page
-    When I hover over the movie
+    When I add "Fight Club" to a new "Action" watchlist
+    And I hover over "Fight Club"
     And I click to move the movie to new list
     And I enter a used name
-    Then I should see {string} in the page
+    Then I should see "" in the page
 
   Scenario: Open the page and move a movie to existing list
     Given I am on the "MyWatchlists" page
-    When I hover over the movie
+    When I add "Fight Club" to a new "Fight" watchlist
+    And I add a new watchlist "Action"
+    And I hover over "Fight Club"
     And I click to move the movie to existing list
     And I choose the "Action" list
-    Then I should see {string} in the page
+    Then I should see "Successfully moved to existing list." in the page
 
   Scenario: Open the page and copy a movie to new list (New name)
     Given I am on the "MyWatchlists" page
