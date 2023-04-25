@@ -19,15 +19,10 @@ function HoverButtons({movieDetails}) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef();
 
-  console.log(movieDetails);
-
     const movieTitle = movieDetails.title;
     const movieId = movieDetails.id;
     const [showOverlay, setShowOverlay] = useState(false);
     const [lists, setLists] = useState([]);
-
-    console.log(movieTitle);
-    console.log(movieId);
 
    const [selectedOption, setSelectedOption] = useState(0);
 
@@ -35,7 +30,7 @@ function HoverButtons({movieDetails}) {
          setSelectedOption(event.target.value);
        };
 
-       const fetchLists = async() => {
+        const fetchLists = async() => {
            const storedId = sessionStorage.getItem('userId');
              if (storedId) {
                console.log('ID found in session storage: ', storedId);
@@ -61,7 +56,8 @@ function HoverButtons({movieDetails}) {
              } else {
                console.log('ID not found in session storage.');
              }
-         }
+         };
+
          const addToList = async (watchlistId, movieId) => {
            const storedId = sessionStorage.getItem('userId');
             try {
@@ -74,8 +70,6 @@ function HoverButtons({movieDetails}) {
                    userId: storedId
                  }),
                });
-               const result = await response.text();
-               console.log(result);
              } catch (error) {
                console.error(error);
              }
@@ -154,7 +148,7 @@ function HoverButtons({movieDetails}) {
                 Add {movieTitle} to a new list?
                 <br />
               </ModalHeader>
-              <ModalCloseButton/>
+              <ModalCloseButton data-testid="close-modal-button"/>
               <ModalBody>
               <Select placeholder='Select your list' value={selectedOption} onChange={handleChange}>
                 {lists.slice(0).map((movie, index) => (
