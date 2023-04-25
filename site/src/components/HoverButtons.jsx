@@ -15,12 +15,12 @@ import {
 } from '@chakra-ui/react';
 import CreateNewList from '../components/CreateNewList';
 
-function HoverButtons(props) {
+function HoverButtons({movieDetails}) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef();
 
-  const movieTitle = props.movieTitle;
-    const movieId = props.movieId;
+    const movieTitle = movieDetails.title;
+    const movieId = movieDetails.id;
     const [showOverlay, setShowOverlay] = useState(false);
     const [lists, setLists] = useState([]);
 
@@ -30,7 +30,7 @@ function HoverButtons(props) {
          setSelectedOption(event.target.value);
        };
 
-       const fetchLists = async() => {
+        const fetchLists = async() => {
            const storedId = sessionStorage.getItem('userId');
              if (storedId) {
                console.log('ID found in session storage: ', storedId);
@@ -56,7 +56,8 @@ function HoverButtons(props) {
              } else {
                console.log('ID not found in session storage.');
              }
-         }
+         };
+
          const addToList = async (watchlistId, movieId) => {
            const storedId = sessionStorage.getItem('userId');
             try {
@@ -75,7 +76,6 @@ function HoverButtons(props) {
                console.error(error);
              }
              setShowOverlay(false);
-
          }
 
          useEffect(()=>{
@@ -83,7 +83,7 @@ function HoverButtons(props) {
          },[]);
 
   const redirectToTickets = () => {
-    window.open('https://www.regmovies.com/search?query=' + props.title, '_blank');
+    window.open('https://www.regmovies.com/search?query=' + movieDetails.title, '_blank');
   }
 
   return (
@@ -150,7 +150,7 @@ function HoverButtons(props) {
                 Add {movieTitle} to a new list?
                 <br />
               </ModalHeader>
-              <ModalCloseButton/>
+              <ModalCloseButton data-testid="close-modal-button"/>
               <ModalBody>
               <Select placeholder='Select your list' value={selectedOption} onChange={handleChange}>
                 {lists.slice(0).map((movie, index) => (
