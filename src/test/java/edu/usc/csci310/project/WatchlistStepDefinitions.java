@@ -24,15 +24,14 @@ public class WatchlistStepDefinitions {
     private static final String ROOT_URL = "http://localhost:8080/";
     private WebDriver driver;
 
-    /*
-    @BeforeAll
-    public static void beforeAll() {
-        System.out.println("Setting Up Cucumber Driver");
-        WebDriverManager.chromedriver().setup();
-        System.setProperty("webdriver.http.factory", "jdk-http-client");
+    @Before
+    public void before() {
+        ChromeOptions options = new ChromeOptions ();
+        options.addArguments("--remote-allow-origins=*");
+        driver = new ChromeDriver (options);
     }
-    */
 
+    /*
     @Before
     public void before() {
         ChromeOptions options = new ChromeOptions();
@@ -44,21 +43,26 @@ public class WatchlistStepDefinitions {
         options.addArguments("--remote-allow-origins=*");
         driver = new ChromeDriver(options);
     }
-
+    */
+    @Given("I am on the {string} page")
+    public void iAmOnPage(String arg0) {
+        driver.get(ROOT_URL + arg0);
+    }
 
     @When("I click to delete the watchlist")
     public void iClickToDeleteTheWatchlist() {
         driver.findElement(By.xpath("//*[@id=\"root\"]/div/div/div[3]/div/div/div[3]/button")).click();
     }
 
-    @When("I click on the Search Page header")
+    @And("I click on the Search Page header")
     public void iClickOnTheSearchPageHeader() {
         driver.findElement(By.xpath("//*[@id=\"root\"]/div/div/div[1]/div[3]/button[1]")).click();
     }
 
-    @When("I click on the Watchlists Page header")
+    @And("I click on the Watchlists Page header")
     public void iClickOnTheWatchlistsPageHeader() {
-        driver.findElement(By.name("watchlistHeader")).click();
+       driver.findElement(By.cssSelector("[name='watchlistHeader']")).click();
+        //driver.findElement(("[name='watchlistHeader']")).click();
     }
 
     @And("I hover over {string}")
@@ -105,5 +109,15 @@ public class WatchlistStepDefinitions {
     @And("I click Done after the list name")
     public void iClickDoneAfterTheListName() {
         driver.findElement(By.id("DoneButton")).click();
+    }
+
+    @When("I am logged in")
+    public void iAmLoggedIn() {
+        driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[3]/button")).click();
+        driver.findElement(By.xpath("//*[@id=\"field-:r2:\"]")).sendKeys("user");
+        driver.findElement(By.xpath("//*[@id=\"field-:r3:\"]")).sendKeys("pass");
+        driver.findElement(By.xpath("//*[@id=\"field-:r4:\"]")).sendKeys("pass");
+        driver.findElement(By.xpath("//*[@id=\"field-:r5:\"]")).sendKeys("User");
+        driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[2]/div/div[2]/div[3]/button")).click();
     }
 }

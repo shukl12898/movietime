@@ -1,7 +1,14 @@
 Feature: Watchlist functionality from the Search Page
+  Scenario: Open the page and navigate to MyWatchlists Page
+    Given I am on the "" page
+    When I am logged in
+    And I click on the Watchlists Page header
+    Then I should see "Your Watchlists" in the page
+
   Scenario: Open the page and add movie to new watchlist (New name)
-    Given I am on the "Search" page
-    When I enter "Fight Club" in the search bar
+    Given I am on the "" page
+    When I am logged in
+    And I enter "Fight Club" in the search bar
     And I press the search button
     And I hover over "Fight Club"
     And I click to add movie to a watchlist
@@ -46,7 +53,3 @@ Feature: Watchlist functionality from the Search Page
     And I click to the Eye button of the movie
     Then I should see "This movie is not on any watchlists." in the page
 
-  Scenario: Open the page and navigate to MyWatchlists Page
-    Given I am on the "Search" page
-    And I click on the Watchlists Page header
-    Then I should see "Your Watchlists" in the page

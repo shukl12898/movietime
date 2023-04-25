@@ -30,7 +30,6 @@ public class SearchStepDefinitions {
         WebDriverManager.chromedriver().setup();
         System.setProperty("webdriver.http.factory", "jdk-http-client");
     }
-
     @Before
     public void before() {
         ChromeOptions options = new ChromeOptions();
@@ -49,7 +48,9 @@ public class SearchStepDefinitions {
 
     @When("I enter {string} in the search bar")
     public void iEnterInTheSearchBar(String arg0) {
-        driver.findElement(By.id("searchBar")).sendKeys(arg0);
+        driver.findElement(By.xpath("//*[@id=\"searchBar\"]")).sendKeys(arg0);
+
+        //driver.findElement(By.id("searchBar")).sendKeys(arg0);
     }
 
     @And("I press the search button")

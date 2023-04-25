@@ -17,13 +17,6 @@ public class ViewStepDefintions {
     private static final String ROOT_URL = "http://localhost:8080/";
     private WebDriver driver;
 
-    /*
-    @BeforeAll
-    public static void beforeAll() {
-        System.out.println("Setting Up Cucumber Driver");
-        WebDriverManager.chromedriver().setup();
-    }
-    */
     @Before
     public void before() {
         ChromeOptions options = new ChromeOptions();
@@ -32,11 +25,6 @@ public class ViewStepDefintions {
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-extensions");
         driver = new ChromeDriver(options);
-    }
-
-    @Given("I am on the {string} page")
-    public void iAmOnEndpoint(String arg0) {
-        driver.get(ROOT_URL + arg0);
     }
 
     @When("I enter {string}")
