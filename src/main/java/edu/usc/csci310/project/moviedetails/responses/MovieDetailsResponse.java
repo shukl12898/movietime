@@ -3,6 +3,8 @@ package edu.usc.csci310.project.moviedetails.responses;
 import java.util.ArrayList;
 
 public class MovieDetailsResponse {
+
+    private int id = 0;
     private String title = null;
     private String overview = null;
     private String poster = null;
@@ -20,30 +22,13 @@ public class MovieDetailsResponse {
 
     public void isValid() {
         boolean validTitle = (title != null);
-        System.out.println("title: " + title);
         boolean validOverview = (overview != null);
-        System.out.println("overview: " + overview);
         boolean validPoster = (poster != null);
-        System.out.println("poster: " + poster);
         boolean validYear = (poster != null);
-        System.out.println("year: " + year);
         boolean validDirector = (director != null);
-        System.out.println("director: " + director);
         boolean validGenres = (!genres.isEmpty());
-        System.out.print("genres: ");
-        for (int i = 0; i < genres.size(); i++){
-            System.out.println(genres.get(i));
-        }
         boolean validProduction = (!productionCompanies.isEmpty());
-        System.out.print("production: ");
-        for (int i = 0; i < productionCompanies.size(); i++){
-            System.out.println(productionCompanies.get(i));
-        }
         boolean validCast = (!cast.isEmpty());
-        System.out.print("cast: ");
-        for (int i = 0; i < cast.size(); i++){
-            System.out.println(cast.get(i));
-        }
 
         this.isValid = validTitle & validOverview & validPoster & validYear & validDirector & validGenres & validProduction & validCast;
     }
@@ -51,6 +36,8 @@ public class MovieDetailsResponse {
     public String getTitle() {
         return title;
     }
+
+    public int getId() {return id;}
     public String getOverview() {
         return overview;
     }
@@ -72,6 +59,7 @@ public class MovieDetailsResponse {
 
     public ArrayList<String> getProductionCompanies() {return productionCompanies;}
 
+    public void setID(int id) {this.id = id;}
     public void setTitle(String original_title) {
         this.title = original_title;
     }
