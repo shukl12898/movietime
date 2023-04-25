@@ -97,6 +97,7 @@ function HoverButtons(props) {
           display="flex"
         />
         <IconButton
+          onClick={() => setShowOverlay(true)}
           icon={<BsPlusCircleFill style={{ color: "#3e5936" }} />}
           aria-label="Comment"
           size="md"
