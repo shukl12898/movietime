@@ -160,7 +160,7 @@ function HoverButtons(props) {
         </Select>
          <br/>
          <Heading size='sm'>Looking for something new?</Heading>
-       <CreateNewList onAlertDialogClose={fetchLists}/>
+       <CreateNewList id="createNewListButton" onAlertDialogClose={fetchLists}/>
         </ModalBody>
         <ModalFooter>
                   <Button onClick={() => {

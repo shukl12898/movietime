@@ -32,6 +32,7 @@ function CreateNewList({onAlertDialogClose}) {
                })
            });
            const result = await response.json();
+
            console.log("API Responded With: ");
            console.log(result);
            if (result.message == "List name exists.") {
@@ -61,6 +62,7 @@ function CreateNewList({onAlertDialogClose}) {
               placeholder='Watchlist Name'
               variant='filled'
               width='auto'
+              id="newListTextBox"
               value={newListName}
               onChange={(e) => setNewListName(e.target.value)}/>
 
@@ -69,7 +71,16 @@ function CreateNewList({onAlertDialogClose}) {
                      A list by this name exists.
                    </FormHelperText>
                 )}
+
+                {!exists && (
+                     <FormHelperText>
+                      Valid list Name!
+                     </FormHelperText>
+                  )}
                 </FormControl>
+
+
+
 
               <br/>
               <Heading size='sm'>Make private?</Heading>
@@ -81,6 +92,7 @@ function CreateNewList({onAlertDialogClose}) {
                   <Button
                   colorScheme='green'
                   onClick={listCreated}
+                  id="DoneButton"
                   >Done</Button>
               </PopoverFooter>
             </PopoverContent>

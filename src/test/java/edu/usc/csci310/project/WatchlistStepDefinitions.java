@@ -4,6 +4,7 @@ import io.cucumber.java.Before;
 import io.cucumber.java.BeforeAll;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
@@ -23,12 +24,14 @@ public class WatchlistStepDefinitions {
     private static final String ROOT_URL = "http://localhost:8080/";
     private WebDriver driver;
 
+    /*
     @BeforeAll
     public static void beforeAll() {
         System.out.println("Setting Up Cucumber Driver");
         WebDriverManager.chromedriver().setup();
         System.setProperty("webdriver.http.factory", "jdk-http-client");
     }
+    */
 
     @Before
     public void before() {
@@ -87,5 +90,20 @@ public class WatchlistStepDefinitions {
         //Webdriver wait?
 
         driver.findElement(By.className("chakra-button css-um367a")).click();
+    }
+
+    @And("I click new watchlist on modal")
+    public void iClickNewWatchlistOnModal() {
+        driver.findElement(By.id("createNewListButton")).click();
+    }
+
+    @And("I enter {string} in the list name")
+    public void iEnterInTheListName(String arg0) {
+        driver.findElement(By.id("newListTextBox")).sendKeys(arg0);
+    }
+
+    @And("I click Done after the list name")
+    public void iClickDoneAfterTheListName() {
+        driver.findElement(By.id("DoneButton")).click();
     }
 }

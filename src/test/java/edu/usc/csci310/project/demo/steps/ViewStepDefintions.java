@@ -17,12 +17,13 @@ public class ViewStepDefintions {
     private static final String ROOT_URL = "http://localhost:8080/";
     private WebDriver driver;
 
+    /*
     @BeforeAll
     public static void beforeAll() {
         System.out.println("Setting Up Cucumber Driver");
         WebDriverManager.chromedriver().setup();
     }
-
+    */
     @Before
     public void before() {
         ChromeOptions options = new ChromeOptions();
