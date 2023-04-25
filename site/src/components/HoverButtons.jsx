@@ -70,6 +70,8 @@ function HoverButtons({movieDetails}) {
                    userId: storedId
                  }),
                });
+               const result = await response.text();
+               console.log(result);
              } catch (error) {
                console.error(error);
              }
