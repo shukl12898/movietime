@@ -29,6 +29,8 @@ public class MovieDetailsService {
         Map<String, Object> responseMap = responseEntity.getBody();
         MovieDetailsResponse movieDetails = new MovieDetailsResponse();
 
+        movieDetails.setID(movieId);
+
         movieDetails.setTitle((String) responseMap.get("original_title"));
         movieDetails.setOverview((String) responseMap.get("overview"));
         movieDetails.setPoster((String) responseMap.get("poster_path"));

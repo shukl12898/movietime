@@ -15,14 +15,19 @@ import {
 } from '@chakra-ui/react';
 import CreateNewList from '../components/CreateNewList';
 
-function HoverButtons(props) {
+function HoverButtons({movieDetails}) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef();
 
-  const movieTitle = props.movieTitle;
-    const movieId = props.movieId;
+  console.log(movieDetails);
+
+    const movieTitle = movieDetails.title;
+    const movieId = movieDetails.id;
     const [showOverlay, setShowOverlay] = useState(false);
     const [lists, setLists] = useState([]);
+
+    console.log(movieTitle);
+    console.log(movieId);
 
    const [selectedOption, setSelectedOption] = useState(0);
 
@@ -75,7 +80,6 @@ function HoverButtons(props) {
                console.error(error);
              }
              setShowOverlay(false);
-
          }
 
          useEffect(()=>{
@@ -83,7 +87,7 @@ function HoverButtons(props) {
          },[]);
 
   const redirectToTickets = () => {
-    window.open('https://www.regmovies.com/search?query=' + props.title, '_blank');
+    window.open('https://www.regmovies.com/search?query=' + movieDetails.title, '_blank');
   }
 
   return (

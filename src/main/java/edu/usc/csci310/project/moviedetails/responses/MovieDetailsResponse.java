@@ -3,6 +3,8 @@ package edu.usc.csci310.project.moviedetails.responses;
 import java.util.ArrayList;
 
 public class MovieDetailsResponse {
+
+    private int id = 0;
     private String title = null;
     private String overview = null;
     private String poster = null;
@@ -34,6 +36,8 @@ public class MovieDetailsResponse {
     public String getTitle() {
         return title;
     }
+
+    public int getId() {return id;}
     public String getOverview() {
         return overview;
     }
@@ -55,6 +59,7 @@ public class MovieDetailsResponse {
 
     public ArrayList<String> getProductionCompanies() {return productionCompanies;}
 
+    public void setID(int id) {this.id = id;}
     public void setTitle(String original_title) {
         this.title = original_title;
     }

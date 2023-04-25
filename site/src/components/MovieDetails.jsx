@@ -79,7 +79,7 @@ function MovieDetails(props) {
                 >
                   {movieDetails.title}
                 </div>
-                {isHovering && <HoverButtons title={movieDetails.title} className="hover" />}
+                {isHovering && <HoverButtons movieDetails={movieDetails} className="hover" />}
               </Box>
               :
               <div>Loading...</div>
