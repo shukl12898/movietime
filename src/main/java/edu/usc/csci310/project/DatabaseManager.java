@@ -32,6 +32,19 @@ public class DatabaseManager {
      * if they do not already exist.
      * @throws Exception sqle if the database could not be created.
      */
+    public DatabaseManager(Connection conn) throws Exception {
+        //try (Connection c = DriverManager.getConnection(SQLITE_CONNECTION_STRING)){
+        try (Connection c = conn) {
+            Statement statement = c.createStatement();
+            statement.executeUpdate(USERS_TABLE);
+            statement.executeUpdate(WATCHLIST_USER_TABLE);
+            statement.executeUpdate(WATCHLIST_CONTENT);
+        } catch (SQLException sqle) {
+            System.err.println(sqle);
+            throw new Exception("Could not create the Database");
+        }
+    }
+
     public DatabaseManager() throws Exception {
         try (Connection c = DriverManager.getConnection(SQLITE_CONNECTION_STRING)){
             Statement statement = c.createStatement();
