@@ -61,8 +61,9 @@ public class WatchlistStepDefinitions {
 
     @And("I click on the Watchlists Page header")
     public void iClickOnTheWatchlistsPageHeader() {
-       driver.findElement(By.cssSelector("[name='watchlistHeader']")).click();
-        //driver.findElement(("[name='watchlistHeader']")).click();
+       //driver.findElement(By.cssSelector("[name='watchlistHeader']")).click();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+        wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath("//*[@id=\"root\"]/div/div/div[1]/div[3]/button[2]")))).click();
     }
 
     @And("I hover over {string}")
@@ -94,6 +95,7 @@ public class WatchlistStepDefinitions {
         //Webdriver wait?
 
         driver.findElement(By.className("chakra-button css-um367a")).click();
+
     }
 
     @And("I click new watchlist on modal")

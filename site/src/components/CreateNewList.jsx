@@ -79,9 +79,6 @@ function CreateNewList({onAlertDialogClose}) {
                   )}
                 </FormControl>
 
-
-
-
               <br/>
               <Heading size='sm'>Make private?</Heading>
               <Switch size='md'
