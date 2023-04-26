@@ -68,7 +68,15 @@ public class MovieDetailsResponse {
     }
     public void setPoster(String poster) {this.poster = "https://image.tmdb.org/t/p/w500" + poster;}
 
-    public void setYear(String date) {this.year = date.substring(0, 4);}
+    public void setYear(String date) {
+
+        if (date.length() > 5) {
+            this.year = date.substring(0, 4);
+        }
+        else{
+            this.year = "Unknown";
+        }
+    }
 
     public void setGenres(ArrayList genres) { this.genres = genres; }
 
