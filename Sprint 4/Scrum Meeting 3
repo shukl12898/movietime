@@ -1,0 +1,23 @@
+What have you done since the last meeting? 
+
+Akanksha: Integrated movie details with watchlists, integrated photo montage with watchlists. JUnit tests for all backend code started, front end code jest tests.
+Oscar: Helping to integrate watchlists into other features, worked on trying to get logged in step definitions.
+Adit: I’ve been working on Jest Tests, API tests, and step definitions for login/watchlists.
+Devika: Finished all functionality of search requirements.
+Hiroaki: I’ve been working on integration of watchlist and suggestion. I have separated the watchlist to front end backend. I’m trying to get one more feature of suggestion.
+
+What do you plan to do for the next meeting? 
+
+Akanksha: I hope to have all the photo montage and movie details acceptance tests done.
+Oscar: Incorporate encryption into login and reviewing requirements to ensure as much has been covered as possible.
+Adit: I’m trying to finish step definitions as soon as possible.
+Devika: Working on finishing JUnit for backend and step definitions for search.
+Hiroaki: Trying to finish everything.
+
+Anything blocking your progress?
+
+Akanksha: Struggling with the login issue for step definitions.
+Oscar: No blocks.
+Adit: I’m stuck on a step def after logging in where I can’t detect elements. 
+Devika: Time is running out!
+Hiroaki: Understanding watchlists.
