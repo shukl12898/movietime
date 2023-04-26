@@ -10,12 +10,23 @@ import { useNavigate } from "react-router-dom";
 import WatchlistMovieDetails from '../components/WatchlistMovieDetails';
 import CreateNewList from '../components/CreateNewList';
 import DeleteWatchlist from '../components/DeleteWatchlist';
+import Montage from './Montage'
 
 function MyWatchlists() {
 
     const [watchlists, assignLists] = useState([]);
     const [userId, setId] = useState(0);
     const navigate = useNavigate();
+
+    const handleCreateMontage = (selectedId) => {
+      const selectedWatchlist = watchlists.find(list => list.listId === selectedId);
+      if (!selectedWatchlist || selectedWatchlist.movies.length === 0) {
+        alert('Selected watchlist has no movies!');
+        return;
+      }
+      navigate("/Montage", { state: { movies: selectedWatchlist.movies } });
+      console.log('Creating montage.');
+    }
 
     const handleAlertDialogClose = () => {
         console.log("Action completed. Lists modified. Refreshing lists.");
@@ -121,6 +132,9 @@ function MyWatchlists() {
                                     listTitle={watchlists[index].listName}
                                     listId={watchlists[index].listId}
                                     onAlertDialogClose={handleAlertDialogClose}/>
+                                    <Button onClick={() => handleCreateMontage(watchlists[index].listId)}>
+                                        Create Montage
+                                    </Button>
                                     </ButtonGroup>
                                  </CardFooter>
                            </Card>

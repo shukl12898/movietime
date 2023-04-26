@@ -6,6 +6,10 @@ import java.util.Map;
 
 public class MontageResponse {
 
+    public HashMap<Integer, ArrayList<String>> getAllResults() {
+        return allResults;
+    }
+
     public static class Image {
         private int id;
         private String imagePath;

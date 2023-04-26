@@ -12,6 +12,7 @@ const PictureGrid = ({ movieImages }) => {
       padding={4}
       backgroundColor="black"
       width="100vw"
+      data-testid="picture-grid"
     >
       {movieImages.sort(() => Math.random() - 0.5).map((image) => (
         <GridItem

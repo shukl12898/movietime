@@ -1,9 +1,9 @@
 package edu.usc.csci310.project.montage.service;
 import edu.usc.csci310.project.montage.responses.MontageResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.*;
 
@@ -12,13 +12,18 @@ public class MontageService {
     @Value("${tmdb.apiKey}")
     private String apiKey;
 
-    private final RestTemplate restTemplate;
+    private final MontageAPIService service;
 
-    public MontageService(RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
+    @Autowired
+    public MontageService(MontageAPIService service) {
+        this.service = service;
     }
 
     public MontageResponse getImages(ArrayList<Integer> ids) {
+
+        if (ids == null){
+            throw new RuntimeException();
+        }
 
         MontageResponse response = new MontageResponse();
 
@@ -28,13 +33,18 @@ public class MontageService {
             Integer id = ids.get(i);
             String url = "https://api.themoviedb.org/3/movie/" + id + "/images?api_key=" + apiKey;
             System.out.println("Sending request to URL: " + url);
-            ResponseEntity<Map> responseEntity = restTemplate.getForEntity(url, Map.class);
+            ResponseEntity<Map> responseEntity = service.makeAPICall(url);
             Map<String, Object> responseMap = responseEntity.getBody();
+            System.out.println("1");
             ArrayList backdrops = (ArrayList) responseMap.get("backdrops");
+            System.out.println("2");
             ArrayList allPaths = new ArrayList();
             for (int j = 0; j < backdrops.size(); j++){
+                System.out.println("3");
                 LinkedHashMap image = (LinkedHashMap) backdrops.get(j);
+                System.out.println("4");
                 String path = "https://image.tmdb.org/t/p/w500" + image.get("file_path");
+                System.out.println("5");
                 allPaths.add(path);
             }
             results.put(id, allPaths);
