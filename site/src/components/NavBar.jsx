@@ -40,7 +40,7 @@ const handleButtonClick = () => {
 
 
   return (
-  <>
+  <div id="navDiv">
   <Flex minWidth='max-content' alignItems='center' gap='2' p={4} bg='#3e5936'>
     <Box p='2'>
       <Heading size='md' color='white'>MovieTime - Team 14</Heading>
@@ -77,7 +77,7 @@ const handleButtonClick = () => {
      ) }
     </ButtonGroup>
   </Flex>
-  </>
+  </div>
 
   );
 };

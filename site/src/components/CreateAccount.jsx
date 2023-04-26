@@ -108,7 +108,7 @@ function CreateAccount() {
                </CardBody>
                <CardFooter>
                 <Spacer/>
-                <Button onClick={handleSubmit}>Create Account</Button>
+                <Button id="lowerCreateAccount" onClick={handleSubmit}>Create Account</Button>
                 <Spacer/>
                </CardFooter>
              </Card>
