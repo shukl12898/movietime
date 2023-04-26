@@ -5,7 +5,6 @@ import PictureGrid from '../components/PictureGrid';
 import NavBar from '../components/NavBar';
 
 function Montage() {
-  const navigate = useNavigate();
   const [images, setImages] = useState(null);
   const location = useLocation();
 
