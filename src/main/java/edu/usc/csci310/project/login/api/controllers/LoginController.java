@@ -26,6 +26,11 @@ public class LoginController {
             response.setStatus(200); // ok
         } catch (Exception e) {
             response.setStatus(401);
+            if (e.getMessage().contains("mismatch")) {
+                response.setMessage("Wrong password.");
+            } else if (e.getMessage().contains("not exist")) {
+                response.setMessage("User does not exist.");
+            }
             return ResponseEntity.status(HttpStatusCode.valueOf(401)).body(response);
         } // end catch
         return ResponseEntity.ok().body(response);
