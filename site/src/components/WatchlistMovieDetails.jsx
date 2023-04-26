@@ -27,13 +27,11 @@ function WatchlistMovieDetails({ onAlertDialogClose, ...props }) {
 
     const [hoverControlsVisible, setHoverControlsVisible] = useState(false);
 
-   const [movieDetails, setMovieDetails] = useState({});
+    const [movieDetails, setMovieDetails] = useState({});
     const [showOverlay, setShowOverlay] = useState(false);
-    const imageURL = "https://image.tmdb.org/t/p/w500/";
-    const APIkey = '?api_key=5e9de98263d160a232935f6d95ab878d';
-    const movieId = props.movieId;
+    const [selectedMovieID, setSelectedMovieID] = useState(null);
+    const movieID = props.movieId;
     const watchlists = props.watchlists;
-    const baseurl = 'https://api.themoviedb.org/3/movie/';
     const listTitle = props.listTitle;
     const listId = props.listId;
 
@@ -46,64 +44,55 @@ function WatchlistMovieDetails({ onAlertDialogClose, ...props }) {
     };
 
     useEffect(() => {
-      const fullurl = baseurl + movieId + APIkey;
-      fetch(fullurl)
-        .then((response) => response.json())
-        .then((data) => setMovieDetails(data))
-        .catch((error) => console.log(error));
-    }, [movieId]);
+            fetch(`/movies/${movieID}`)
+                .then(response => {
+                    if(response.status === 400) {
+                        throw new Error(response.json());
+                    }
+                    return response.json();
+                })
+                .then(data => setMovieDetails(data))
+                .catch(error => console.error(error));
+        }, [movieID]);
 
-    useEffect(() => {
-      const casturl = baseurl + movieId + '/credits' + APIkey;
-      fetch(casturl)
-        .then((response) => response.json())
-        .then((data) => {
-         if (data) {
-                //setMovieDetails(data);
-                console.log(data);
-              } else {
-                console.log("API returned null data");
-              }
-        })
-        .catch((error) => console.log(error));
-    }, [movieId]);
-
-    const showDetails = () => {
+    const showDetails = (movieID) => {
         setShowOverlay(true);
+        setSelectedMovieID(movieID);
     }
+
     return (
       <div className="background">
         {
-            <Box p={3} id="movie-name" onMouseEnter={showHoverControls} onMouseLeave={hideHoverControls} key={movieId} >
+            <Box p={3} id="movie-name" onMouseEnter={showHoverControls} onMouseLeave={hideHoverControls} key={movieID} >
             <Flex>
 
               <div onClick={() => {
-                       showDetails(movieId);
+                       showDetails(movieID);
                }}>
-              {movieDetails?.original_title || 'Loading movie details...'}
+              {movieDetails?.title || 'Loading movie details...'}
               </div>
               <Spacer/>
               {hoverControlsVisible && (
                   <ButtonGroup gap='1'
                   >
                     <CopyMovie
-                    movieTitle={movieDetails.original_title}
-                    movieId={movieId}
+                    movieTitle={movieDetails.title}
+                    movieId={movieID}
                     listName={listTitle}
                     listId={listId}
                     onAlertDialogClose={onAlertDialogClose}
                     watchlists={watchlists}/>
                     <MoveMovie
-                    movieTitle={movieDetails.original_title}
-                    movieId={movieId}
+                    movieTitle={movieDetails.title}
+                    movieId={movieID}
                     listName={listTitle}
                     listId={listId}
                     onAlertDialogClose={onAlertDialogClose}
                     watchlists={watchlists}/>
 
                    <RemoveMovie
-                   movieTitle={movieDetails.original_title}
-                   movieId={movieId}
+                   movieTitle={movieDetails.title}
+                   movieId={movieID}
                    listName={listTitle}
                    listId={listId}
                    onAlertDialogClose={onAlertDialogClose}
@@ -114,43 +103,54 @@ function WatchlistMovieDetails({ onAlertDialogClose, ...props }) {
             </Box>}
 
 
-        {showOverlay && (
+        {showOverlay && selectedMovieID && (
 
         <Modal isOpen={showOverlay} onClose={setShowOverlay} >
-            <ModalOverlay />
-                <ModalContent data-testid="overlay" id="overlay-content">
-                  <ModalHeader>
-                    {movieDetails.original_title}
-                    <br />
-                    <Badge>Released {movieDetails.release_date.toString().substring(0, 4)} </Badge >
-                  </ModalHeader>
-                  <ModalCloseButton data-testid="closeButton"/>
-                  <ModalBody>
-                    <br />
-                      <Image src={imageURL + movieId.poster_path} />
-                    <br />
-                        {movieDetails.overview}
-                    <br />
-                    <Accordion>
-                       <AccordionItem>
-                         <h2>
-                           <AccordionButton>
-                               Cast List
-                             <AccordionIcon />
-                           </AccordionButton>
-                         </h2>
-                         <AccordionPanel maxH="200px" overflowY="scroll" id="scrollContainer">
+                    <ModalOverlay />
+                        <ModalContent data-testid="overlay" id="overlay-content">
+                          <ModalHeader>
+                            {movieDetails.title}
+                            <br />
+                            <Badge>Released {movieDetails.year} </Badge >
+                          </ModalHeader>
+                          <ModalCloseButton data-testid="closeButton"/>
+                          <ModalBody>
+                            <br />
+                              <Image src={movieDetails.poster} />
+                            <br />
+                                {movieDetails.overview}
+                            <br />
+                              Genres: {movieDetails.genres.map((genre) => genre).join(", ")}
 
-                         </AccordionPanel>
-                       </AccordionItem>
+                            <br />
+                            <br />
+                            <Accordion>
+                               <AccordionItem>
+                                 <h2>
+                                   <AccordionButton>
 
-                    </Accordion>
-                    <br />
-                      </ModalBody>
-                      <ModalFooter>
-                      </ModalFooter>
-                    </ModalContent>
-             </Modal>
+                                       Cast List
+
+                                     <AccordionIcon />
+                                   </AccordionButton>
+                                 </h2>
+                                 <AccordionPanel maxH="200px" overflowY="scroll" id="scrollContainer">
+                                    {movieDetails.cast.map((member,index) =>
+                                      <li key={index} data-testid="cast">{member}</li>
+                                    )}
+                                 </AccordionPanel>
+                               </AccordionItem>
+                            </Accordion>
+                            <br />
+                            {movieDetails.director}
+                            <br/>
+                            {movieDetails.productionCompanies.map((company) => company).join(", ")}
+                            <br/>
+                              </ModalBody>
+                              <ModalFooter>
+                              </ModalFooter>
+                            </ModalContent>
+                     </Modal>
 
 
             )}
