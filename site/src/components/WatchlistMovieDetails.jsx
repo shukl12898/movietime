@@ -1,7 +1,6 @@
 import React from "react";
 import {useState, useEffect} from "react";
 import '../styles/movie-details.css';
-import HoverButtons from '../components/HoverButtons';
 import RemoveMovie from '../components/RemoveMovie';
 import CopyMovie from '../components/CopyMovie';
 import MoveMovie from '../components/MoveMovie';
@@ -21,7 +20,7 @@ import {
     AccordionButton,
     AccordionPanel,
     AccordionIcon,
-    Box,Button, Flex, Spacer, ButtonGroup
+    Box, Flex, Spacer, ButtonGroup
 } from '@chakra-ui/react';
 
 function WatchlistMovieDetails({ onAlertDialogClose, ...props }) {
@@ -29,8 +28,6 @@ function WatchlistMovieDetails({ onAlertDialogClose, ...props }) {
     const [hoverControlsVisible, setHoverControlsVisible] = useState(false);
 
    const [movieDetails, setMovieDetails] = useState({});
-    const [isHovering, setIsHovering] = useState(false);
-    const [castDetails, setCastDetails] = useState({});
     const [showOverlay, setShowOverlay] = useState(false);
     const imageURL = "https://image.tmdb.org/t/p/w500/";
     const APIkey = '?api_key=5e9de98263d160a232935f6d95ab878d';
@@ -71,18 +68,9 @@ function WatchlistMovieDetails({ onAlertDialogClose, ...props }) {
         .catch((error) => console.log(error));
     }, [movieId]);
 
-    const showDetails = (movieID) => {
+    const showDetails = () => {
         setShowOverlay(true);
     }
-
-    const handleMouseEnter = () => {
-        setIsHovering(true);
-    };
-
-      const handleMouseLeave = () => {
-        setIsHovering(false);
-    };
-
     return (
       <div className="background">
         {

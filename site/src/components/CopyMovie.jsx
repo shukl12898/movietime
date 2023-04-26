@@ -1,15 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
-Card, CardHeader, CardBody, Heading,
-Flex, Spacer,Button, Popover, PopoverArrow, PopoverCloseButton,
-PopoverFooter, PopoverContent, PopoverTrigger, PopoverBody,
- Box, SimpleGrid,Text,CardFooter, ButtonGroup, Input, Badge, Switch, Divider,
- AlertDialog, AlertDialogOverlay,AlertDialogContent,
- AlertDialogHeader,AlertDialogFooter, useDisclosure, Select, AlertDialogBody,
+Heading,
+Button,useDisclosure, Select,
  Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton,
  ModalBody, ModalFooter
 } from '@chakra-ui/react';
-import { useNavigate } from "react-router-dom";
 import CreateNewList from '../components/CreateNewList';
 
 function CopyMovie({ onAlertDialogClose, ...props }) {
@@ -22,7 +17,6 @@ function CopyMovie({ onAlertDialogClose, ...props }) {
     const [selectedOption, setSelectedOption] = useState(0);
 
     const { isOpen, onOpen, onClose } = useDisclosure()
-      const cancelRef = React.useRef()
 
    const addToList = async () => {
        const storedId = sessionStorage.getItem('userId');
@@ -33,7 +27,7 @@ function CopyMovie({ onAlertDialogClose, ...props }) {
                'Content-Type': 'application/json',
              },
              body: JSON.stringify({
-               userId: 0
+               userId: storedId
              }),
            });
            const result = await response.text();
@@ -99,7 +93,7 @@ function CopyMovie({ onAlertDialogClose, ...props }) {
                      <Select placeholder="Select a list" value={selectedOption} onChange={handleChange}>
                                           {watchlists
                                             .filter((list) => list.listId !== listId)
-                                            .map((list, index) => (
+                                            .map((list) => (
                                               <option key={list.listId} value={list.listId}>
                                                 {list.listName}
                                               </option>

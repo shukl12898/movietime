@@ -11,108 +11,108 @@ import {
   AlertDialogOverlay,
   useDisclosure,
   Select, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton,
-  ModalBody, ModalFooter, useToast, Heading
+  ModalBody, ModalFooter, Heading
 } from '@chakra-ui/react';
 import CreateNewList from '../components/CreateNewList';
 
-function HoverButtons(props) {
+function HoverButtons({movieDetails}) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef();
 
-  const toast = useToast();
+    const movieTitle = movieDetails.title;
+    const movieId = movieDetails.id;
+    const [showOverlay, setShowOverlay] = useState(false);
+    const [lists, setLists] = useState([]);
 
-  const movieTitle = props.movieTitle;
-  const movieId = props.movieId;
-  const [showOverlay, setShowOverlay] = useState(false);
-  const [lists, setLists] = useState([]);
-
-  const [toListId, setToListId] = useState(0);
    const [selectedOption, setSelectedOption] = useState(0);
 
-    const handleChange = (event) => {
-      setSelectedOption(event.target.value);
-    };
+       const handleChange = (event) => {
+         setSelectedOption(event.target.value);
+       };
 
-  const fetchLists = async() => {
-    const storedId = sessionStorage.getItem('userId');
-      if (storedId) {
-        console.log('ID found in session storage: ', storedId);
+        const fetchLists = async() => {
+           const storedId = sessionStorage.getItem('userId');
+             if (storedId) {
+               console.log('ID found in session storage: ', storedId);
 
-        fetch("/api/getAllLists", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-             userId: storedId
-             })
-              })
-            .then(res => res.json())
-            .then((response) => {
-                console.log("API Responded With: ");
-                console.log(response);
-                setLists(response.watchlists);
-            })
-            .catch(error => {
-              console.log(error);
-            });
-      } else {
-        console.log('ID not found in session storage.');
-      }
+               fetch("/api/getAllLists", {
+                   method: "POST",
+                   headers: {
+                     "Content-Type": "application/json"
+                   },
+                   body: JSON.stringify({
+                    userId: storedId
+                    })
+                     })
+                   .then(res => res.json())
+                   .then((response) => {
+                       console.log("API Responded With: ");
+                       console.log(response);
+                       setLists(response.watchlists);
+                   })
+                   .catch(error => {
+                     console.log(error);
+                   });
+             } else {
+               console.log('ID not found in session storage.');
+             }
+         };
+
+         const addToList = async (watchlistId, movieId) => {
+           const storedId = sessionStorage.getItem('userId');
+            try {
+               const response = await fetch(`/api/watchlists/insertMovie=${watchlistId}/${movieId}`, {
+                 method: 'POST',
+                 headers: {
+                   'Content-Type': 'application/json',
+                 },
+                 body: JSON.stringify({
+                   userId: storedId
+                 }),
+               });
+               const result = await response.text();
+               console.log(result);
+             } catch (error) {
+               console.error(error);
+             }
+             setShowOverlay(false);
+         }
+
+         useEffect(()=>{
+          fetchLists();
+         },[]);
+
+  const redirectToTickets = () => {
+    window.open('https://www.regmovies.com/search?query=' + movieDetails.title, '_blank');
   }
-  const addToList = async (watchlistId, movieId) => {
-    const storedId = sessionStorage.getItem('userId');
-     try {
-        const response = await fetch(`/api/watchlists/insertMovie=${watchlistId}/${movieId}`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            userId: storedId
-          }),
-        });
-        const result = await response.text();
-        console.log(result);
-      } catch (error) {
-        console.error(error);
-      }
-      setShowOverlay(false);
-
-  }
-
-  useEffect(()=>{
-   fetchLists();
-  },[]);
-
 
   return (
     <>
-        <HStack spacing={4}>
-          <IconButton
-            icon={<BsFillEyeFill style={{ color: "#3e5936" }} />}
-            aria-label="Like"
-            size="lg"
-            variant="unstyled"
-            display="flex"
-          />
-          <IconButton
-            onClick={() => setShowOverlay(true)}
-            icon={<BsPlusCircleFill style={{ color: "#3e5936" }} />}
-            aria-label="Comment"
-            size="md"
-            variant="unstyled"
-            display="flex"
-          />
-          <IconButton
-            onClick={() => onOpen()}
-            icon={<AiFillDollarCircle style={{ color: "#3e5936" }} />}
-            aria-label="Ticket"
-            size="md"
-            variant="unstyled"
-            display="flex"
-          />
-        </HStack>
+      <HStack spacing={4} data-testid= "hover-buttons">
+        <IconButton
+          icon={<BsFillEyeFill style={{ color: "#3e5936" }} />}
+          aria-label="Like"
+          size="lg"
+          variant="unstyled"
+          display="flex"
+        />
+        <IconButton
+          onClick={() => setShowOverlay(true)}
+          icon={<BsPlusCircleFill style={{ color: "#3e5936" }} />}
+          aria-label="Comment"
+          size="md"
+          variant="unstyled"
+          display="flex"
+        />
+        <IconButton
+          onClick={onOpen}
+          icon={<AiFillDollarCircle style={{ color: "#3e5936" }} />}
+          aria-label="Ticket"
+          size="md"
+          variant="unstyled"
+          display="flex"
+        />
+      </HStack>
 
       <AlertDialog
         isOpen={isOpen}
@@ -123,19 +123,19 @@ function HoverButtons(props) {
           <AlertDialogContent>
             <div>
               <AlertDialogHeader fontSize='lg' fontWeight='bold'>
-                Free tickets!
+                Buy tickets!
               </AlertDialogHeader>
             </div>
 
             <AlertDialogBody>
-              Do you want to redeem free tickets to this movie?
+              Do you want to buy tickets to this movie?
             </AlertDialogBody>
 
             <AlertDialogFooter>
               <Button ref={cancelRef} onClick={onClose}>
                 Cancel
               </Button>
-              <Button style={{ backgroundColor: "#3e5936", color: 'white' }} onClick={onClose} ml={3}>
+              <Button style={{ backgroundColor: "#3e5936", color: 'white' }} onClick={redirectToTickets} ml={3}>
                 Purchase
               </Button>
             </AlertDialogFooter>
@@ -143,32 +143,31 @@ function HoverButtons(props) {
         </AlertDialogOverlay>
       </AlertDialog>
 
-
       <Modal isOpen={showOverlay} onClose={() => setShowOverlay(false)}>
-            <ModalOverlay />
-            <ModalContent>
-        <ModalHeader>
-          Add {movieTitle} to a new list?
-          <br />
-        </ModalHeader>
-        <ModalCloseButton/>
-        <ModalBody>
-        <Select placeholder='Select your list' value={selectedOption} onChange={handleChange}>
-          {lists.slice(0).map((movie, index) => (
-                <option key={lists[index].listId} value={lists[index].listId}>{lists[index].listName}</option>
-          ) )}
-        </Select>
-         <br/>
-         <Heading size='sm'>Looking for something new?</Heading>
-       <CreateNewList id="createNewListButton" onAlertDialogClose={fetchLists}/>
-        </ModalBody>
-        <ModalFooter>
-                  <Button onClick={() => {
-                  addToList(selectedOption, movieId);
-                  }}>Add</Button>
-                </ModalFooter>
-      </ModalContent>
-      </Modal>
+                  <ModalOverlay />
+                  <ModalContent>
+              <ModalHeader>
+                Add {movieTitle} to a new list?
+                <br />
+              </ModalHeader>
+              <ModalCloseButton data-testid="close-modal-button"/>
+              <ModalBody>
+              <Select placeholder='Select your list' value={selectedOption} onChange={handleChange}>
+                {lists.slice(0).map((movie, index) => (
+                      <option key={lists[index].listId} value={lists[index].listId}>{lists[index].listName}</option>
+                ) )}
+              </Select>
+               <br/>
+               <Heading size='sm'>Looking for something new?</Heading>
+             <CreateNewList onAlertDialogClose={fetchLists}/>
+              </ModalBody>
+              <ModalFooter>
+                        <Button onClick={() => {
+                        addToList(selectedOption, movieId);
+                        }}>Add</Button>
+                      </ModalFooter>
+            </ModalContent>
+            </Modal>
     </>
   );
 }

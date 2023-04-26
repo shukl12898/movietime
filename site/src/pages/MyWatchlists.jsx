@@ -2,14 +2,11 @@ import React, { useState, useEffect } from "react";
 import NavBar from '../components/NavBar';
 import {
 Card, CardHeader, CardBody, Heading,
-Flex, Spacer,Button, Popover, PopoverArrow, PopoverCloseButton,
-PopoverFooter, PopoverContent, PopoverTrigger, PopoverBody,
- Box, SimpleGrid,Text,CardFooter, ButtonGroup, Input, Badge, Switch, Divider, IconButton,
- useDisclosure
+Flex, Spacer,Button,
+ Box, SimpleGrid,CardFooter, ButtonGroup, Badge, Divider, IconButton
 } from '@chakra-ui/react';
-import { DeleteIcon, EditIcon} from '@chakra-ui/icons'
+import {EditIcon} from '@chakra-ui/icons'
 import { useNavigate } from "react-router-dom";
-import MovieDetails from '../components/MovieDetails';
 import WatchlistMovieDetails from '../components/WatchlistMovieDetails';
 import CreateNewList from '../components/CreateNewList';
 import DeleteWatchlist from '../components/DeleteWatchlist';
@@ -17,14 +14,8 @@ import DeleteWatchlist from '../components/DeleteWatchlist';
 function MyWatchlists() {
 
     const [watchlists, assignLists] = useState([]);
-    const [movieDetails, setMovieDetails] = useState([]);
     const [userId, setId] = useState(0);
     const navigate = useNavigate();
-    const [newListName, setNewListName] = useState("");
-    const [makePrivate, setMakePrivate] = useState(false);
-
-    const { isOpen, onOpen, onClose } = useDisclosure()
-    const cancelRef = React.useRef()
 
     const handleAlertDialogClose = () => {
         console.log("Action completed. Lists modified. Refreshing lists.");
@@ -64,30 +55,6 @@ function MyWatchlists() {
       useEffect(()=>{
               getLists();
       },[]);
-
-   const listCreated = async () => {
-       try {
-           const response = await fetch("/api/newList", {
-               method: "POST",
-               headers: {
-                   "Content-Type": "application/json"
-               },
-               body: JSON.stringify({
-                   watchListName: newListName,
-                   forUser: userId,
-                   isPrivate: makePrivate
-               })
-           });
-           const result = await response.json();
-           console.log("API Responded With: ");
-           console.log(result);
-       } catch (error) {
-           console.log(error);
-       }
-
-        setNewListName('');
-       getLists();
-   };
 
     return (
         <div>

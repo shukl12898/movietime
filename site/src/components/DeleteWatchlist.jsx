@@ -1,15 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
-Card, CardHeader, CardBody, Heading,
-Flex, Spacer,Button, Popover, PopoverArrow, PopoverCloseButton,
-PopoverFooter, PopoverContent, PopoverTrigger, PopoverBody,
- Box, SimpleGrid,Text,CardFooter, ButtonGroup, Input, Badge, Switch, Divider,
+Button,
  AlertDialog, AlertDialogOverlay,AlertDialogContent,
  AlertDialogHeader,AlertDialogFooter, useDisclosure, IconButton
 } from '@chakra-ui/react';
-import { useNavigate } from "react-router-dom";
 
-import { DeleteIcon, EditIcon} from '@chakra-ui/icons'
+import { DeleteIcon} from '@chakra-ui/icons'
 
 function DeleteWatchlist({ onAlertDialogClose, ...props }) {
     const listName = props.listTitle;
