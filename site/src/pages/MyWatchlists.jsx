@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import WatchlistMovieDetails from '../components/WatchlistMovieDetails';
 import CreateNewList from '../components/CreateNewList';
 import DeleteWatchlist from '../components/DeleteWatchlist';
+import Montage from './Montage'
 
 function MyWatchlists() {
 

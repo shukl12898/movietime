@@ -35,11 +35,16 @@ public class MontageService {
             System.out.println("Sending request to URL: " + url);
             ResponseEntity<Map> responseEntity = service.makeAPICall(url);
             Map<String, Object> responseMap = responseEntity.getBody();
+            System.out.println("1");
             ArrayList backdrops = (ArrayList) responseMap.get("backdrops");
+            System.out.println("2");
             ArrayList allPaths = new ArrayList();
             for (int j = 0; j < backdrops.size(); j++){
+                System.out.println("3");
                 LinkedHashMap image = (LinkedHashMap) backdrops.get(j);
+                System.out.println("4");
                 String path = "https://image.tmdb.org/t/p/w500" + image.get("file_path");
+                System.out.println("5");
                 allPaths.add(path);
             }
             results.put(id, allPaths);
