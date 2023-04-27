@@ -90,6 +90,9 @@ public class CreateAccountStepDefinitions {
 
     @Then("I should see {string} on the page")
     public void iSeeOnPage(String arg0) {
+        try{
+            WebDriverWait wait = new WebDriverWait (driver, Duration.ofSeconds (2)) ;
+        } catch(Exception e) {}
         String source = driver.getPageSource();
         assertTrue(source.contains(arg0));
     }

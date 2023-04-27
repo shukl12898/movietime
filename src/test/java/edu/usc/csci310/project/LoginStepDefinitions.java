@@ -31,6 +31,7 @@ public class LoginStepDefinitions {
         DatabaseManager db = new DatabaseManager();
         db.dropAllTables();
         db.setUp();
+
         System.out.println("Setting Up Cucumber Driver");
         System.setProperty("webdriver.http.factory", "jdk-http-client");
         WebDriverManager.chromedriver().setup();
@@ -50,26 +51,66 @@ public class LoginStepDefinitions {
 
     @Given("I am on the login page")
     public void iAmOnLogin() {
-
+        driver.get(ROOT_URL);
     }
 
-    @When("I enter {string} in the username box")
+    @When("I enter {string} in the username box, login")
     public void iEnterUsername(String arg0) {
+        try {
+            DatabaseManager db = new DatabaseManager();
+            db.createNewUser("oclavijo", "1234abcd", "Oscar");
+        } catch (Exception e) {}
 
+        driver.findElement(By.xpath("//*[@id=\"field-:r0:\"]")).sendKeys(arg0);
     }
 
-    @And("I enter {string} in the password box")
+    @And("I enter {string} in the password box, login")
     public void iEnterPassword(String arg0) {
-
+        driver.findElement(By.xpath("//*[@id=\"field-:r1:\"]")).sendKeys(arg0);
     }
 
-    @And("I click submit")
-    public void iClickSubmit(){
-
+    @And("I click login")
+    public void iClickLogin(){
+        driver.findElement(By.xpath("//*[@id=\"root\"]/div[2]/div[1]/div/div[2]/div[3]/button")).click();
     }
 
     @Then("The page should display {string}")
     public void pageDisplays(String arg0){
+        try{
+            WebDriverWait wait = new WebDriverWait (driver, Duration.ofSeconds (2)) ;
+        } catch(Exception e) {}
+        String source = driver.getPageSource();
+        assertTrue(source.contains(arg0));
+    }
+
+    @When("I press the Create Account button")
+    public void clickOnCreateAccount() {
+        driver.findElement(By.xpath("//*[@id=\"root\"]/div[2]/div[2]/button")).click();
+    }
+
+    @Then("I should be taken to the Create Account Page")
+    public void shouldBeOnCreateAccount() {
+        try{
+            WebDriverWait wait = new WebDriverWait (driver, Duration.ofSeconds (2)) ;
+        } catch(Exception e) {}
+        assertEquals(
+                "Create Account",
+                driver.findElement(By.xpath("//*[@id=\"root\"]/div[2]/div[1]/div/div[2]/div[1]/h2")).getText());
+
+    }
+
+    @Then("Login is successful and I am on search page")
+    public void loginSuccessful() {
+        try{
+            WebDriverWait wait = new WebDriverWait (driver, Duration.ofSeconds (2)) ;
+            WebElement searchBttn =
+                    wait.until(ExpectedConditions.elementToBeClickable(
+                            driver.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div[3]/button[1]"))));
+            searchBttn.click();
+        } catch(Exception e) {}
+        assertEquals(
+                "Search",
+                driver.findElement(By.xpath("//*[@id=\"root\"]/div[2]/div/div[1]/div[2]/div[1]/h2")).getText());
 
     }
 
