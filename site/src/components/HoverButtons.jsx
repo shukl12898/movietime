@@ -110,6 +110,7 @@ function HoverButtons({movieDetails}) {
           size="md"
           variant="unstyled"
           display="flex"
+          id="dollarButton"
         />
       </HStack>
 
@@ -134,7 +135,7 @@ function HoverButtons({movieDetails}) {
               <Button ref={cancelRef} onClick={onClose}>
                 Cancel
               </Button>
-              <Button style={{ backgroundColor: "#3e5936", color: 'white' }} onClick={redirectToTickets} ml={3}>
+              <Button id="purchaseButton" style={{ backgroundColor: "#3e5936", color: 'white' }} onClick={redirectToTickets} ml={3}>
                 Purchase
               </Button>
             </AlertDialogFooter>
