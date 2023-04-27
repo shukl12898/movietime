@@ -15,6 +15,8 @@ function App() {
 
     const [loggedIn, setLoggedIn] = useState(false);
     const [name, setName] = useState("");
+     //const navigate = useNavigate();
+
 
     const toggleLogIn = () => {
         setLoggedIn(!loggedIn);
@@ -28,6 +30,7 @@ function App() {
         } else {
           console.log('App render. No name found.');
           setName('');
+          //navigate("/");
         }
     };
 
@@ -43,7 +46,7 @@ function App() {
           {loggedIn && (
               <Routes>
                 {/* Root pages, located in /pages/ */}
-                <Route path="/" element={<MyWatchlists />} />
+                <Route path="/" element={<Search />} />
                 <Route path="/MyWatchlists" element={<MyWatchlists />} />
                 <Route path="/Search" element={<Search />} />
                  <Route path ="/Suggestions/:num" element ={<Suggestions />} />

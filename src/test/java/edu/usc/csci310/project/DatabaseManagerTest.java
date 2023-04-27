@@ -15,7 +15,7 @@ class DatabaseManagerTest {
     void setDB() throws Exception {
         db = new DatabaseManager();
         db.dropAllTables();
-        db = new DatabaseManager();
+        db.setUp();
     }
     @AfterEach
     void tearDown() {
