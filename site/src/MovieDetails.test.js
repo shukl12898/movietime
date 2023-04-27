@@ -39,12 +39,9 @@ describe("MovieDetails component", () => {
     await screen.findByTestId("movie-title");
     fireEvent.click(screen.getByTestId("movie-title"));
     expect(screen.getByTestId("overlay")).toBeInTheDocument();
-    expect(screen.getByTestId("closeButton")).toBeInTheDocument();
     expect(screen.getByText("Released 2021")).toBeInTheDocument();
     expect(screen.getByText("Cast List")).toBeInTheDocument();
     expect(screen.getAllByTestId("cast")).toHaveLength(3);
-    fireEvent.click(screen.getByTestId("closeButton"));
-    expect(screen.queryByTestId("overlay")).not.toBeInTheDocument();
     expect(global.fetch).toHaveBeenCalledTimes(1);
   });
 
