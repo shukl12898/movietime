@@ -144,7 +144,7 @@ function HoverButtons({movieDetails}) {
         </AlertDialogOverlay>
       </AlertDialog>
 
-      <Modal isOpen={showOverlay} onClose={() => setShowOverlay(false)}>
+      <Modal data-testid="modal" isOpen={showOverlay} onClose={() => setShowOverlay(false)}>
                   <ModalOverlay />
                   <ModalContent>
               <ModalHeader>
