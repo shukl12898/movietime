@@ -68,7 +68,7 @@ function MyWatchlists() {
 
     return (
         <div>
-            <NavBar/>
+
 
             <Flex minWidth='max-content' alignItems='center' gap='2' p='9'>
               <Box>
