@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import PictureGrid from '../components/PictureGrid';
-import NavBar from '../components/NavBar';
 
 function Montage() {
   const [images, setImages] = useState(null);
@@ -28,7 +27,6 @@ function Montage() {
 
   return (
     <div>
-          <NavBar data-testid="navbar"/>
           {images && <PictureGrid data-testid="picture-grid" movieImages = {images.montageImages} />}
         </div>
   );
