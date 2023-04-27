@@ -6,7 +6,7 @@ Flex, Spacer, FormControl,FormLabel,Input, Button, FormHelperText
 } from '@chakra-ui/react'
 import { useNavigate } from "react-router-dom";
 
-function CreateAccount() {
+function CreateAccount({toggleLogIn}) {
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -54,7 +54,7 @@ function CreateAccount() {
                } else {
                    sessionStorage.setItem("userId", response.userId);
                    sessionStorage.setItem("displayName", response.displayName);
-                   navigate('/Search');
+                   toggleLogIn();
                }
                console.log(response);
                sessionStorage.setItem("userId", response.userId);
@@ -108,7 +108,7 @@ function CreateAccount() {
                </CardBody>
                <CardFooter>
                 <Spacer/>
-                <Button onClick={handleSubmit}>Create Account</Button>
+                <Button isDisabled={matchingPw} onClick={handleSubmit}>Create Account</Button>
                 <Spacer/>
                </CardFooter>
              </Card>
