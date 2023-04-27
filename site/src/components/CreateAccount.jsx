@@ -15,6 +15,7 @@ function CreateAccount({toggleLogIn}) {
     const navigate = useNavigate();
 
     const matchingPw = password != confirmPassword;
+    const allFields = (username != '') && (password != '') && (name != '');
 
     //const [validUser, setValid] = useState(true);
 

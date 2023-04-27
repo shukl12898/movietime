@@ -12,6 +12,8 @@ function LoginComponent({toggleLogIn}) {
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
 
+    const allow = (username != '') && (password != '');
+
     const [registered, setRegistered] = useState(true);
 
     function handleUsernameChange(event) {
@@ -51,7 +53,9 @@ function LoginComponent({toggleLogIn}) {
           </CardBody>
           <CardFooter>
           <Spacer/>
-           <Button onClick={() => {
+           <Button
+           isDisabled={!allow}
+           onClick={() => {
                       fetch("/api/login", {
                         method: "POST",
                         headers: {
