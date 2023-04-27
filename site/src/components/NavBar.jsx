@@ -9,8 +9,6 @@ import { Flex, Spacer, Button, ButtonGroup, Box, Heading,
   PopoverCloseButton
   } from '@chakra-ui/react';
 import { useNavigate } from "react-router-dom";
-import {useState, useEffect} from "react";
-
 
 // This page provides a button with a redirect to "/other"
 function NavBar({toggleLogIn, ...props}) {

@@ -4,7 +4,6 @@ import {
 Card, CardHeader, CardBody, Heading,CardFooter,
 Flex, Spacer, FormControl,FormLabel,Input, Button, FormHelperText
 } from '@chakra-ui/react'
-import { useNavigate } from "react-router-dom";
 
 function CreateAccount() {
 
@@ -12,10 +11,8 @@ function CreateAccount() {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfPassword] = useState("");
     const [name, setName] = useState("");
-    const navigate = useNavigate();
 
     const matchingPw = password != confirmPassword;
-    const allFields = (username != '') && (password != '') && (name != '');
 
     //const [validUser, setValid] = useState(true);
 
