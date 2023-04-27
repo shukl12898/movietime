@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import NavBar from '../components/NavBar';
 import {
 Card, CardHeader, CardBody, Heading,
 Flex, Spacer,Button,
@@ -16,6 +15,16 @@ function MyWatchlists() {
     const [watchlists, assignLists] = useState([]);
     const [userId, setId] = useState(0);
     const navigate = useNavigate();
+
+    const handleCreateMontage = (selectedId) => {
+      const selectedWatchlist = watchlists.find(list => list.listId === selectedId);
+      if (!selectedWatchlist || selectedWatchlist.movies.length === 0) {
+        alert('Selected watchlist has no movies!');
+        return;
+      }
+      navigate("/Montage", { state: { movies: selectedWatchlist.movies } });
+      console.log('Creating montage.');
+    }
 
     const handleAlertDialogClose = () => {
         console.log("Action completed. Lists modified. Refreshing lists.");
@@ -59,7 +68,7 @@ function MyWatchlists() {
 
     return (
         <div>
-            <NavBar/>
+
 
             <Flex minWidth='max-content' alignItems='center' gap='2' p='9'>
               <Box>
@@ -122,8 +131,10 @@ function MyWatchlists() {
                                     <DeleteWatchlist
                                     listTitle={watchlists[index].listName}
                                     listId={watchlists[index].listId}
-                                    onAlertDialogClose={handleAlertDialogClose}
-                                    />
+                                    onAlertDialogClose={handleAlertDialogClose}/>
+                                    <Button onClick={() => handleCreateMontage(watchlists[index].listId)}>
+                                        Create Montage
+                                    </Button>
                                     </ButtonGroup>
                                  </CardFooter>
                            </Card>

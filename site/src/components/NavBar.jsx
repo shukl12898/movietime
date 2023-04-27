@@ -9,32 +9,12 @@ import { Flex, Spacer, Button, ButtonGroup, Box, Heading,
   PopoverCloseButton
   } from '@chakra-ui/react';
 import { useNavigate } from "react-router-dom";
-import {useState, useEffect} from "react";
-
 
 // This page provides a button with a redirect to "/other"
-function NavBar() {
+function NavBar({toggleLogIn, ...props}) {
 
-const [name, setName] = useState('');
-const [rerender, setRerender] = useState(false);
+    const name = props.name;
 
-  useEffect(() => {
-    checkNameInSessionStorage();
-  }, [rerender]);
-
-const handleButtonClick = () => {
-    setRerender(prevState => !prevState);
-  };
-
-  const checkNameInSessionStorage = () => {
-    const storedName = sessionStorage.getItem('displayName');
-    if (storedName) {
-      setName(storedName);
-      console.log('Name found in session storage:', storedName);
-    } else {
-      console.log('Name not found in session storage.');
-    }
-  };
   // Calling navigate() will allow us to redirect the webpage
   const navigate = useNavigate();
 
@@ -42,7 +22,7 @@ const handleButtonClick = () => {
   return (
   <>
   <Flex minWidth='max-content' alignItems='center' gap='2' p={4} bg='#3e5936'>
-    <Box p='2'>
+    <Box p='2' data-testid="navbar">
       <Heading size='md' color='white'>MovieTime - Team 14</Heading>
     </Box>
     <Spacer />
@@ -67,8 +47,8 @@ const handleButtonClick = () => {
                  colorScheme='red'
                  onClick={()=>{
                  sessionStorage.clear();
+                 toggleLogIn();
                  navigate("/");
-                 handleButtonClick();
                  }}
                  >Log Out</Button>
              </PopoverFooter>
