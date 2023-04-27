@@ -3,13 +3,14 @@ Feature: Watchlist functionality from the Search Page
     Given I am on the "" page
     When I am logged in
     And I click on the Watchlists Page header
-    Then I should see "Your Watchlists" in the page
+    Then I should see "Your Watchlists" simply on page
 
   Scenario: Open the page and add movie to new watchlist (New name)
     Given I am on the "" page
     When I am logged in
     And I enter "Fight Club" in the search bar
     And I press the search button
+    And I should see "Fight Club" in the page
     And I hover over "Fight Club"
     And I click to add movie to a watchlist
     And I click new watchlist on modal

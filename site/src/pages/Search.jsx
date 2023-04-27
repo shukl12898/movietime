@@ -119,7 +119,7 @@ function Search() {
  <Spacer />
         <Card variant='elevated' size='md'>
           <CardHeader>
-              <Heading size='md'>Search</Heading>
+              <Heading id="searchHeading" size='md'>Search</Heading>
           </CardHeader>
           <CardBody>
             <HStack>

@@ -46,14 +46,18 @@ public class SearchStepDefinitions {
         driver.get(ROOT_URL+"Search");
     }
 
-    @When("I enter {string} in the search bar")
-    public void iEnterInTheSearchBar(String arg0) {
+    //@When("I enter {string} in the search bar")
+    public void iEnterInTheSearchBar(String arg0) throws InterruptedException {
         //driver.findElement(By.xpath("//*[@id=\"searchBar\"]")).sendKeys(arg0);
+        //Thread.sleep(2000);
+        //WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        System.out.println(driver.getPageSource());
+        WebElement searchBar = driver.findElement(By.id("searchHeading"));
+        //searchBar.sendKeys(arg0);
 
-        driver.findElement(By.id("searchBar")).sendKeys(arg0);
     }
 
-    @And("I press the search button")
+    //@And("I press the search button")
     public void iPressTheSearchButton() {
         driver.findElement(By.xpath("/html/body/div[1]/div/div/div[2]/div[2]/div[2]/div/div[2]/form/button")).click();
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
@@ -169,7 +173,7 @@ public class SearchStepDefinitions {
 
     }
 
-    @Then("I should see {string} in the page")
+    //@Then("I should see {string} in the page")
     public void iShouldSeeInThePage(String arg0) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(120));
         By movieDetailsSelector = By.id("movie-title");

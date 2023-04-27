@@ -139,6 +139,7 @@ function MyWatchlists({selectedMovies, setSelectedMovies}) {
                                     <IconButton
                                         icon={<EditIcon/>}
 
+
                                     />
                                     <DeleteWatchlist
                                     listTitle={watchlists[index].listName}

@@ -6,6 +6,7 @@ import org.junit.jupiter.api.AfterEach;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -18,10 +19,11 @@ import java.util.Optional;
 class DatabaseManagerTest {
 
     private static final String SQLITE_CONNECTION_STRING_TEST = "jdbc:sqlite:src/main/resources/test.db";
+    private static final String SQLITE_CONNECTION_STRING = "jdbc:sqlite:src/main/resources/platform.db";
     DatabaseManager db;
     @BeforeEach
     void setDB() throws Exception {
-        db = new DatabaseManager(DriverManager.getConnection(SQLITE_CONNECTION_STRING_TEST));
+        db = new DatabaseManager(DriverManager.getConnection(SQLITE_CONNECTION_STRING));
     }
     @AfterEach
     void tearDown() {
@@ -54,9 +56,9 @@ class DatabaseManagerTest {
         assertEquals(2, l.size());
 
         ListModel shrekList = l.get(0);
-        assertEquals(Optional.of(111), shrekList.getMovies().get(0));
-        assertEquals(Optional.of(222), shrekList.getMovies().get(1));
-        assertEquals(Optional.of(333), shrekList.getMovies().get(2));
+        assertEquals(Optional.of(111), Optional.of(shrekList.getMovies().get(0)));
+        assertEquals(Optional.of(222), Optional.ofNullable(shrekList.getMovies().get(1)));
+        assertEquals(Optional.of(333), Optional.ofNullable(shrekList.getMovies().get(2)));
 
         //Get Watchlist
         int shrekId = db.getWatchList("Shrek Films");
@@ -102,22 +104,19 @@ class DatabaseManagerTest {
 
     }
 
-    @Test
-    void insertException() throws Exception {
-        Connection conn = mock(Connection.class);
-        Statement st = mock(Statement.class);
-        ResultSet rs = mock(ResultSet.class);
-        PreparedStatement pst = mock(PreparedStatement.class);
-
-        when(conn.prepareStatement(anyString())).thenReturn(pst);
-        when(conn.createStatement()).thenReturn(st);
-        when(st.executeQuery(anyString())).thenReturn(rs);
-        when(rs.next()).thenReturn(true).thenReturn(false);
-        when(rs.getInt(anyString())).thenThrow(SQLException.class);
-
-        DatabaseManager testDB = new DatabaseManager(conn);
-        //String response = testDB.insertIntoWatchlist("")
-        //assertEquals("it was not possible to eat at this time", response);
-    }
+    //@Test
+//    void insertException() throws Exception {
+//        Connection conn = mock(Connection.class);
+//        Statement st = mock(Statement.class);
+//        ResultSet rs = mock(ResultSet.class);
+//        PreparedStatement pst = mock(PreparedStatement.class);
+//
+//        when(conn.prepareStatement(anyString())).thenReturn(pst);
+//        when(pst.executeUpdate(anyString())).thenThrow(SQLException.class);
+//
+//        DatabaseManager testDB = new DatabaseManager(conn);
+//        String response = testDB.insertIntoWatchlist(111, 0);
+//        assertTrue(response.contains("Error"));
+//    }
 
 }

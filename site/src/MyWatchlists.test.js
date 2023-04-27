@@ -1,36 +1,42 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
-import MyWatchlists from './MyWatchlists';
-/*
-describe('MyWatchlists Page', () => {
-  test('Clicking "Create a New List" button should open a form to create a new list', () => {
-    const { getByText, getByTestId } = render(<MyWatchlists />);
+import { render, screen, fireEvent } from "@testing-library/react";
+import { BrowserRouter } from "react-router-dom";
+import CreateNewList from './components/CreateNewList'
+import MyWatchlists from "./pages/MyWatchlists";
 
-    // Check that the "Add new list" button is present
-    const addButton = getByText('Create a New List');
-    expect(addButton).toBeInTheDocument();
-
-    // Check that the form to create a new list is initially hidden
-    const form = getByTestId('new-list-form');
-    expect(form).not.toBeVisible();
-
-    // Click the "Add new list" button
-    fireEvent.click(addButton);
-
-    // Check that the form to create a new list is now visible
-    expect(form).toBeVisible();
-
-    // Fill in the form and submit it
-    // (This assumes that the form has input fields and a submit button)
-    const nameInput = getByTestId('list-name-input');
-    const submitButton = getByTestId('submit-button');
-
-    fireEvent.change(nameInput, { target: { value: 'My New List' } });
-    fireEvent.click(submitButton);
-
-    // Check that the new list has been added to the page
-    const newList = getByText('My New List');
-    expect(newList).toBeInTheDocument();
+const mockFetch = () =>
+  Promise.resolve({
+    ok: true,
+    json: () =>
+      Promise.resolve({
+        results: [
+          {
+            id: 1,
+            title: "Test Movie",
+            poster_path: "/testposter.jpg",
+            overview: "Test movie overview",
+          },
+        ],
+      }),
   });
+
+test("full app rendering", async () => {
+    render(<MyWatchlists />, { wrapper: BrowserRouter });
+
+    // verify page content for default route
+    expect(screen.getByText(/MovieTime/)).toBeInTheDocument();
 });
-*/
+
+describe('MyWatchlists Page', ()=>{
+    test('renders CreateNewList component', () => {
+        render(<CreateNewList />);
+        expect(screen.getByText(/MovieTime/)).toBeInTheDocument();
+    });
+
+    test('Generating Movies Shown', () => {
+        render(< />)
+
+        expect(screen.getByText(/MovieTime/)).toBeInTheDocument();
+    });
+
+});
