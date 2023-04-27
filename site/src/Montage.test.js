@@ -6,7 +6,7 @@ import Montage from './pages/Montage';
 describe('Montage', () => {
   it('renders null when location state does not exist', () => {
     render(
-      <MemoryRouter initialEntries={['/']}>
+      <MemoryRouter initialEntries={['/montage']}>
         <Routes>
           <Route path="/montage" element={<Montage />} />
         </Routes>
@@ -61,4 +61,5 @@ describe('Montage', () => {
       expect(screen.queryByTestId('picture-grid')).not.toBeInTheDocument();
     });
   });
+
 });
