@@ -2,6 +2,7 @@ package edu.usc.csci310.project;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.BeforeAll;
 import io.cucumber.java.en.Given;
@@ -46,6 +47,11 @@ public class CreateAccountStepDefinitions {
         options.addArguments("--disable-extensions");
         driver = new ChromeDriver(options);
 
+    }
+
+    @After
+    public void afterLogin(){
+        driver.quit();
     }
 
     @Given("I am on the Create Account page")

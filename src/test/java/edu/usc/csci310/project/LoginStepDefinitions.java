@@ -2,6 +2,7 @@ package edu.usc.csci310.project;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.BeforeAll;
 import io.cucumber.java.en.Given;
@@ -27,19 +28,18 @@ public class LoginStepDefinitions {
     private WebDriver driver;
 
     @BeforeAll
-    public static void beforeAll() throws Exception {
+    public static void beforeAllLogin() throws Exception {
         DatabaseManager db = new DatabaseManager();
         db.dropAllTables();
         db.setUp();
-
         System.out.println("Setting Up Cucumber Driver");
         System.setProperty("webdriver.http.factory", "jdk-http-client");
         WebDriverManager.chromedriver().setup();
-
     }
 
+
     @Before
-    public void before() {
+    public void beforeLogin() {
         ChromeOptions options = new ChromeOptions();
         // options.addArguments("--headless");
         options.addArguments("--whitelisted-ips");
@@ -49,6 +49,10 @@ public class LoginStepDefinitions {
 
     }
 
+    @After
+    public void after(){
+        driver.quit();
+    }
     @Given("I am on the login page")
     public void iAmOnLogin() {
         driver.get(ROOT_URL);
@@ -56,6 +60,7 @@ public class LoginStepDefinitions {
 
     @When("I enter {string} in the username box, login")
     public void iEnterUsername(String arg0) {
+
         try {
             DatabaseManager db = new DatabaseManager();
             db.createNewUser("oclavijo", "1234abcd", "Oscar");
