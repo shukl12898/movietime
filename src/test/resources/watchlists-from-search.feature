@@ -10,6 +10,7 @@ Feature: Watchlist functionality from the Search Page
     When I am logged in
     And I enter "Fight Club" in the search bar
     And I press the search button
+    And I should see "Fight Club" in the page
     And I hover over "Fight Club"
     And I click to add movie to a watchlist
     And I click new watchlist on modal
