@@ -6,20 +6,12 @@ import CopyMovie from '../components/CopyMovie';
 import MoveMovie from '../components/MoveMovie';
 
 import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
   Image,
   Badge,
    Accordion,
     AccordionItem,
     AccordionButton,
     AccordionPanel,
-    AccordionIcon,
     Box, Flex, Spacer, ButtonGroup
 } from '@chakra-ui/react';
 
@@ -28,8 +20,8 @@ function WatchlistMovieDetails({ onAlertDialogClose, ...props }) {
     const [hoverControlsVisible, setHoverControlsVisible] = useState(false);
 
     const [movieDetails, setMovieDetails] = useState({});
-    const [showOverlay, setShowOverlay] = useState(false);
     const [selectedMovieID, setSelectedMovieID] = useState(null);
+    const [castIsOpen, setCastIsOpen] = useState(false);
     const movieID = props.movieId;
     const watchlists = props.watchlists;
     const listTitle = props.listTitle;
@@ -55,10 +47,13 @@ function WatchlistMovieDetails({ onAlertDialogClose, ...props }) {
                 .catch(error => console.error(error));
         }, [movieID]);
 
-    const showDetails = (movieID) => {
-        setShowOverlay(true);
-        setSelectedMovieID(movieID);
+  const showDetailsToggle = (movieID) => {
+    if (selectedMovieID === movieID) {
+       setSelectedMovieID(null);
+    } else {
+       setSelectedMovieID(movieID);
     }
+  };
 
     return (
       <div className="background">
@@ -67,7 +62,7 @@ function WatchlistMovieDetails({ onAlertDialogClose, ...props }) {
             <Flex>
 
               <div onClick={() => {
-                       showDetails(movieID);
+                       showDetailsToggle(movieID);
                }}>
               {movieDetails?.title || 'Loading movie details...'}
               </div>
@@ -103,57 +98,38 @@ function WatchlistMovieDetails({ onAlertDialogClose, ...props }) {
             </Box>}
 
 
-        {showOverlay && selectedMovieID && (
-
-        <Modal isOpen={showOverlay} onClose={setShowOverlay} >
-                    <ModalOverlay />
-                        <ModalContent data-testid="overlay" id="overlay-content">
-                          <ModalHeader>
-                            {movieDetails.title}
-                            <br />
-                            <Badge>Released {movieDetails.year} </Badge >
-                          </ModalHeader>
-                          <ModalCloseButton data-testid="closeButton"/>
-                          <ModalBody>
-                            <br />
-                              <Image src={movieDetails.poster} />
-                            <br />
-                                {movieDetails.overview}
-                            <br />
-                              Genres: {movieDetails.genres.map((genre) => genre).join(", ")}
-
-                            <br />
-                            <br />
-                            <Accordion>
-                               <AccordionItem>
-                                 <h2>
-                                   <AccordionButton>
-
-                                       Cast List
-
-                                     <AccordionIcon />
-                                   </AccordionButton>
-                                 </h2>
-                                 <AccordionPanel maxH="200px" overflowY="scroll" id="scrollContainer">
-                                    {movieDetails.cast.map((member,index) =>
-                                      <li key={index} data-testid="cast">{member}</li>
-                                    )}
-                                 </AccordionPanel>
-                               </AccordionItem>
-                            </Accordion>
-                            <br />
-                            {movieDetails.director}
-                            <br/>
-                            {movieDetails.productionCompanies.map((company) => company).join(", ")}
-                            <br/>
-                              </ModalBody>
-                              <ModalFooter>
-                              </ModalFooter>
-                            </ModalContent>
-                     </Modal>
-
-
-            )}
+        {selectedMovieID && (
+                    <Box id="overlay-content" data-testid="overlay" mt={2} padding="20px" borderWidth="1px" borderRadius="md" boxShadow="lg" width="400px">
+                      <Box mb={2}>
+                        <Badge>Released {movieDetails.year}</Badge>
+                      </Box>
+                      <Box d="flex">
+                        <Image src={movieDetails.poster} mr={2} />
+                        <Box>
+                          <Box mb={2}>{movieDetails.overview}</Box>
+                          <Box mb={2}>
+                            Genres: {movieDetails.genres.map((genre) => genre).join(", ")}
+                          </Box>
+                          <Accordion mb={2} allowToggle>
+                            <AccordionItem>
+                              <h2>
+                                <AccordionButton onClick={() => setCastIsOpen(!castIsOpen)}>Cast List</AccordionButton>
+                              </h2>
+                              <AccordionPanel maxH="200px" overflowY="scroll" isOpen={castIsOpen}>
+                                {movieDetails.cast.map((member, index) => (
+                                  <li key={index} data-testid="cast">
+                                    {member}
+                                  </li>
+                                ))}
+                              </AccordionPanel>
+                            </AccordionItem>
+                          </Accordion>
+                          <Box mb={2}>{movieDetails.director}</Box>
+                          <Box>{movieDetails.productionCompanies.join(", ")}</Box>
+                        </Box>
+                      </Box>
+                </Box>
+              )}
             </div>
     );
 }

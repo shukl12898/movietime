@@ -17,27 +17,27 @@ public class SearchController {
         this.service = service;
     }
 
-    @GetMapping("/search_movie/{query}")
-    public ResponseEntity<SearchResponse> getMoviesTitle(@PathVariable String query){
-        SearchResponse response = service.getMoviesTitle(query);
+    @GetMapping("/search_movie/{query}/{startYear}/{endYear}")
+    public ResponseEntity<SearchResponse> getMoviesTitle(@PathVariable String query, @PathVariable String startYear, @PathVariable String endYear){
+        SearchResponse response = service.getMoviesTitle(query, startYear, endYear);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/search_keyword/{query}")
-    public ResponseEntity<SearchResponse> getMoviesKeyword(@PathVariable String query){
-        SearchResponse response = service.getMoviesKeyword(query);
+    @GetMapping("/search_keyword/{query}/{startYear}/{endYear}")
+    public ResponseEntity<SearchResponse> getMoviesKeyword(@PathVariable String query, @PathVariable String startYear, @PathVariable String endYear){
+        SearchResponse response = service.getMoviesKeyword(query, startYear, endYear);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/search_person/{query}")
-    public ResponseEntity<SearchResponse> getMoviesActor(@PathVariable String query){
-        SearchResponse response = service.getMoviesActor(query);
+    @GetMapping("/search_person/{query}/{startYear}/{endYear}")
+    public ResponseEntity<SearchResponse> getMoviesActor(@PathVariable String query, @PathVariable String startYear, @PathVariable String endYear){
+        SearchResponse response = service.getMoviesActor(query, startYear, endYear);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/search_multi/{query}/{filters}")
-    public ResponseEntity<SearchResponse> getMoviesMulti(@PathVariable String query,@PathVariable ArrayList<Object> filters){
-        SearchResponse response = service.getMultiResults(query, filters);
+    @GetMapping("/search_multi/{query}/{filters}/{startYear}/{endYear}")
+    public ResponseEntity<SearchResponse> getMoviesMulti(@PathVariable String query,@PathVariable ArrayList<Object> filters, @PathVariable String startYear, @PathVariable String endYear){
+        SearchResponse response = service.getMultiResults(query, filters, startYear, endYear);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

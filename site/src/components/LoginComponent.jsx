@@ -4,13 +4,13 @@ import {
 Card, CardHeader, CardBody, Heading,CardFooter,
 Flex, Spacer, FormControl,FormLabel,Input, Button, FormHelperText
 } from '@chakra-ui/react';
-import { useNavigate } from "react-router-dom";
 
-function LoginComponent() {
+function LoginComponent({toggleLogIn}) {
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const navigate = useNavigate();
+
+    const allow = (username != '') && (password != '');
 
     const [registered, setRegistered] = useState(true);
 
@@ -51,7 +51,9 @@ function LoginComponent() {
           </CardBody>
           <CardFooter>
           <Spacer/>
-           <Button onClick={() => {
+           <Button
+           isDisabled={!allow}
+           onClick={() => {
                       fetch("/api/login", {
                         method: "POST",
                         headers: {
@@ -72,7 +74,7 @@ function LoginComponent() {
                                 sessionStorage.setItem("userId", response.userId);
                                 sessionStorage.setItem("displayName", response.displayName);
                                 setRegistered(true);
-                                navigate('/Search');
+                                toggleLogIn();
                             }
                             console.log(response);
                         })

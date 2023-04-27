@@ -3,13 +3,16 @@ import { Input} from '@chakra-ui/react'
 
 
 // functional component
-const SearchBox = ({onSearch}) => {
+const SearchBox = ({onSearch, onSubmitted}) => {
     const [currentQuery, setCurrentQuery] = useState("");
+
 
     const handleSubmit = (event) => {
         event.preventDefault();
         onSearch(currentQuery);
+        onSubmitted(true);
     }
+
 
     return (
         <div key = "0">
