@@ -89,10 +89,42 @@ public class DatabaseManager {
      * @param password password (encrypted).
      */
      public UserModel createNewUser(String username, String password, String name){
-        insertIntoUser(username, password, name);
-        UserModel u = getUser(username, password);
-        u.setDisplayName(name);
-        return u;
+         if (doesUserExist(username)) return null;
+         String encryptedUser = Encryption.hash(username);
+         String encryptedPw = Encryption.hash(password);
+         insertIntoUser(encryptedUser, encryptedPw, name);
+
+         try {
+             UserModel u = getUser(username, password);
+             u.setDisplayName(name);
+             return u;
+         } catch (Exception e) {
+             System.out.println(e);
+         }
+         return null;
+    }
+
+    /**
+     * Checks if a user exists. pass a non-encrypted username.
+     * @param username
+     * @return
+     */
+    public boolean doesUserExist(String username) {
+
+        try (Connection c = DriverManager.getConnection(SQLITE_CONNECTION_STRING)){
+            String encryptedUser = Encryption.hash(username);
+
+            PreparedStatement pst = c.prepareStatement("SELECT user_id, name from users " +
+                    "WHERE username = ? ");
+            pst.setString(1, encryptedUser);
+            ResultSet resultSet = pst.executeQuery();
+            if (resultSet.next()) {
+                return true;
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
     }
 
     /**
@@ -122,50 +154,32 @@ public class DatabaseManager {
         return userNames;
     }
 
-    /**
-     * Counts number of entries for a given table.
-     * @param tableName of the table to search for.
-     * @return
-     */
-    public int getRowCount(String tableName) {
-        String table;
-        String attribute;
-        if (tableName.contains("user")) {
-            table = "users";
-            attribute = "user_id";
-        } else {
-            return 0;
-        }
 
-        try (Connection c = DriverManager.getConnection(SQLITE_CONNECTION_STRING)){
-            PreparedStatement pst = c.prepareStatement("SELECT COUNT(?) FROM ?");
-            pst.setString(1, attribute);
-            pst.setString(2, table);
-            ResultSet resultSet = pst.executeQuery();
-            return resultSet.getInt(0);
-        } catch (Exception e) {
-            System.out.println(e);
-            System.out.println("Error counting entries.");
+    public UserModel getUser(String username, String password) throws Exception {
+        if (!doesUserExist(username)) {
+            throw new Exception("User does not exist");
         }
-        return -1;
-    }
-
-    public UserModel getUser(String username, String password) {
         try (Connection c = DriverManager.getConnection(SQLITE_CONNECTION_STRING)){
-            PreparedStatement pst = c.prepareStatement("SELECT user_id, name from users " +
-                    "WHERE username = ? AND password = ? ");
-            pst.setString(1, username);
-            pst.setString(2, password);
+            String encryptedUser = Encryption.hash(username);
+            String encryptedPw = Encryption.hash(password);
+
+            PreparedStatement pst = c.prepareStatement("SELECT user_id, password, name from users " +
+                    "WHERE username = ? ");
+            pst.setString(1, encryptedUser);
             ResultSet resultSet = pst.executeQuery();
             if (resultSet.next()) {
                 int userId = resultSet.getInt("user_id");
                 String name = resultSet.getString("name");
+                String storedPw = resultSet.getString("password");
+                if (encryptedPw.compareTo(storedPw) != 0) {
+                    throw new Exception("Password mismatch");
+                }
                 UserModel u = new UserModel(userId, username);
                 u.setDisplayName(name);
                 return u;
             }
         } catch (Exception e) {
-            System.out.println(e);
+            throw e;
         }
         return null;
     }
@@ -324,6 +338,52 @@ public class DatabaseManager {
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
+    }
+
+    public void deleteFromWatchlist(int targetMovie, int watchlistId) {
+        try (Connection conn = DriverManager.getConnection(SQLITE_CONNECTION_STRING)) {
+            String query2 = "DELETE FROM contentsOfLists WHERE watchlist_id = ? and movie_id = ?";
+            PreparedStatement pst2 = conn.prepareStatement(query2);
+            pst2.setInt(1, watchlistId);
+            pst2.setInt(2, targetMovie);
+            pst2.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
+    public String renameList(int watchlistId, String newName) {
+
+        try (Connection conn = DriverManager.getConnection(SQLITE_CONNECTION_STRING)) {
+            String query = "SELECT user_id FROM watchlists WHERE watchlist_id = ? ";
+            PreparedStatement pst1 = conn.prepareStatement(query);
+            pst1.setInt(1, watchlistId);
+            ResultSet rs = pst1.executeQuery();
+            rs.next();
+
+            int belongsTo = rs.getInt("user_id");
+
+            String query3 = "SELECT * FROM watchlists WHERE user_id = ? and list_name = ? ";
+            PreparedStatement pst3 = conn.prepareStatement(query3);
+            pst3.setInt(1, belongsTo);
+            pst3.setString(2, newName);
+            ResultSet listsWithRename = pst3.executeQuery();
+            if (listsWithRename.next()) {
+                return "Name exists";
+            }
+
+            String query2 = "UPDATE watchlists " +
+                    "SET list_name = ? " +
+                    "WHERE watchlist_id = ?";
+            PreparedStatement pst2 = conn.prepareStatement(query2);
+            pst2.setString(1, newName);
+            pst2.setInt(2, watchlistId);
+            pst2.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return "SUCCESS";
+
     }
 
 

@@ -1,9 +1,10 @@
 package edu.usc.csci310.project.moviedetails.service;
 import edu.usc.csci310.project.moviedetails.responses.MovieDetailsResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
+
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -13,18 +14,22 @@ public class MovieDetailsService {
     @Value("${tmdb.apiKey}")
     private String apiKey;
 
-    private final RestTemplate restTemplate;
+    private final MovieDetailsAPIService service;
 
-    public MovieDetailsService(RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
+    @Autowired
+    public MovieDetailsService(MovieDetailsAPIService service) {
+        this.service = service;
+
     }
 
     public MovieDetailsResponse getMovieDetails(int movieId) {
         String url = "https://api.themoviedb.org/3/movie/" + movieId + "?api_key=" + apiKey;
-//        System.out.println("Sending request to URL: " + url);
-        ResponseEntity<Map> responseEntity = restTemplate.getForEntity(url, Map.class);
+        System.out.println("Sending request to URL: " + url);
+        ResponseEntity<Map> responseEntity = service.makeAPICall(url);
         Map<String, Object> responseMap = responseEntity.getBody();
         MovieDetailsResponse movieDetails = new MovieDetailsResponse();
+
+        movieDetails.setID(movieId);
 
         movieDetails.setTitle((String) responseMap.get("original_title"));
         movieDetails.setOverview((String) responseMap.get("overview"));
@@ -54,8 +59,8 @@ public class MovieDetailsService {
         movieDetails.setGenres(genres);
 
         String castUrl = "https://api.themoviedb.org/3/movie/" + movieId + "/credits?api_key=" + apiKey;
-//        System.out.println("Sending request to URL: " + castUrl);
-        ResponseEntity<Map> responseEntity2 = restTemplate.getForEntity(castUrl, Map.class);
+        System.out.println("Sending request to URL: " + castUrl);
+        ResponseEntity<Map> responseEntity2 = service.makeAPICall(castUrl);
         Map<String, Object> responseMap2 = responseEntity2.getBody();
 
         list = (ArrayList) responseMap2.get("crew");

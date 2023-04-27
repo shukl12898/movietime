@@ -42,15 +42,19 @@ public class WatchlistController {
         NewWatchlistResponse response = new NewWatchlistResponse();
         try {
             DatabaseManager db = new DatabaseManager();
-            db.newWatchlist(request.getWatchListName(), request.getForUser(), request.isPrivate());
-            response.setStatus(200);
-            response.setMessage("Successfully created list.");
+            int listId = db.newWatchlist(request.getWatchListName(), request.getForUser(), request.isPrivate());
+            if (listId == -1) {
+                response.setStatus(401);
+                response.setMessage("List name exists.");
+            } else {
+                response.setStatus(200);
+                response.setMessage("Successfully created list.");
+            }
         } catch (Exception e) {
             response.setStatus(401);
             response.setMessage("Error creating list.");
         }
         return ResponseEntity.ok().body(response);
-
     }
 
     @DeleteMapping("/api/watchlists/{watchlistId}")
@@ -64,6 +68,19 @@ public class WatchlistController {
         }
     }
 
+    @DeleteMapping("/api/watchlists/{watchlistId}/{movieId}")
+    public String deleteMovie(@PathVariable("watchlistId") int watchlistId,
+                              @PathVariable("movieId") int movieId,
+                              @RequestBody WatchlistRequest request) {
+        try {
+            DatabaseManager db = new DatabaseManager();
+            db.deleteFromWatchlist(movieId, watchlistId);
+            return "Successfully deleted." ;
+        } catch (Exception e) {
+            return e.toString();
+        }
+    }
+
     @PostMapping("/api/watchlists/insertMovie={watchlistId}/{movieId}")
     public String insertMovie(@PathVariable("watchlistId") int watchlistId,
                                   @PathVariable("movieId") int movieId,
@@ -72,6 +89,18 @@ public class WatchlistController {
             DatabaseManager db = new DatabaseManager();
             db.insertIntoWatchlist(movieId, watchlistId);
             return "Successfully added a new movie.";
+        } catch (Exception e) {
+            return e.toString();
+        }
+    }
+    @PostMapping("/api/watchlists/changeList={watchlistId}/to={newName}")
+    public String updateList(@PathVariable("watchlistId") int watchlistId,
+                              @PathVariable("newName") String newName,
+                              @RequestBody WatchlistRequest request) {
+        try {
+            DatabaseManager db = new DatabaseManager();
+            String message = db.renameList(watchlistId, newName);
+            return message;
         } catch (Exception e) {
             return e.toString();
         }

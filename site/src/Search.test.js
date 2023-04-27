@@ -13,6 +13,7 @@ test("full app rendering", async () => {
     expect(screen.getByText(/MovieTime/)).toBeInTheDocument();
 });
 
+
 describe('SearchBox', ()=>{
     test('renders SearchBox component', () => {
         render(<SearchBox />);

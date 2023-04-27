@@ -27,8 +27,8 @@ function MovieDetails(props) {
   const [isHovering, setIsHovering] = useState(false);
   const [showOverlay, setShowOverlay] = useState(false);
   const [selectedMovieID, setSelectedMovieID] = useState(null);
-  const movieID = props.data;
 
+  const movieID = props.data;
 
     useEffect(() => {
         fetch(`/movies/${movieID}`)
@@ -60,6 +60,7 @@ function MovieDetails(props) {
     }
 
     return (
+
         <div className="background">
             {movieDetails.title ?
               <Box
@@ -78,7 +79,7 @@ function MovieDetails(props) {
                 >
                   {movieDetails.title}
                 </div>
-                {isHovering && <HoverButtons title={movieDetails.title} className="hover" />}
+                {isHovering && <HoverButtons movieDetails={movieDetails} className="hover" />}
               </Box>
               :
               <div>Loading...</div>
@@ -102,6 +103,7 @@ function MovieDetails(props) {
                         {movieDetails.overview}
                     <br />
                       Genres: {movieDetails.genres.map((genre) => genre).join(", ")}
+
                     <br />
                     <br />
                     <Accordion>
