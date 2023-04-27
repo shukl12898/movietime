@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import SuggestionResult from "../components/SuggestionResult";
-import NavBar from "../components/NavBar";
 import SuggestionCreateNewList from "../components/SuggestionCreateNewList"
 import { Box, Flex, Text} from "@chakra-ui/react";
 
@@ -55,7 +54,6 @@ function Suggestions({ selectedMovies }) {
   return (
     <div>
 
-      <NavBar />
        <Flex justifyContent="center" alignItems="center" flexDirection="column">
           {loading && <div>Loading...</div>}
           {error && <div>These are the 0 movies that we suggest!</div>}

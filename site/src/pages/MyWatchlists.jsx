@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from "react";
-import NavBar from '../components/NavBar';
 import {
 Card, CardHeader, CardBody, Heading,
 Flex, Spacer,Button,
- Box, SimpleGrid,CardFooter, ButtonGroup, Badge, Divider, IconButton
+ Box, SimpleGrid,CardFooter, ButtonGroup, Badge, Divider
 } from '@chakra-ui/react';
-import {EditIcon} from '@chakra-ui/icons'
 import { useNavigate } from "react-router-dom";
 import WatchlistMovieDetails from '../components/WatchlistMovieDetails';
 import CreateNewList from '../components/CreateNewList';
 import DeleteWatchlist from '../components/DeleteWatchlist';
+import ReconfigureList from '../components/ReconfigureList';
 import SuggestionButton from '../components/SuggestionButton';
 import CompareWatchlist from "../components/CompareWatchlist";
 
@@ -26,6 +25,16 @@ function MyWatchlists({selectedMovies, setSelectedMovies}) {
     const handleSuggestionClick = () => {
          setShowSuggestionStuff(!showSuggestionStuff);
      };
+
+    const handleCreateMontage = (selectedId) => {
+      const selectedWatchlist = watchlists.find(list => list.listId === selectedId);
+      if (!selectedWatchlist || selectedWatchlist.movies.length === 0) {
+        alert('Selected watchlist has no movies!');
+        return;
+      }
+      navigate("/Montage", { state: { movies: selectedWatchlist.movies } });
+      console.log('Creating montage.');
+    }
 
     const handleAlertDialogClose = () => {
         console.log("Action completed. Lists modified. Refreshing lists.");
@@ -73,12 +82,13 @@ function MyWatchlists({selectedMovies, setSelectedMovies}) {
     };
 
       useEffect(()=>{
+            console.log("rendering...");
               getLists();
       },[]);
 
     return (
         <div>
-            <NavBar/>
+
 
             <Flex minWidth='max-content' alignItems='center' gap='2' p='9'>
               <Box>
@@ -136,19 +146,21 @@ function MyWatchlists({selectedMovies, setSelectedMovies}) {
                                  <CardFooter>
                                  <Spacer/>
                                  <ButtonGroup gap='2'>
-                                    <IconButton
-                                        icon={<EditIcon/>}
-
-
+                                    <ReconfigureList
+                                     listTitle={watchlists[index].listName}
+                                    listId={watchlists[index].listId}
+                                    onAlertDialogClose={handleAlertDialogClose}
                                     />
                                     <DeleteWatchlist
                                     listTitle={watchlists[index].listName}
                                     listId={watchlists[index].listId}
                                     onAlertDialogClose={handleAlertDialogClose}/>
+                                    <Button onClick={() => handleCreateMontage(watchlists[index].listId)}>
+                                        Create Montage
+                                    </Button>
                                     <CompareWatchlist
-                                     listId = {watchlists[index].listId}
-                                     isPrivate={watchlists[index].isPrivate}
-                                    />
+                                        listId = {watchlists[index].listId}
+                                        isPrivate = {watchlists[index].isPrivate} />
                                     </ButtonGroup>
                                  </CardFooter>
                            </Card>

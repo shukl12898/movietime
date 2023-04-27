@@ -4,15 +4,16 @@ import {
 Card, CardHeader, CardBody, Heading,CardFooter,
 Flex, Spacer, FormControl,FormLabel,Input, Button, FormHelperText
 } from '@chakra-ui/react';
-import { useNavigate } from "react-router-dom";
 
-function LoginComponent() {
+function LoginComponent({toggleLogIn}) {
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const navigate = useNavigate();
+
+    const allow = (username != '') && (password != '');
 
     const [registered, setRegistered] = useState(true);
+    const [correct, setCorrect] = useState(true);
 
     function handleUsernameChange(event) {
         setUsername(event.target.value);
@@ -45,13 +46,20 @@ function LoginComponent() {
                            Account not found.
                          </FormHelperText>
                        )}
+                       {!correct && (
+                                                <FormHelperText>
+                                                  Incorrect password.
+                                                </FormHelperText>
+                                              )}
                   </FormControl>
 
 
           </CardBody>
           <CardFooter>
           <Spacer/>
-           <Button onClick={() => {
+           <Button
+           isDisabled={!allow}
+           onClick={() => {
                       fetch("/api/login", {
                         method: "POST",
                         headers: {
@@ -65,16 +73,25 @@ function LoginComponent() {
                         .then(res => res.json())
                         .then((response) => {
                             console.log("API Responded With: ");
-                            if (response.displayName == null) {
-                                console.log("Error.");
-                                setRegistered(false);
-                            } else {
-                                sessionStorage.setItem("userId", response.userId);
-                                sessionStorage.setItem("displayName", response.displayName);
-                                setRegistered(true);
-                                navigate('/Search');
-                            }
                             console.log(response);
+                            if(response.message == "Wrong password.") {
+
+                                setCorrect(false);
+
+                            } else if(response.message == "User does not exist.") {
+
+                                setCorrect(true);
+                                setRegistered(false);
+
+                            } else if (response.message == "Success"){
+
+                                sessionStorage.setItem("userId", response.userId);
+                                                                sessionStorage.setItem("displayName", response.displayName);
+                                setCorrect(true);
+                                setRegistered(true);
+                                toggleLogIn();
+
+                            }
                         })
                         .catch(error => {
                           console.log(error);

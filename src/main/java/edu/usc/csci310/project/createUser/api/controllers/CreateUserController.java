@@ -21,9 +21,17 @@ public class CreateUserController {
         try {
             DatabaseManager db = new DatabaseManager();
             UserModel u = db.createNewUser(request.getUsername(), request.getPassword(), request.getName());
-            response.setUserId(u.getUser_id());
-            response.setDisplayName(u.getDisplayName());
-            response.setStatus(200); // ok
+
+            if (u == null) {
+                response.setStatus(401);
+                response.setMessage("User exists.");
+                return ResponseEntity.status(HttpStatusCode.valueOf(401)).body(response);
+            } else {
+                response.setUserId(u.getUser_id());
+                response.setDisplayName(u.getDisplayName());
+                response.setMessage("Successfully created.");
+                response.setStatus(200); // ok
+            }
         } catch (Exception e) {
             response.setStatus(401);
             return ResponseEntity.status(HttpStatusCode.valueOf(401)).body(response);
