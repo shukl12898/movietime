@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import MovieResult from '../components/MovieResult';
 import SearchBox from '../components/SearchBox';
 import SearchFilter from '../components/SearchFilter';
-import NavBar from '../components/NavBar';
 import {
 HStack, VStack,
 Card, CardHeader, CardBody, Heading,
