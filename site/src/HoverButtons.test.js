@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent, screen, waitFor, getByTestId } from '@testing-library/react';
+import { render, fireEvent, screen, waitFor, getByTestId, waitForElementToBeRemoved } from '@testing-library/react';
 import HoverButtons from './components/HoverButtons';
 
 describe('HoverButtons', () => {
@@ -100,5 +100,22 @@ describe('HoverButtons', () => {
         expect(await screen.findByText('Test List 1')).toBeInTheDocument();
         expect(await screen.findByText('Test List 2')).toBeInTheDocument();
       });
+
+      it('should not display the modal by default', () => {
+        render(<HoverButtons movieDetails={{ title: 'Movie Title', id: 123 }} />);
+        const modal = screen.queryByTestId('modal');
+        expect(modal).not.toBeInTheDocument();
+      });
+
+    it('should show and display the modal according to showOverlay', async () => {
+      render(<HoverButtons movieDetails={{ title: 'Movie Title', id: 123 }} />);
+      const addButton = screen.getByLabelText('Comment');
+      fireEvent.click(addButton);
+      const modal = screen.getByTestId('close-modal-button');
+      expect(modal).toBeInTheDocument();
+      fireEvent.click(modal);
+      await waitForElementToBeRemoved(() => screen.queryByTestId('close-modal-button'));
+      expect(screen.queryByTestId('close-modal-button')).not.toBeInTheDocument();
+    });
 
 });
