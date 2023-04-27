@@ -103,6 +103,7 @@ function HoverButtons({movieDetails}) {
           size="md"
           variant="unstyled"
           display="flex"
+          id="addButton"
         />
         <IconButton
           onClick={onOpen}
@@ -152,7 +153,7 @@ function HoverButtons({movieDetails}) {
               </ModalHeader>
               <ModalCloseButton data-testid="close-modal-button"/>
               <ModalBody>
-              <Select placeholder='Select your list' value={selectedOption} onChange={handleChange}>
+              <Select placeholder='Select your list' id="dropdown" value={selectedOption} onChange={handleChange}>
                 {lists.slice(0).map((movie, index) => (
                       <option key={lists[index].listId} value={lists[index].listId}>{lists[index].listName}</option>
                 ) )}
@@ -162,7 +163,7 @@ function HoverButtons({movieDetails}) {
              <CreateNewList onAlertDialogClose={fetchLists}/>
               </ModalBody>
               <ModalFooter>
-                        <Button onClick={() => {
+                        <Button id="addToList" onClick={() => {
                         addToList(selectedOption, movieId);
                         }}>Add</Button>
                       </ModalFooter>

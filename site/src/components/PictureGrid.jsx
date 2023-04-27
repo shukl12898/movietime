@@ -31,6 +31,7 @@ const PictureGrid = ({ movieImages }) => {
             maxWidth={maxImageWidth}
             transform={`rotate(${Math.floor(Math.random() * 91) - 45}deg)`}
             border="5px solid white"
+            tag="img"
           />
         </GridItem>
       ))}
