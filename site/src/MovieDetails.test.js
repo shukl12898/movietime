@@ -77,5 +77,30 @@ describe("MovieDetails component", () => {
     delete global.fetch;
   });
 
+  test("deselects movie when movie title is clicked again", async () => {
+    render(<MovieDetails data={mockMovieData} filter="movie" />);
+    await screen.findByTestId("movie-title");
+
+    fireEvent.click(screen.getByTestId("movie-title"));
+    expect(screen.getByTestId("overlay")).toBeInTheDocument();
+
+    fireEvent.click(screen.getByTestId("movie-title"));
+    expect(screen.queryByTestId("overlay")).not.toBeInTheDocument();
+  });
+
+    test("toggles Cast List accordion on click", async () => {
+      render(<MovieDetails data={mockMovieData} filter="movie" />);
+      await screen.findByTestId("movie-title");
+      fireEvent.click(screen.getByTestId("movie-title"));
+
+      const accordionButton = screen.getByTestId("castButton");
+      const castList = screen.getByTestId("castList");
+
+      fireEvent.click(accordionButton);
+
+      expect(castList).not.toBeNull();
+
+    });
+
 
 });

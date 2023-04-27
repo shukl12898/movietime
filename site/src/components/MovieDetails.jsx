@@ -88,9 +88,9 @@ function MovieDetails(props) {
                   <Accordion mb={2} allowToggle>
                     <AccordionItem>
                       <h2>
-                        <AccordionButton onClick={() => setCastIsOpen(!castIsOpen)}>Cast List</AccordionButton>
+                        <AccordionButton data-testid="castButton" onClick={() => setCastIsOpen(!castIsOpen)}>Cast List</AccordionButton>
                       </h2>
-                      <AccordionPanel maxH="200px" overflowY="scroll" isOpen={castIsOpen}>
+                      <AccordionPanel maxH="200px" data-testid="castList" overflowY="scroll" isOpen={castIsOpen}>
                         {movieDetails.cast.map((member, index) => (
                           <li key={index} data-testid="cast">
                             {member}
