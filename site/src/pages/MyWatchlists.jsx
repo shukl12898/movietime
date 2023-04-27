@@ -10,17 +10,37 @@ import { useNavigate } from "react-router-dom";
 import WatchlistMovieDetails from '../components/WatchlistMovieDetails';
 import CreateNewList from '../components/CreateNewList';
 import DeleteWatchlist from '../components/DeleteWatchlist';
+import SuggestionButton from '../components/SuggestionButton';
+import CompareWatchlist from "../components/CompareWatchlist";
 
-function MyWatchlists() {
+function MyWatchlists({selectedMovies, setSelectedMovies}) {
 
     const [watchlists, assignLists] = useState([]);
     const [userId, setId] = useState(0);
     const navigate = useNavigate();
+    const [showSuggestionStuff, setShowSuggestionStuff] = useState(false);
+
+
+
+
+    const handleSuggestionClick = () => {
+         setShowSuggestionStuff(!showSuggestionStuff);
+     };
 
     const handleAlertDialogClose = () => {
         console.log("Action completed. Lists modified. Refreshing lists.");
         getLists();
       };
+
+    const handleRadioChange = (movieId, isSelected) => {
+      if (isSelected) {
+        setSelectedMovies((prevState) => [...prevState, movieId]);
+      } else {
+        setSelectedMovies((prevState) =>
+          prevState.filter((id) => id !== movieId)
+        );
+      }
+    };
 
     const getLists = async() => {
         const storedId = sessionStorage.getItem('userId');
@@ -66,6 +86,7 @@ function MyWatchlists() {
               </Box>
               <Spacer />
               <ButtonGroup gap='3'>
+               <Button onClick = {handleSuggestionClick} > Suggestion </Button>
                <CreateNewList onAlertDialogClose={handleAlertDialogClose}/>
                 <Button> Find a List</Button>
               </ButtonGroup>
@@ -105,6 +126,8 @@ function MyWatchlists() {
                                           listId={watchlists[index].listId}
                                           onAlertDialogClose={handleAlertDialogClose}
                                           watchlists={watchlists}
+                                          onRadioChange={handleRadioChange}
+                                          showRadio = {showSuggestionStuff}
                                           />
                                           </>
                                         ))
@@ -121,12 +144,22 @@ function MyWatchlists() {
                                     listTitle={watchlists[index].listName}
                                     listId={watchlists[index].listId}
                                     onAlertDialogClose={handleAlertDialogClose}/>
+                                    <CompareWatchlist
+                                     listId = {watchlists[index].listId}
+                                     isPrivate={watchlists[index].isPrivate}
+                                    />
                                     </ButtonGroup>
                                  </CardFooter>
                            </Card>
                         </div>
                             ))}
                 </SimpleGrid>
+
+                <Flex justifyContent="center" alignItems="center" flexDirection="row">
+                    {showSuggestionStuff && (
+                        <SuggestionButton containsSomething = {selectedMovies.length}/>
+                        )}
+                </Flex>
 
             </div>
     );

@@ -20,10 +20,10 @@ import {
     AccordionButton,
     AccordionPanel,
     AccordionIcon,
-    Box, Flex, Spacer, ButtonGroup
+    Box, Flex, Spacer, ButtonGroup, Checkbox
 } from '@chakra-ui/react';
 
-function WatchlistMovieDetails({ onAlertDialogClose, ...props }) {
+function WatchlistMovieDetails({ onAlertDialogClose, onRadioChange,showRadio,...props }) {
 
     const [hoverControlsVisible, setHoverControlsVisible] = useState(false);
 
@@ -36,6 +36,13 @@ function WatchlistMovieDetails({ onAlertDialogClose, ...props }) {
     const baseurl = 'https://api.themoviedb.org/3/movie/';
     const listTitle = props.listTitle;
     const listId = props.listId;
+    const [selected, setSelected] = useState(false);
+
+
+    const handleRadioSelection = (e) => {
+        setSelected(e.target.checked);
+        onRadioChange(movieId, e.target.checked);
+    };
 
     const showHoverControls = () => {
       setHoverControlsVisible(true);
@@ -76,7 +83,13 @@ function WatchlistMovieDetails({ onAlertDialogClose, ...props }) {
         {
             <Box p={3} id="movie-name" onMouseEnter={showHoverControls} onMouseLeave={hideHoverControls} key={movieId} >
             <Flex>
-
+               {showRadio && (
+               <Checkbox
+                 isChecked={selected}
+                 onChange={handleRadioSelection}
+               >
+               </Checkbox>
+               )}
               <div onClick={() => {
                        showDetails(movieId);
                }}>
