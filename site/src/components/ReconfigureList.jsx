@@ -1,14 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
-Card, CardHeader, CardBody, Heading,
-Flex, Spacer,Button, Popover, PopoverArrow, PopoverCloseButton,
-PopoverFooter, PopoverContent, PopoverTrigger, PopoverBody,
- Box, SimpleGrid,Text,CardFooter, ButtonGroup, Input, Badge, Switch, Divider,
- AlertDialog, AlertDialogOverlay,AlertDialogContent,
- AlertDialogHeader,AlertDialogFooter, useDisclosure, IconButton
+Button, Input,
+ AlertDialog, AlertDialogOverlay,AlertDialogContent, AlertDialogBody,
+ AlertDialogHeader,AlertDialogFooter, useDisclosure, IconButton, FormControl, FormLabel, FormHelperText
 } from '@chakra-ui/react';
-import { DeleteIcon, EditIcon} from '@chakra-ui/icons'
-import { useNavigate } from "react-router-dom";
+import { EditIcon} from '@chakra-ui/icons';
 
 function ReconfigureList({ onAlertDialogClose, ...props }) {
     const listName = props.listTitle;
@@ -24,7 +20,7 @@ function ReconfigureList({ onAlertDialogClose, ...props }) {
     const updateList = async () => {
         const storedId = sessionStorage.getItem('userId');
          try {
-            const response = await fetch(`/api/watchlists/changeList=${listId}/to=${rename}`, {
+            const response = await fetch(`/api/watchlists/changeList=${listId}/to=${newListName}`, {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
@@ -35,6 +31,12 @@ function ReconfigureList({ onAlertDialogClose, ...props }) {
             });
             const result = await response.text();
             console.log(result);
+            if (result == "Name exists") {
+                setExists(true);
+            } else {
+                setExists(false);
+                handleClose();
+            }
           } catch (error) {
             console.error(error);
           }
@@ -43,11 +45,6 @@ function ReconfigureList({ onAlertDialogClose, ...props }) {
     const handleClose = () => {
         onAlertDialogClose(); // Call the function from Component A
         onClose(); // Close the AlertDialog
-    };
-
-    const handleDelete = () => {
-        deleteWatchlist();
-        onClose();
     };
 
     return (
@@ -68,7 +65,7 @@ function ReconfigureList({ onAlertDialogClose, ...props }) {
                 <AlertDialogHeader fontSize='lg' fontWeight='bold'>
                   Edit {listName}
                 </AlertDialogHeader>
-
+                <AlertDialogBody>
                 <FormControl isRequired isInvalid={exists}>
                   <FormLabel>Rename your list:</FormLabel>
                   <Input
@@ -84,13 +81,13 @@ function ReconfigureList({ onAlertDialogClose, ...props }) {
                        </FormHelperText>
                     )}
                     </FormControl>
-
+                </AlertDialogBody>
                 <AlertDialogFooter>
                   <Button ref={cancelRef} onClick={handleClose}>
                     Cancel
                   </Button>
-                  <Button colorScheme='red' onClick={handleDelete} ml={3}>
-                    Delete
+                  <Button colorScheme='green' onClick={updateList} ml={3}>
+                    Submit Changes
                   </Button>
                 </AlertDialogFooter>
               </AlertDialogContent>
