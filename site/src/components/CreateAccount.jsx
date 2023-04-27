@@ -12,8 +12,10 @@ function CreateAccount({toggleLogIn}) {
     const [confirmPassword, setConfPassword] = useState("");
     const [name, setName] = useState("");
 
-    const matchingPw = password != confirmPassword;
+    const [exists, setExists] = useState(false);
 
+    const matchingPw = password != confirmPassword;
+    const empty = (username == '') || (password == '');
     //const [validUser, setValid] = useState(true);
 
     function handleUsernameChange(event) {
@@ -33,6 +35,9 @@ function CreateAccount({toggleLogIn}) {
      }
 
      function handleSubmit() {
+        if (name == "") {
+            setName(username);
+        }
         fetch("/api/createUser", {
             method: "POST",
             headers: {
@@ -47,16 +52,15 @@ function CreateAccount({toggleLogIn}) {
             .then(res => res.json())
             .then((response) => {
                console.log("API Responded With: ");
-               if (response.displayName == null) {
-                   console.log("Error.");
+               console.log(response);
+               if (response.message == "User exists.") {
+                   setExists(true);
                } else {
+                   setExists(false);
                    sessionStorage.setItem("userId", response.userId);
                    sessionStorage.setItem("displayName", response.displayName);
                    toggleLogIn();
                }
-               console.log(response);
-               sessionStorage.setItem("userId", response.userId);
-               sessionStorage.setItem("displayName", response.displayName);
             })
             .catch(error => {
              console.log(error)
@@ -78,7 +82,7 @@ function CreateAccount({toggleLogIn}) {
                      <Input
                      placeholder='Enter a username' type="text" value={username} onChange={handleUsernameChange}
                      />
-                     {false && (
+                     {exists && (
                           <FormHelperText>
                             Username already exists.
                           </FormHelperText>
@@ -99,14 +103,14 @@ function CreateAccount({toggleLogIn}) {
                         )}
                       </FormControl>
 
-                      <FormControl isRequired>
+                      <FormControl>
                    <FormLabel htmlFor="displayName">Display Name</FormLabel>
                    <Input placeholder='Enter display name' type="text" value={name} onChange={handleNameChange}/>
                     </FormControl>
                </CardBody>
                <CardFooter>
                 <Spacer/>
-                <Button isDisabled={matchingPw} onClick={handleSubmit}>Create Account</Button>
+                <Button isDisabled={matchingPw || empty} onClick={handleSubmit}>Create Account</Button>
                 <Spacer/>
                </CardFooter>
              </Card>
