@@ -9,12 +9,16 @@ import NavBar from "./components/NavBar";
 import {useState, useEffect} from "react";
 
 import { ChakraProvider } from '@chakra-ui/react';
+import { useNavigate } from "react-router-dom";
+
 
 
 function App() {
 
     const [loggedIn, setLoggedIn] = useState(false);
     const [name, setName] = useState("");
+     //const navigate = useNavigate();
+
 
     const toggleLogIn = () => {
         setLoggedIn(!loggedIn);
@@ -28,6 +32,7 @@ function App() {
         } else {
           console.log('App render. No name found.');
           setName('');
+          //navigate("/");
         }
     };
 
