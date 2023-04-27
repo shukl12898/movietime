@@ -3,7 +3,7 @@ Feature: Watchlist functionality from the Search Page
     Given I am on the "" page
     When I am logged in
     And I click on the Watchlists Page header
-    Then I should see "Your Watchlists" in the page
+    Then I should see "Your Watchlists" simply on page
 
   Scenario: Open the page and add movie to new watchlist (New name)
     Given I am on the "" page

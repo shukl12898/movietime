@@ -1,4 +1,4 @@
-package edu.usc.csci310.project;
+package edu.usc.csci310.project.demo;
 
 import io.cucumber.java.Before;
 import io.cucumber.java.BeforeAll;
@@ -7,6 +7,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.WebDriver;
@@ -64,14 +65,12 @@ public class WatchlistStepDefinitions {
     }
 
     @And("I click on the Watchlists Page header")
-    public void iClickOnTheWatchlistsPageHeader() {
-       //driver.findElement(By.cssSelector("[name='watchlistHeader']")).click();
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-        System.out.println(driver.getPageSource());
-        driver.findElement(By.id("navDiv"));
-        //wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.id("watchlistHeader"))));
-
+    public void iClickOnTheWatchlistsPageHeader() throws InterruptedException {
+        Thread.sleep(2000);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+//        System.out.println(driver.getPageSource());
+        WebElement watchlistNavButton = wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.cssSelector("#navDiv > div > div.chakra-button__group.css-1ind3v2 > button:nth-child(2)"))));
+        watchlistNavButton.click();
     }
 
     @And("I hover over {string}")
@@ -122,17 +121,19 @@ public class WatchlistStepDefinitions {
     }
 
     @When("I am logged in")
-    public void iAmLoggedIn() {
+    public void iAmLoggedIn() throws InterruptedException {
         driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[3]/button")).click();
         driver.findElement(By.xpath("//*[@id=\"field-:r2:\"]")).sendKeys("user");
         driver.findElement(By.xpath("//*[@id=\"field-:r3:\"]")).sendKeys("pass");
         driver.findElement(By.xpath("//*[@id=\"field-:r4:\"]")).sendKeys("pass");
         driver.findElement(By.xpath("//*[@id=\"field-:r5:\"]")).sendKeys("User");
         driver.findElement(By.id("lowerCreateAccount")).click();
-        //driver.navigate().to(ROOT_URL+"Search");
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+//        Thread.sleep(4000);
+        new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.elementToBeClickable(driver.findElement(By.id("navDiv"))));
+    }
 
-        wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.id("searchHeading"))));
-
+    @Then("I should see {string} simply on page")
+    public void iShouldSeeSimplyOnPage(String arg0) {
+        Assert.assertTrue(driver.getPageSource().contains(arg0));
     }
 }
