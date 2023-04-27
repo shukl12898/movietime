@@ -5,6 +5,7 @@ import { BrowserRouter } from "react-router-dom";
 import SearchBox from './components/SearchBox'
 import SearchFilter from './components/SearchFilter';
 import YearPicker from './components/YearPicker';
+
 test("full app rendering", async () => {
     render(<Search />, { wrapper: BrowserRouter });
 
@@ -19,7 +20,8 @@ describe('SearchBox', ()=>{
     
     test('submitting search form triggers onSearch function with current query', () => {
         const onSearchMock = jest.fn();
-        const { getByTestId } = render(<SearchBox onSearch={onSearchMock} />);
+        const onSubmittedMock = jest.fn();
+        const { getByTestId } = render(<SearchBox onSearch={onSearchMock} onSubmitted={onSubmittedMock} />);
         const searchInput = getByTestId('search-input');
         const searchForm = getByTestId('search-form');
         const query = 'example query';
@@ -28,6 +30,8 @@ describe('SearchBox', ()=>{
 
         expect(onSearchMock).toHaveBeenCalledTimes(1);
         expect(onSearchMock).toHaveBeenCalledWith(query);
+        expect(onSubmittedMock).toHaveBeenCalledTimes(1);
+        expect(onSubmittedMock).toHaveBeenCalledWith(true);
 
     });
     
@@ -105,3 +109,7 @@ describe('YearPicker', () => {
         expect(onEndYearSelect).toHaveBeenCalledWith('2022');
     });
 });
+
+
+
+

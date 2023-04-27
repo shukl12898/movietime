@@ -21,7 +21,7 @@ public class MovieDetailsService {
 
     public MovieDetailsResponse getMovieDetails(int movieId) {
         String url = "https://api.themoviedb.org/3/movie/" + movieId + "?api_key=" + apiKey;
-        System.out.println("Sending request to URL: " + url);
+//        System.out.println("Sending request to URL: " + url);
         ResponseEntity<Map> responseEntity = restTemplate.getForEntity(url, Map.class);
         Map<String, Object> responseMap = responseEntity.getBody();
         MovieDetailsResponse movieDetails = new MovieDetailsResponse();
@@ -54,7 +54,7 @@ public class MovieDetailsService {
         movieDetails.setGenres(genres);
 
         String castUrl = "https://api.themoviedb.org/3/movie/" + movieId + "/credits?api_key=" + apiKey;
-        System.out.println("Sending request to URL: " + castUrl);
+//        System.out.println("Sending request to URL: " + castUrl);
         ResponseEntity<Map> responseEntity2 = restTemplate.getForEntity(castUrl, Map.class);
         Map<String, Object> responseMap2 = responseEntity2.getBody();
 
