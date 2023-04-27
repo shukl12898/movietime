@@ -47,10 +47,13 @@ public class SearchStepDefinitions {
     }
 
     @When("I enter {string} in the search bar")
-    public void iEnterInTheSearchBar(String arg0) {
+    public void iEnterInTheSearchBar(String arg0) throws InterruptedException {
         //driver.findElement(By.xpath("//*[@id=\"searchBar\"]")).sendKeys(arg0);
+        Thread.sleep(2000);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        WebElement searchBar = wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.id("searchBar"))));
+        searchBar.sendKeys(arg0);
 
-        driver.findElement(By.id("searchBar")).sendKeys(arg0);
     }
 
     @And("I press the search button")

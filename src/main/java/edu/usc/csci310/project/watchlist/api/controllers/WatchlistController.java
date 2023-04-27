@@ -38,7 +38,6 @@ public class WatchlistController {
 
     @PostMapping("/api/newList")
     public ResponseEntity<NewWatchlistResponse> newList(@RequestBody NewWatchlistRequest request) {
-
         NewWatchlistResponse response = new NewWatchlistResponse();
         try {
             DatabaseManager db = new DatabaseManager();

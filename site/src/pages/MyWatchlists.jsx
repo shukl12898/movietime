@@ -116,6 +116,7 @@ function MyWatchlists() {
                                     <IconButton
                                         icon={<EditIcon/>}
 
+
                                     />
                                     <DeleteWatchlist
                                     listTitle={watchlists[index].listName}
