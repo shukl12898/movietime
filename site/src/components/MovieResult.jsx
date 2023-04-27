@@ -8,7 +8,7 @@ const MovieResult = (props) => {
         <>
             {props.movies.slice(0, props.numResults).map((movie, index) => (
                     <div key={index} id="movie-title">
-                        <MovieDetails data = {movie}/>
+                        <MovieDetails data = {movie} handleCast = {props.handleCast} handleGenre = {props.handleGenre}/>
 
                     </div>
 

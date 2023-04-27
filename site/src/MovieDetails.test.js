@@ -29,13 +29,19 @@ describe("MovieDetails component", () => {
   });
 
   test("renders loading message before movie details are fetched", async () => {
-    render(<MovieDetails data={mockMovieData} filter="movie" />);
+    const handleCastMock = jest.fn();
+    const handleGenreMock = jest.fn();
+
+    render(<MovieDetails data={mockMovieData} filter="movie" handleCast = {handleCastMock} handleGenre = {handleGenreMock}/>);
     expect(screen.getByText("Loading...")).toBeInTheDocument();
     expect(global.fetch).toHaveBeenCalledTimes(1);
   });
 
   test("opens overlay with movie details when movie title is clicked", async () => {
-    render(<MovieDetails data={mockMovieData} filter="movie" />);
+    const handleCastMock = jest.fn();
+    const handleGenreMock = jest.fn();
+
+    render(<MovieDetails data={mockMovieData} filter="movie" handleCast = {handleCastMock} handleGenre = {handleGenreMock}/>);
     await screen.findByTestId("movie-title");
     fireEvent.click(screen.getByTestId("movie-title"));
     expect(screen.getByTestId("overlay")).toBeInTheDocument();
@@ -46,7 +52,9 @@ describe("MovieDetails component", () => {
   });
 
   test('MovieDetails handles mouse enter and leave events', async () => {
-    render(<MovieDetails data={mockMovieData} filter="movie" />);
+    const handleCastMock = jest.fn();
+    const handleGenreMock = jest.fn();
+    render(<MovieDetails data={mockMovieData} filter="movie" handleCast = {handleCastMock} handleGenre = {handleGenreMock}/>);
     await screen.findByTestId("movie-title");
 
     const movieTitle = screen.getByTestId('movie-title');
@@ -61,6 +69,8 @@ describe("MovieDetails component", () => {
   });
 
   test('should log error message when movieID is invalid', async () => {
+    const handleCastMock = jest.fn();
+    const handleGenreMock = jest.fn();
     const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
     const mockMovieData = { id: 12345 };
     global.fetch = jest.fn().mockImplementation(() =>
@@ -70,7 +80,7 @@ describe("MovieDetails component", () => {
       })
     );
 
-    render(<MovieDetails data={mockMovieData} filter="movie" />);
+    render(<MovieDetails data={mockMovieData} filter="movie" handleCast = {handleCastMock} handleGenre = {handleGenreMock}/>);
     await waitFor(() => expect(fetch).toHaveBeenCalledTimes(1));
 
     consoleSpy.mockRestore();
@@ -78,7 +88,9 @@ describe("MovieDetails component", () => {
   });
 
   test("deselects movie when movie title is clicked again", async () => {
-    render(<MovieDetails data={mockMovieData} filter="movie" />);
+    const handleCastMock = jest.fn();
+    const handleGenreMock = jest.fn();
+    render(<MovieDetails data={mockMovieData} filter="movie" handleCast = {handleCastMock} handleGenre = {handleGenreMock}/>);
     await screen.findByTestId("movie-title");
 
     fireEvent.click(screen.getByTestId("movie-title"));
@@ -89,7 +101,9 @@ describe("MovieDetails component", () => {
   });
 
     test("toggles Cast List accordion on click", async () => {
-      render(<MovieDetails data={mockMovieData} filter="movie" />);
+      const handleCastMock = jest.fn();
+      const handleGenreMock = jest.fn();
+      render(<MovieDetails data={mockMovieData} filter="movie" handleCast = {handleCastMock} handleGenre = {handleGenreMock}/>);
       await screen.findByTestId("movie-title");
       fireEvent.click(screen.getByTestId("movie-title"));
 
