@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { IconButton, HStack, Button } from '@chakra-ui/react';
 import { AiFillDollarCircle } from 'react-icons/ai';
-import { BsPlusCircleFill, BsFillEyeFill } from 'react-icons/bs';
+import { BsPlusCircleFill } from 'react-icons/bs';
 import {
   AlertDialog,
   AlertDialogBody,
@@ -14,6 +14,7 @@ import {
   ModalBody, ModalFooter, Heading
 } from '@chakra-ui/react';
 import CreateNewList from '../components/CreateNewList';
+import InWatchlists from '../components/InWatchlists';
 
 function HoverButtons({movieDetails}) {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -89,12 +90,9 @@ function HoverButtons({movieDetails}) {
   return (
     <>
       <HStack spacing={4} data-testid= "hover-buttons">
-        <IconButton
-          icon={<BsFillEyeFill style={{ color: "#3e5936" }} />}
-          aria-label="Like"
-          size="lg"
-          variant="unstyled"
-          display="flex"
+        <InWatchlists
+            movieTitle = {movieTitle}
+            movieId = {movieId}
         />
         <IconButton
           onClick={() => setShowOverlay(true)}
@@ -112,6 +110,7 @@ function HoverButtons({movieDetails}) {
           size="md"
           variant="unstyled"
           display="flex"
+          id="dollarButton"
         />
       </HStack>
 
@@ -136,7 +135,7 @@ function HoverButtons({movieDetails}) {
               <Button ref={cancelRef} onClick={onClose}>
                 Cancel
               </Button>
-              <Button style={{ backgroundColor: "#3e5936", color: 'white' }} onClick={redirectToTickets} ml={3}>
+              <Button id="purchaseButton" style={{ backgroundColor: "#3e5936", color: 'white' }} onClick={redirectToTickets} ml={3}>
                 Purchase
               </Button>
             </AlertDialogFooter>

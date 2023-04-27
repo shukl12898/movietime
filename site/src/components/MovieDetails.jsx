@@ -19,6 +19,16 @@ function MovieDetails(props) {
 
   const movieID = props.data;
 
+  const handleCast = (newQuery) =>{
+    props.handleCast(newQuery);
+    setSelectedMovieID(null);
+  }
+
+  // const handleGenre = (newQuery) => {
+  //   props.handleGenre(newQuery);
+  //   setSelectedMovieID(null);
+  // }
+
   useEffect(() => {
     fetch(`/movies/${movieID}`)
       .then((response) => {
@@ -51,6 +61,8 @@ function MovieDetails(props) {
     return <div>Loading...</div>;
   }
 
+  console.log("Movie Details are: " + movieDetails);
+
   return (
     <Box className="background">
       {movieDetails.title && (
@@ -66,6 +78,7 @@ function MovieDetails(props) {
           <div
             className="movie-title"
             data-testid="movie-title"
+            id="movie-title-name"
             onClick={() => {
               showDetailsToggle(movieID);
             }}
@@ -92,7 +105,7 @@ function MovieDetails(props) {
                       </h2>
                       <AccordionPanel maxH="200px" data-testid="castList" overflowY="scroll" isOpen={castIsOpen}>
                         {movieDetails.cast.map((member, index) => (
-                          <li key={index} data-testid="cast">
+                          <li key={index} data-testid="cast" onClick={() => handleCast(member)}>
                             {member}
                           </li>
                         ))}

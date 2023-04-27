@@ -105,4 +105,36 @@ public class WatchlistController {
         }
     }
 
+    @PostMapping("/api/watchlists/fetchFor={movieId}")
+    public ResponseEntity<WatchlistResponse>  fetchContainsMovie(@PathVariable("movieId") int movieId,
+                                                                 @RequestBody WatchlistRequest request) {
+        WatchlistResponse response = new WatchlistResponse();
+        try {
+            DatabaseManager db = new DatabaseManager();
+            System.out.println("Fetching lists for " + request.getUserId());
+            ArrayList<ListModel> lists = db.getListsForUser(request.getUserId());
+
+            ArrayList<ListModel> result = new ArrayList<>();
+            for (ListModel l : lists) {
+                List<Integer> temp = l.getMovies();
+                if (temp.contains(movieId)) {
+                    result.add(l);
+                    System.out.println("Found a movie match. ");
+                }
+            }
+
+            response.setWatchlists(result);
+            response.setStatus(200);
+            response.setUser_id(request.getUserId());
+        } catch (Exception e) {
+            response.setStatus(401);
+            response.setUser_id(-1);
+            response.setWatchlists(new ArrayList<>());
+        }
+        return ResponseEntity.ok().body(response);
+
+
+    }
+
+
 }

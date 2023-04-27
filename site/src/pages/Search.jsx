@@ -21,6 +21,7 @@ function Search() {
   const [endYear, setEndYear] = useState("");
   const [selectedFilters, setSelectedFilters]= useState([]);
   const [fetchData, setFetchData] = useState(false);
+  // const [prevFilters, setPrevFilters] = useState([]);
   // const [searchSubmitted, setSearchSubmitted] = useState(false);
 
 
@@ -31,6 +32,19 @@ function Search() {
   const handleSelectFilter = (selectedOptions) => {
       setSelectedFilters(selectedOptions);
   };
+
+  const handleCastClick = (newQuery) =>{
+      setSelectedFilters(["person"]);
+      setQuery(newQuery);
+      setFetchData(true);
+  }
+
+  const handleGenreClick = (newQuery) => {
+      setSelectedFilters(["keyword"]);
+      setQuery(newQuery);
+      setFetchData(true);
+  }
+
 
   const handleSearchSubmitted = (submitted) => {
       setFetchData(submitted);
@@ -65,7 +79,7 @@ function Search() {
  <Spacer />
         <Card variant='elevated' size='md'>
           <CardHeader>
-              <Heading id="searchHeading" size='md'>Search</Heading>
+              <Heading size='md'>Search</Heading>
           </CardHeader>
           <CardBody>
             <HStack>
@@ -84,7 +98,7 @@ function Search() {
   align='center'
 >
         <SearchBackend query = {query} filters = {selectedFilters} startYear = {startYear} endYear = {endYear} handleSearch = {handleSearchResults} fetchData = {fetchData} onFetchDataChange = {handleSearchSubmitted}/>
-        <MovieResult movies = {movies} numResults = {resultCount}/>
+        <MovieResult movies = {movies} numResults = {resultCount} handleCast = {handleCastClick} handleGenre = {handleGenreClick}/>
         <button onClick={getMoreResults}>Load More</button>
 
 </VStack>

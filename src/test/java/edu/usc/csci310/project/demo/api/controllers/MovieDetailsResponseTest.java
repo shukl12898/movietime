@@ -28,11 +28,28 @@ public class MovieDetailsResponseTest {
     }
 
     @Test
+    public void testGetID() {
+        MovieDetailsResponse response = new MovieDetailsResponse();
+        int id = 1;
+        response.setID(id);
+        assertEquals(id, response.getId());
+    }
+
+    @Test
     public void testGetYear() {
         MovieDetailsResponse response = new MovieDetailsResponse();
         String year = "2020-03-11";
         response.setYear(year);
         String yearExpected = year.substring(0,4);
+        assertEquals(yearExpected, response.getYear());
+    }
+
+    @Test
+    public void testSetYear() {
+        MovieDetailsResponse response = new MovieDetailsResponse();
+        String year = "202";
+        response.setYear(year);
+        String yearExpected = "Unknown";
         assertEquals(yearExpected, response.getYear());
     }
 

@@ -1,6 +1,5 @@
 package edu.usc.csci310.project;
 
-import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -199,9 +198,9 @@ public class MontageStepDefinition {
                 movieIds.size() >= arg0);
     }
 
-    @After
-    public void after(){
-        driver.quit();
-    }
+//    @After
+//    public void after(){
+//        driver.quit();
+//    }
 
 }

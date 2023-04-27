@@ -1,13 +1,11 @@
 package edu.usc.csci310.project.search.api.service;
 
-//import edu.usc.csci310.project.moviedetails.responses.MovieDetailsResponse;
 import edu.usc.csci310.project.search.api.response.SearchResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -20,10 +18,10 @@ public class SearchService {
     @Value("${tmdb.apiKey}")
     private String apiKey;
 
-    private final RestTemplate restTemplate;
+    private final SearchAPIService service;
 
-    public SearchService(RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
+    public SearchService(SearchAPIService service) {
+        this.service = service;
     }
 
     public static ArrayList<Integer> sortResults(ArrayList<Integer>...results){
@@ -74,7 +72,7 @@ public class SearchService {
         String url = "https://api.themoviedb.org/3/movie/" + id + "?api_key=" + apiKey;
         String year = "";
         try{
-            ResponseEntity<Map> responseEntity = restTemplate.getForEntity(url, Map.class);
+            ResponseEntity<Map> responseEntity = service.makeAPICall(url);
             Map<String, Object> responseMap = responseEntity.getBody();
             year = (String) responseMap.get("release_date");
         }
@@ -99,7 +97,7 @@ public class SearchService {
         ArrayList results = new ArrayList();
         while (results.size() < 20 && pageNum < 20){
             String newURL = url + pageNum;
-            ResponseEntity<Map> responseEntity = restTemplate.getForEntity(newURL, Map.class);
+            ResponseEntity<Map> responseEntity = service.makeAPICall(newURL);
             Map<String, Object> responseMap = responseEntity.getBody();
 
             ArrayList list = (ArrayList) responseMap.get("results");
@@ -144,7 +142,7 @@ public class SearchService {
         ArrayList results = new ArrayList();
         while (results.size() < 20 && pageNum < 20){
             String newURL = url + pageNum;
-            ResponseEntity<Map> responseEntity = restTemplate.getForEntity(newURL, Map.class);
+            ResponseEntity<Map> responseEntity = service.makeAPICall(newURL);
             Map<String, Object> responseMap = responseEntity.getBody();
 
             ArrayList list = (ArrayList) responseMap.get("results");
@@ -190,7 +188,7 @@ public class SearchService {
         ArrayList ids = new ArrayList();
         while (ids.size() < 20 && pageNum < 20){
             String newURL = url + pageNum;
-            ResponseEntity<Map> responseEntity = restTemplate.getForEntity(newURL, Map.class);
+            ResponseEntity<Map> responseEntity = service.makeAPICall(newURL);
             Map<String, Object> responseMap = responseEntity.getBody();
 
             ArrayList list = (ArrayList) responseMap.get("results");
