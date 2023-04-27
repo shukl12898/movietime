@@ -92,7 +92,7 @@ function MyWatchlists() {
                                         Created by You
                                       </Badge>
                                     )}
-                                    {watchlists[index].isPrivate ? (
+                                    {watchlists[index].private ? (
                                       <Badge ml="1" fontSize="0.8em" colorScheme="purple">
                                         Private
                                       </Badge>
