@@ -66,6 +66,7 @@ function MovieDetails(props) {
           <div
             className="movie-title"
             data-testid="movie-title"
+            id="movie-title-name"
             onClick={() => {
               showDetailsToggle(movieID);
             }}
