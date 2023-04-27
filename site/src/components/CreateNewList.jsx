@@ -25,7 +25,7 @@ function CreateNewList({onAlertDialogClose}) {
                body: JSON.stringify({
                    watchListName: newListName,
                    forUser: storedId,
-                   isPrivate: makePrivate
+                   private: makePrivate
                })
            });
            const result = await response.json();
@@ -72,7 +72,12 @@ function CreateNewList({onAlertDialogClose}) {
               <Heading size='sm'>Make private?</Heading>
               <Switch size='md'
                 value={makePrivate}
-                onChange={(e) => setMakePrivate(e.target.value)}/>
+                onChange={() => {
+
+                 setMakePrivate(!makePrivate);
+                 console.log("Changed priv/public. " + makePrivate);
+                }
+                }/>
               </PopoverBody>
               <PopoverFooter>
                   <Button
