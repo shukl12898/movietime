@@ -21,6 +21,9 @@ public class MontageController {
     public ResponseEntity<?> getMovieImages(@PathVariable ArrayList<Integer> ids){
         MontageResponse response = service.getImages(ids);
         try{
+            if (ids == null) {
+                throw new IllegalArgumentException("Invalid parameter");
+            }
             return new ResponseEntity<>(response, HttpStatus.OK);
 
         } catch (Exception ex){

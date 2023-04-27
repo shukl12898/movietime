@@ -44,20 +44,12 @@ public class PhotoMontageControllerTest {
         assertEquals(expectedResponse, actualResponse);
     }
 
-//    @Test
-//    public void testGetMovieImages_Exception(){
-//        // Mock the service to throw an exception
-//        when(montageServiceMock.getImages(any())).thenThrow(new RuntimeException("Invalid parameter"));
-//
-//        // Call the endpoint with an invalid ID
-//        ResponseEntity<?> responseEntity = montageController.getMovieImages(new ArrayList<>());
-//
-//        // Verify that the service method was called with the correct arguments
-//        verify(montageServiceMock).getImages(any());
-//
-//        // Verify that the response status is BAD_REQUEST and the response body contains the exception message
-//        assert(responseEntity.getStatusCode() == HttpStatus.BAD_REQUEST);
-//        assert(responseEntity.getBody().equals("Invalid parameter"));
-//    }
+    @Test
+    public void testGetMovieImages_Exception(){
+        ResponseEntity<?> actualResponse = montageController.getMovieImages(null);
+
+        assertEquals(HttpStatus.BAD_REQUEST, actualResponse.getStatusCode());
+        assertEquals("Invalid parameter", actualResponse.getBody());
+    }
 
 }
