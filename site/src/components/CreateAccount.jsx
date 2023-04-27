@@ -2,25 +2,27 @@ import React from "react";
 import { useState } from 'react';
 import {
 Card, CardHeader, CardBody, Heading,CardFooter,
-Flex, Spacer, FormControl,FormLabel,Input, Button
+Flex, Spacer, FormControl,FormLabel,Input, Button, FormHelperText
 } from '@chakra-ui/react'
 
 function CreateAccount() {
 
-     const [username, setUsername] = useState("");
-     const [password, setPassword] = useState("");
-     const [confirmPassword, setConfPassword] = useState("");
-     const [name, setName] = useState("");
-     const [user, setUser] = useState();
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfPassword] = useState("");
+    const [name, setName] = useState("");
 
-    console.log(user);
-     function handleUsernameChange(event) {
-         setUsername(event.target.value);
-     }
+    const matchingPw = password != confirmPassword;
 
-     function handlePasswordChange(event) {
-         setPassword(event.target.value);
-     }
+    //const [validUser, setValid] = useState(true);
+
+    function handleUsernameChange(event) {
+        setUsername(event.target.value);
+    }
+
+    function handlePasswordChange(event) {
+        setPassword(event.target.value);
+    }
 
      function handleNameChange(event) {
          setName(event.target.value);
@@ -45,8 +47,16 @@ function CreateAccount() {
             .then(res => res.json())
             .then((response) => {
                console.log("API Responded With: ");
+               if (response.displayName == null) {
+                   console.log("Error.");
+               } else {
+                   sessionStorage.setItem("userId", response.userId);
+                   sessionStorage.setItem("displayName", response.displayName);
+                   navigate('/Search');
+               }
                console.log(response);
-               setUser(response);
+               sessionStorage.setItem("userId", response.userId);
+               sessionStorage.setItem("displayName", response.displayName);
             })
             .catch(error => {
              console.log(error)
@@ -63,20 +73,30 @@ function CreateAccount() {
                </CardHeader>
                <CardBody>
 
-                   <FormControl isRequired>
+                   <FormControl isRequired isInvalid={false}>
                      <FormLabel htmlFor="username">Username</FormLabel>
                      <Input
                      placeholder='Enter a username' type="text" value={username} onChange={handleUsernameChange}
                      />
+                     {false && (
+                          <FormHelperText>
+                            Username already exists.
+                          </FormHelperText>
+                        )}
                       </FormControl>
-                      <FormControl isRequired>
+                      <FormControl isRequired isInvalid={matchingPw}>
                       <FormLabel htmlFor="password">Password</FormLabel>
                       <Input placeholder='Enter a password' type="password" value={password} onChange={handlePasswordChange}/>
                        </FormControl>
 
-                     <FormControl isRequired>
+                     <FormControl isRequired isInvalid={matchingPw}>
                      <FormLabel htmlFor="confirmPassword">Confirm Password</FormLabel>
                      <Input placeholder='Retype password' type="password" value={confirmPassword} onChange={handlePasswordConf}/>
+                    {matchingPw && (
+                          <FormHelperText>
+                            Passwords must match.
+                          </FormHelperText>
+                        )}
                       </FormControl>
 
                       <FormControl isRequired>
@@ -86,7 +106,7 @@ function CreateAccount() {
                </CardBody>
                <CardFooter>
                 <Spacer/>
-                <Button onClick={handleSubmit}>Create Account</Button>
+                <Button id="lowerCreateAccount" onClick={handleSubmit}>Create Account</Button>
                 <Spacer/>
                </CardFooter>
              </Card>

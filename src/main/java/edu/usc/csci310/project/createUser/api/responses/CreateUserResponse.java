@@ -6,6 +6,8 @@ public class CreateUserResponse {
     private int userId;
     private String displayName;
 
+    private String message;
+
     public int getStatus() {
         return status;
     }
@@ -28,5 +30,13 @@ public class CreateUserResponse {
 
     public void setDisplayName(String displayName) {
         this.displayName = displayName;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }
