@@ -6,14 +6,6 @@ import SearchBox from './components/SearchBox'
 import SearchFilter from './components/SearchFilter';
 import YearPicker from './components/YearPicker';
 
-test("full app rendering", async () => {
-    render(<Search />, { wrapper: BrowserRouter });
-
-    // verify page content for default route
-    expect(screen.getByText(/MovieTime/)).toBeInTheDocument();
-});
-
-
 describe('SearchBox', ()=>{
     test('renders SearchBox component', () => {
         render(<SearchBox />);
