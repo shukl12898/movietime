@@ -12,6 +12,8 @@ function LoginComponent({toggleLogIn}) {
 
     const allow = (username != '') && (password != '');
 
+    const allow = (username != '') && (password != '');
+
     const [registered, setRegistered] = useState(true);
     const [correct, setCorrect] = useState(true);
 
