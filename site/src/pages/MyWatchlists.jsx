@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 import {
 Card, CardHeader, CardBody, Heading,
 Flex, Spacer,Button,
- Box, SimpleGrid,CardFooter, ButtonGroup, Badge, Divider, IconButton
+ Box, SimpleGrid,CardFooter, ButtonGroup, Badge, Divider
 } from '@chakra-ui/react';
-import {EditIcon} from '@chakra-ui/icons'
 import { useNavigate } from "react-router-dom";
 import WatchlistMovieDetails from '../components/WatchlistMovieDetails';
 import CreateNewList from '../components/CreateNewList';
 import DeleteWatchlist from '../components/DeleteWatchlist';
+import ReconfigureList from '../components/ReconfigureList';
 
 function MyWatchlists() {
 
@@ -62,6 +62,7 @@ function MyWatchlists() {
     };
 
       useEffect(()=>{
+            console.log("rendering...");
               getLists();
       },[]);
 
@@ -122,9 +123,10 @@ function MyWatchlists() {
                                  <CardFooter>
                                  <Spacer/>
                                  <ButtonGroup gap='2'>
-                                    <IconButton
-                                        icon={<EditIcon/>}
-
+                                    <ReconfigureList
+                                     listTitle={watchlists[index].listName}
+                                    listId={watchlists[index].listId}
+                                    onAlertDialogClose={handleAlertDialogClose}
                                     />
                                     <DeleteWatchlist
                                     listTitle={watchlists[index].listName}

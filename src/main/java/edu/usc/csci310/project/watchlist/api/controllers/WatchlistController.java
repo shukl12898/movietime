@@ -99,8 +99,8 @@ public class WatchlistController {
                               @RequestBody WatchlistRequest request) {
         try {
             DatabaseManager db = new DatabaseManager();
-            db.renameList(watchlistId, newName);
-            return "Successfully updated the list name.";
+            String message = db.renameList(watchlistId, newName);
+            return message;
         } catch (Exception e) {
             return e.toString();
         }
