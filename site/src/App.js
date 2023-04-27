@@ -42,7 +42,7 @@ function App() {
           {loggedIn && (
               <Routes>
                 {/* Root pages, located in /pages/ */}
-                <Route path="/" element={<MyWatchlists />} />
+                <Route path="/" element={<Search />} />
                 <Route path="/MyWatchlists" element={<MyWatchlists />} />
                 <Route path="/Search" element={<Search />} />
                  <Route path ="/Suggestions/:num" element ={<Suggestions />} />
