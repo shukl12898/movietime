@@ -1,5 +1,6 @@
 package edu.usc.csci310.project;
 
+import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -123,7 +124,7 @@ public class MontageStepDefinition {
     }
 
     @And("I add {int} movie")
-    public void iAddMovie(int arg0) {
+    public void iAddMovie(int arg0) throws InterruptedException {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(120));
         WebElement movieFilter = wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath("/html/body/div[1]/div[2]/div/div[1]/div[2]/div[2]/div/div[1]/label[1]"))));
         movieFilter.click();
@@ -143,12 +144,13 @@ public class MontageStepDefinition {
             Select select = new Select(selectElement);
             select.selectByValue("1");
             driver.findElement(By.id("addToList")).click();
+            Thread.sleep(2000);
             wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath("/html/body/div[1]/div[2]/div/div[1]/div[2]/div[2]/div/div[1]/label[1]"))));
         }
     }
 
     @Then("I should see at least {int} non overlapping images, with a visible white border, with each picture rotated a random amount between {int} and {int} degrees")
-    public void iShouldSeeAtLeastNonOverlappingImagesWithAVisibleWhiteBorderWithEachPictureRotatedARandomAmountBetweenAndDegrees(int arg0) {
+    public void iShouldSeeAtLeastNonOverlappingImagesWithAVisibleWhiteBorderWithEachPictureRotatedARandomAmountBetweenAndDegrees(int arg0, int arg1, int arg2) {
         // Wait until at least arg0 images with the "img" tag are present
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         List<WebElement> images = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.tagName("img")));
@@ -167,7 +169,7 @@ public class MontageStepDefinition {
             String transform = image.getCssValue("transform");
             if (!transform.equals("none")) {
                 double rotation = getRotation(transform);
-                assertTrue(rotation >= -45 && rotation <= 45);
+                assertTrue(rotation >= arg1 && rotation <= arg2);
             }
         }
     }
@@ -195,6 +197,11 @@ public class MontageStepDefinition {
 
         assertTrue(String.format("Expected to see at least %d different movies, but found only %d", arg0, movieIds.size()),
                 movieIds.size() >= arg0);
+    }
+
+    @After
+    public void after(){
+        driver.quit();
     }
 
 }
