@@ -12,10 +12,16 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class MontageStepDefinition {
 
@@ -42,10 +48,12 @@ public class MontageStepDefinition {
 //    }
 
     @Before
-    public void before() {
+    public void before() throws Exception {
         ChromeOptions options = new ChromeOptions ();
         options.addArguments("--remote-allow-origins=*");
         driver = new ChromeDriver (options);
+        DatabaseManager db = new DatabaseManager();
+        db.dropAllTables();
     }
 
     @And("I am on the view all watchlist page")
@@ -57,38 +65,30 @@ public class MontageStepDefinition {
 
     @When("I press the create montage button")
     public void iPressTheCreateMontageButton() {
-        
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        WebElement montageButton = wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath("/html/body/div[1]/div[2]/div/div[2]/div/div/div[3]/div[2]/button[3]"))));
+        montageButton.click();
     }
 
     @Then("I should be taken to a separate page which can navigate to the search and list page")
     public void iShouldBeTakenToASeparatePageWhichCanNavigateToTheSearchAndListPage() {
-        
-    }
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+        wait.until(ExpectedConditions.urlContains("Montage"));
+        assertTrue("Expected URL to contain Montage", driver.getCurrentUrl().contains("Montage"));
 
-    @And("I have a watchlist with {int} movie in it")
-    public void iHaveAWatchlistWithMovieInIt() {
-        
-    }
+        WebElement watchlistNavButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[1]/div[1]/div[3]/button[2]")));
+        assertNotNull("Expected watchlistNavButton to be present and clickable", watchlistNavButton);
+        watchlistNavButton.click();
+        wait.until(ExpectedConditions.urlContains("MyWatchlists"));
+        assertTrue("Expected URL to contain watchlist", driver.getCurrentUrl().contains("MyWatchlists"));
 
-    @When("I am taken to a separate page")
-    public void iAmTakenToASeparatePage() {
-    }
+        driver.navigate().back();
 
-    @Then("I should see {int} overlapping images, with a visible white border, with each picture rotated a random amount between {int} and {int} degrees")
-    public void iShouldSeeOverlappingImagesWithAVisibleWhiteBorderWithEachPictureRotatedARandomAmountBetweenAndDegrees() {
-    }
-
-    @And("I have a watchlist with {int} movies in it")
-    public void iHaveAWatchlistWithMoviesInIt() {
-        
-    }
-
-    @Then("I should see at least one image for each movie in the watchlist")
-    public void iShouldSeeAtLeastOneImageForEachMovieInTheWatchlist() {
-    }
-
-    @Then("I should be taken to a separate page with a montage in less than {double} seconds")
-    public void iShouldBeTakenToASeparatePageWithAMontageInLessThanSeconds() {
+        WebElement searchNavButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"root\"]/div[1]/div[3]/button[1]")));
+        assertNotNull("Expected searchNavButton to be present and clickable", searchNavButton);
+        searchNavButton.click();
+        wait.until(ExpectedConditions.urlContains("Search"));
+        assertTrue("Expected URL to contain search", driver.getCurrentUrl().contains("Search"));
     }
 
     @When("I am logged in")
@@ -124,13 +124,12 @@ public class MontageStepDefinition {
 
     @And("I add {int} movie")
     public void iAddMovie(int arg0) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(120));
         WebElement movieFilter = wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath("/html/body/div[1]/div[2]/div/div[1]/div[2]/div[2]/div/div[1]/label[1]"))));
         movieFilter.click();
-        driver.findElement(By.id("searchBar")).sendKeys("a");
+        driver.findElement(By.id("searchBar")).sendKeys("harry");
         driver.findElement(By.xpath("/html/body/div[1]/div[2]/div/div[1]/div[2]/div[2]/div/div[2]/form/button")).click();
 
-        // Wait for the movie titles to be loaded
         List<WebElement> titles = wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.id("movie-title")));
 
         Actions actions = new Actions(driver);
@@ -138,11 +137,64 @@ public class MontageStepDefinition {
         for (int i = 0; i < arg0; i++){
             WebElement currTitle = titles.get(i);
             actions.moveToElement(currTitle).perform();
-            WebElement addButton = wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath("/html/body/div[1]/div[2]/div/div[2]/div[2]/div/div/div[2]/button[2]"))));
+            WebElement addButton = wait.until(ExpectedConditions.elementToBeClickable(currTitle.findElement(By.id("addButton"))));
             addButton.click();
-            WebElement listSelect = wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.id("/html/body[@class='chakra-ui-light']/div[@class='chakra-portal'][2]/div[3]/div[@class='chakra-modal__content-container css-1u2cvaz']/section[@id='chakra-modal-:r1n:']/div[@id='chakra-modal--body-:r1n:']/div[@class='chakra-select__wrapper css-42b2qy']/select[@class='chakra-select css-7p9xsp']"))));
-            listSelect.click();
+            WebElement selectElement = driver.findElement(By.id("dropdown"));
+            Select select = new Select(selectElement);
+            select.selectByValue("1");
+            driver.findElement(By.id("addToList")).click();
+            wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath("/html/body/div[1]/div[2]/div/div[1]/div[2]/div[2]/div/div[1]/label[1]"))));
         }
+    }
+
+    @Then("I should see at least {int} non overlapping images, with a visible white border, with each picture rotated a random amount between {int} and {int} degrees")
+    public void iShouldSeeAtLeastNonOverlappingImagesWithAVisibleWhiteBorderWithEachPictureRotatedARandomAmountBetweenAndDegrees(int arg0) {
+        // Wait until at least arg0 images with the "img" tag are present
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        List<WebElement> images = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.tagName("img")));
+
+        // Verify that there are at least arg0 images
+        assertTrue(images.size() >= arg0);
+
+        // Verify each image has a white border and is rotated between -45 and 45 degrees
+        for (WebElement image : images) {
+            // Verify the white border
+            String borderStyle = image.getCssValue("border-style");
+            String borderColor = image.getCssValue("border-color");
+            assertTrue(borderStyle.equals("solid") && borderColor.equals("rgb(255, 255, 255)"));
+
+            // Verify the rotation
+            String transform = image.getCssValue("transform");
+            if (!transform.equals("none")) {
+                double rotation = getRotation(transform);
+                assertTrue(rotation >= -45 && rotation <= 45);
+            }
+        }
+    }
+
+    // Helper function to parse the rotation angle from a CSS transform matrix
+    private double getRotation(String transform) {
+        String[] matrix = transform.substring(transform.indexOf('(') + 1, transform.indexOf(')')).split(",");
+        double a = Double.parseDouble(matrix[0]);
+        double b = Double.parseDouble(matrix[1]);
+        double rotation = Math.atan2(b, a);
+        return Math.toDegrees(rotation);
+    }
+
+    @Then("I should see at least one image for each of the {int} movies in the watchlist")
+    public void iShouldSeeAtLeastOneImageForEachOfTheMoviesInTheWatchlist(int arg0) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        List<WebElement> images = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.tagName("img")));
+
+        Set<String> movieIds = new HashSet<>();
+        for (WebElement image : images) {
+            String altText = image.getAttribute("alt");
+            String movieId = altText.substring(6);
+            movieIds.add(movieId);
+        }
+
+        assertTrue(String.format("Expected to see at least %d different movies, but found only %d", arg0, movieIds.size()),
+                movieIds.size() >= arg0);
     }
 
 }
