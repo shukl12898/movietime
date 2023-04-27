@@ -48,7 +48,6 @@ function NavBar({toggleLogIn, ...props}) {
                  onClick={()=>{
                  sessionStorage.clear();
                  toggleLogIn();
-                 navigate("/");
                  }}
                  >Log Out</Button>
              </PopoverFooter>
