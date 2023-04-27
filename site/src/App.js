@@ -9,8 +9,6 @@ import NavBar from "./components/NavBar";
 import {useState, useEffect} from "react";
 
 import { ChakraProvider } from '@chakra-ui/react';
-import { useNavigate } from "react-router-dom";
-
 
 
 function App() {
