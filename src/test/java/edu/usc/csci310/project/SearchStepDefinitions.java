@@ -8,6 +8,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -240,6 +241,105 @@ public class SearchStepDefinitions {
             }
         }
     }
+
+    @And("I hover over the {string} movie title")
+    public void iHoverOverTheMovieTitle(String arg0) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(120));
+
+        // Wait for all movie titles to be visible
+        List<WebElement> titles = wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.id("movie-title")));
+
+        // Find the desired movie title and hover over it
+        for (WebElement currTitle : titles) {
+            if (currTitle.getText().equals(arg0)) {
+                Actions actions = new Actions(driver);
+                actions.moveToElement(currTitle).perform();
+                break;
+            }
+        }
+    }
+
+    @Then("I should see the hover buttons on the page")
+    public void iShouldSeeTheHoverButtonsOnThePage() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(120));
+        By hoverButtonsSelector = By.cssSelector("[data-testid='hover-buttons']");
+        WebElement hoverButtonsContainer = wait.until(ExpectedConditions.presenceOfElementLocated(hoverButtonsSelector));
+
+        assertTrue("Hover buttons container is not displayed", hoverButtonsContainer.isDisplayed());
+    }
+
+    @And("I press purchase from the dollar sign hover button")
+    public void iPressPurchaseFromTheDollarSignHoverButton() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(120));
+        WebElement dollarButton = wait.until(ExpectedConditions.elementToBeClickable(By.id("dollarButton")));
+        dollarButton.click();
+        WebElement purchaseButton = wait.until(ExpectedConditions.elementToBeClickable(By.id("purchaseButton")));
+        purchaseButton.click();
+    }
+
+    @Then("I should be redirected to a ticket purchasing website with a query of the movie title")
+    public void iShouldBeRedirectedToATicketPurchasingWebsiteWithAQueryOfTheMovieTitle() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(120));
+        wait.until(ExpectedConditions.numberOfWindowsToBe(2));
+
+        String originalHandle = driver.getWindowHandle();
+
+        for (String handle : driver.getWindowHandles()) {
+            if (!handle.equals(originalHandle)) {
+                driver.switchTo().window(handle);
+                break;
+            }
+        }
+
+        String expectedURL = "https://www.regmovies.com/search?query=Fight%20Club";
+        String currentUrl = driver.getCurrentUrl();
+        assertEquals(expectedURL, currentUrl);
+
+        driver.switchTo().window(originalHandle);
+    }
+
+    @And("I go to the view all watchlist page")
+    public void iGoToTheViewAllWatchlistPage() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement searchNavButton = wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div[3]/button[2]"))));
+        searchNavButton.click();
+    }
+
+    @And("I make one watchlist")
+    public void iMakeOneWatchlist() {
+        driver.findElement(By.xpath("/html/body/div[1]/div[2]/div/div[1]/div[3]/button[1]")).click();
+        driver.findElement(By.xpath("/html/body/div[1]/div[2]/div/div[1]/div[3]/div/section/div[2]/div/input")).sendKeys("list");
+        driver.findElement(By.xpath("/html/body/div[1]/div[2]/div/div[1]/div[3]/div/section/footer/button")).click();
+    }
+
+    @And("I add to the watchlist from the plus button")
+    public void iAddToTheWatchlistFromThePlusButton() throws InterruptedException {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(120));
+        WebElement addButton = wait.until(ExpectedConditions.elementToBeClickable(By.id("addButton")));
+        addButton.click();
+        WebElement selectElement = driver.findElement(By.id("dropdown"));
+        Select select = new Select(selectElement);
+        select.selectByValue("1");
+        driver.findElement(By.id("addToList")).click();
+        Thread.sleep(2000);
+        wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath("/html/body/div[1]/div[2]/div/div[1]/div[2]/div[2]/div/div[2]/label[1]"))));
+    }
+
+    @Then("I should see one movie in the watchlist")
+    public void iShouldSeeOneMovieInTheWatchlist() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(120));
+
+        List<WebElement> titles = wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.id("movie-name")));
+        assertEquals(1, titles.size());
+    }
+
+    @And("I add to a new watchlist from the plus button")
+    public void iAddToANewWatchlistFromThePlusButton() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(120));
+        WebElement addButton = wait.until(ExpectedConditions.elementToBeClickable(By.id("addButton")));
+        addButton.click();
+    }
+
 
 //    @After
 //    public void after(){

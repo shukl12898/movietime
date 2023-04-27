@@ -19,7 +19,6 @@ public class MovieDetailsService {
     @Autowired
     public MovieDetailsService(MovieDetailsAPIService service) {
         this.service = service;
-
     }
 
     public MovieDetailsResponse getMovieDetails(int movieId) {
