@@ -2,7 +2,7 @@ Feature: Testing User Create Account Functionality
   Scenario: A new user tries to create an account
     Given I am on the Create Account page
     When I enter "devika" in the username box
-    And I enter "1234 in the password box
+    And I enter "1234" in the password box
     And I enter "1234" in the confirm password box
     And I click submit button
     Then I should be on the search page
