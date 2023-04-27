@@ -14,6 +14,7 @@ import {
   ModalBody, ModalFooter, Heading
 } from '@chakra-ui/react';
 import CreateNewList from '../components/CreateNewList';
+import InWatchlists from '../components/InWatchlists';
 
 function HoverButtons({movieDetails}) {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -89,12 +90,9 @@ function HoverButtons({movieDetails}) {
   return (
     <>
       <HStack spacing={4} data-testid= "hover-buttons">
-        <IconButton
-          icon={<BsFillEyeFill style={{ color: "#3e5936" }} />}
-          aria-label="Like"
-          size="lg"
-          variant="unstyled"
-          display="flex"
+        <InWatchlists
+            movieTitle = {movieTitle}
+            movieId = {movieId}
         />
         <IconButton
           onClick={() => setShowOverlay(true)}
