@@ -58,6 +58,17 @@ public class DatabaseManager {
         }
     }
 
+    public void setUp()  {
+        try (Connection c = DriverManager.getConnection(SQLITE_CONNECTION_STRING)){
+            Statement statement = c.createStatement();
+            statement.executeUpdate(USERS_TABLE);
+            statement.executeUpdate(WATCHLIST_USER_TABLE);
+            statement.executeUpdate(WATCHLIST_CONTENT);
+        } catch (SQLException sqle) {
+            System.err.println(sqle);
+        }
+    }
+
     /**
      * Drops all tables created. Helper function.
      */
