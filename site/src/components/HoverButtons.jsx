@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { IconButton, HStack, Button } from '@chakra-ui/react';
 import { AiFillDollarCircle } from 'react-icons/ai';
-import { BsPlusCircleFill, BsFillEyeFill } from 'react-icons/bs';
+import { BsPlusCircleFill } from 'react-icons/bs';
 import {
   AlertDialog,
   AlertDialogBody,
