@@ -9,7 +9,6 @@ import {
   AccordionItem,
   AccordionButton,
   AccordionPanel,
-  AccordionIcon,
 } from "@chakra-ui/react";
 
 function MovieDetails(props) {
