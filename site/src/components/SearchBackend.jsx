@@ -30,7 +30,8 @@ function SearchBackend(props) {
     }
 
     // console.log("URL IS" + url);
-
+    console.log("FIlters are: " + props.filters);
+    console.log("QUery is:" + props.query);
     useEffect(() => {
         console.log("useEffect is being called");
 
