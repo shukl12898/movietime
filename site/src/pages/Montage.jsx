@@ -14,7 +14,7 @@ function Montage() {
   const movies = location.state;
 
   useEffect(() => {
-      fetch(`/images/${movies.movies}`)
+      fetch(`/images/${movies?.movies}`)
         .then(response => {
           if(response.status === 400) {
             throw new Error("Error fetching data");
