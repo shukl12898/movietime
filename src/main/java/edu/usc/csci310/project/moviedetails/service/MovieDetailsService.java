@@ -30,7 +30,6 @@ public class MovieDetailsService {
         MovieDetailsResponse movieDetails = new MovieDetailsResponse();
         ArrayList list;
 
-        if (responseEntity != null){
             Map<String, Object> responseMap = responseEntity.getBody();
 
             movieDetails.setID(movieId);
@@ -61,10 +60,6 @@ public class MovieDetailsService {
             }
 
             movieDetails.setGenres(genres);
-        }
-        else{
-            System.out.println("An error occurred while calling the API ");
-        }
 
 
         String castUrl = "https://api.themoviedb.org/3/movie/" + movieId + "/credits?api_key=" + apiKey;
@@ -72,7 +67,6 @@ public class MovieDetailsService {
 
 
         ResponseEntity<Map> responseEntity2 = service.makeAPICall(castUrl);
-        if (responseEntity2 != null){
             Map<String, Object> responseMap2 = responseEntity2.getBody();
             list = (ArrayList) responseMap2.get("crew");
 
@@ -97,17 +91,6 @@ public class MovieDetailsService {
             }
 
             movieDetails.setCast(actors);
-        }
-        else{
-            System.out.println("An error occurred while calling the API ");
-
-        }
-
-
-
-
-
-
 
         return movieDetails;
     }
