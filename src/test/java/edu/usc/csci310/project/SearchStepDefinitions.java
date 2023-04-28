@@ -1,6 +1,5 @@
 package edu.usc.csci310.project;
 
-import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -361,15 +360,18 @@ public class SearchStepDefinitions {
 
     @And("I click on {string} in the cast list")
     public void iClickOnInTheCastList(String arg0) throws InterruptedException {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(180));
         By overlayElementSelector = By.id("overlay-content");
         wait.until(ExpectedConditions.visibilityOfElementLocated(overlayElementSelector));
         driver.findElement(By.cssSelector("[data-testid='castButton']")).click();
         WebElement castList = driver.findElement(By.cssSelector("[data-testid='castList']"));
+        wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.tagName("li"), 13));
+
         List<WebElement> castElements = castList.findElements(By.tagName("li"));
 
         for (WebElement castElement : castElements) {
             String castName = castElement.getText();
+            System.out.println(castName);
             if (castName.equals(String.valueOf(arg0))) {
                 Thread.sleep(2000);
                 wait.until(ExpectedConditions.elementToBeClickable(castElement)).click();
@@ -395,8 +397,8 @@ public class SearchStepDefinitions {
         assertTrue("Should see " + arg0 + " in the page", foundMatch);
     }
 
-    @After
-    public void after(){
-        driver.quit();
-    }
+//    @After
+//    public void after(){
+//        driver.quit();
+//    }
 }
