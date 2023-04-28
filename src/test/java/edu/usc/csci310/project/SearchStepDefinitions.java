@@ -400,7 +400,7 @@ public class SearchStepDefinitions {
     }
 
     @Then("I should see {string} in the new results")
-    public void iShouldSeeInTheNewResults(String arg0){
+    public void iShouldSeeInTheNewResults(String arg0) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(120));
 
         List<WebElement> titles = wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.id("movie-title-name")));
@@ -413,6 +413,7 @@ public class SearchStepDefinitions {
         }
 
         assertTrue("Should see " + arg0 + " in the page", foundMatch);
+    }
 
     @Given("I am on the {string} page using HTTP")
     public void iAmOnThePageUsingHTTP(String arg0) {
