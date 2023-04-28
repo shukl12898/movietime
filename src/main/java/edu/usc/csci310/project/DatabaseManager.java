@@ -367,6 +367,15 @@ public class DatabaseManager {
 
         try (Connection c = DriverManager.getConnection(SQLITE_CONNECTION_STRING)){
 
+            PreparedStatement checkLists = c.prepareStatement("SELECT movie_id " +
+                    "FROM contentsOfLists WHERE watchlist_id = ? and movie_id = ?");
+            checkLists.setInt(1, watchlistId);
+            checkLists.setInt(2, movieId);
+            ResultSet matchingMoviesInList = checkLists.executeQuery();
+            if (matchingMoviesInList.next()) {
+                return "Movie already in list";
+            }
+
             PreparedStatement pst = c.prepareStatement("insert into contentsOfLists (watchlist_id, movie_id) " +
                     "values(?,?)");
             pst.setInt(1, watchlistId);
@@ -460,6 +469,40 @@ public class DatabaseManager {
         }
         return "SUCCESS";
 
+    }
+
+    public String combineLists(int listIdOne, int listIdTwo, int forUser,
+                               String name) {
+
+//        try (Connection conn = DriverManager.getConnection(SQLITE_CONNECTION_STRING)) {
+//            String query = "SELECT user_id FROM watchlists WHERE watchlist_id = ? ";
+//            PreparedStatement pst1 = conn.prepareStatement(query);
+//            pst1.setInt(1, watchlistId);
+//            ResultSet rs = pst1.executeQuery();
+//            rs.next();
+//
+//            int belongsTo = rs.getInt("user_id");
+//
+//            String query3 = "SELECT * FROM watchlists WHERE user_id = ? and list_name = ? ";
+//            PreparedStatement pst3 = conn.prepareStatement(query3);
+//            pst3.setInt(1, belongsTo);
+//            pst3.setString(2, newName);
+//            ResultSet listsWithRename = pst3.executeQuery();
+//            if (listsWithRename.next()) {
+//                return "Name exists";
+//            }
+//
+//            String query2 = "UPDATE watchlists " +
+//                    "SET list_name = ? " +
+//                    "WHERE watchlist_id = ?";
+//            PreparedStatement pst2 = conn.prepareStatement(query2);
+//            pst2.setString(1, newName);
+//            pst2.setInt(2, watchlistId);
+//            pst2.executeUpdate();
+//        } catch (SQLException e) {
+//            System.err.println(e.getMessage());
+//        }
+        return "SUCCESS";
     }
 
 
