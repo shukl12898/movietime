@@ -1,5 +1,6 @@
 package edu.usc.csci310.project;
 
+import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -149,8 +150,8 @@ public class SearchStepDefinitions {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
         By overlayElementSelector = By.id("overlay-content");
         wait.until(ExpectedConditions.visibilityOfElementLocated(overlayElementSelector));
-        driver.findElement(By.id("accordion-button-:r8:")).click();
-        WebElement castList = driver.findElement(By.id("accordion-panel-:r8:"));
+        driver.findElement(By.cssSelector("[data-testid='castButton']")).click();
+        WebElement castList = driver.findElement(By.cssSelector("[data-testid='castList']"));
         Boolean isScrollable = (Boolean) ((JavascriptExecutor) driver).executeScript("return arguments[0].scrollHeight > arguments[0].clientHeight", castList);
 
         assertTrue("Cast list is scrollable", isScrollable);
@@ -358,13 +359,44 @@ public class SearchStepDefinitions {
 
     }
 
-//    @And("I click on {string} in the cast list")
-//    public void iClickOnInTheCastList(String arg0) {
-//
-//    }
+    @And("I click on {string} in the cast list")
+    public void iClickOnInTheCastList(String arg0) throws InterruptedException {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+        By overlayElementSelector = By.id("overlay-content");
+        wait.until(ExpectedConditions.visibilityOfElementLocated(overlayElementSelector));
+        driver.findElement(By.cssSelector("[data-testid='castButton']")).click();
+        WebElement castList = driver.findElement(By.cssSelector("[data-testid='castList']"));
+        List<WebElement> castElements = castList.findElements(By.tagName("li"));
 
-//    @After
-//    public void after(){
-//        driver.quit();
-//    }
+        for (WebElement castElement : castElements) {
+            String castName = castElement.getText();
+            if (castName.equals(String.valueOf(arg0))) {
+                Thread.sleep(2000);
+                wait.until(ExpectedConditions.elementToBeClickable(castElement)).click();
+                Thread.sleep(6000);
+                return;
+            }
+        }
+    }
+
+    @Then("I should see {string} in the new results")
+    public void iShouldSeeInTheNewResults(String arg0){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(120));
+
+        List<WebElement> titles = wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.id("movie-title-name")));
+        boolean foundMatch = false;
+        for (WebElement currTitle : titles) {
+            if (currTitle.getText().contains(arg0)) {
+                foundMatch = true;
+                break;
+            }
+        }
+
+        assertTrue("Should see " + arg0 + " in the page", foundMatch);
+    }
+
+    @After
+    public void after(){
+        driver.quit();
+    }
 }

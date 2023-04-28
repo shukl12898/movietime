@@ -32,4 +32,3 @@ Feature: testing out the picture montage feature
     And I press the create montage button
     Then I should see at least one image for each of the 5 movies in the watchlist
 
-
