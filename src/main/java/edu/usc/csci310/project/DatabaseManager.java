@@ -18,7 +18,7 @@ public class DatabaseManager {
 
     private static final String WATCHLIST_USER_TABLE = "CREATE TABLE IF NOT EXISTS " +
             "watchlists (watchlist_id INTEGER PRIMARY KEY AUTOINCREMENT, list_name VARCHAR(255) NOT NULL, " +
-            " user_id INTEGER NOT NULL, isPrivate BIT NOT NULL)";
+            " user_id INTEGER NOT NULL, isPrivate INTEGER NOT NULL)";
     private static final String WATCHLIST_CONTENT = "CREATE TABLE IF NOT EXISTS " +
             "contentsOfLists (watchlist_id INTEGER, " + "movie_id INTEGER NOT NULL, " +
             "FOREIGN KEY (watchlist_id) REFERENCES watchlists(watchlist_id) ON DELETE CASCADE)";
@@ -41,6 +41,17 @@ public class DatabaseManager {
         } catch (SQLException sqle) {
             System.err.println(sqle);
             throw new Exception("Could not create the Database");
+        }
+    }
+
+    public void setUp()  {
+        try (Connection c = DriverManager.getConnection(SQLITE_CONNECTION_STRING)){
+            Statement statement = c.createStatement();
+            statement.executeUpdate(USERS_TABLE);
+            statement.executeUpdate(WATCHLIST_USER_TABLE);
+            statement.executeUpdate(WATCHLIST_CONTENT);
+        } catch (SQLException sqle) {
+            System.err.println(sqle);
         }
     }
 
@@ -90,6 +101,13 @@ public class DatabaseManager {
      */
      public UserModel createNewUser(String username, String password, String name){
          if (doesUserExist(username)) return null;
+
+         String saveName;
+         if (name.isEmpty()) {
+             saveName = username;
+         } else {
+             saveName = name;
+         }
          String encryptedUser = Encryption.hash(username);
          String encryptedPw = Encryption.hash(password);
          insertIntoUser(encryptedUser, encryptedPw, name);
@@ -133,8 +151,8 @@ public class DatabaseManager {
      * @param limit of rows to return.
      * @return
      */
-    public List<String> getAllUsers(int limit) {
-        List<String> userNames = new ArrayList<>();
+    public List<UserModel> getAllUsers(int limit) {
+        List<UserModel> users = new ArrayList<>();
         try (Connection c = DriverManager.getConnection(SQLITE_CONNECTION_STRING)){
             PreparedStatement pst = c.prepareStatement("SELECT * from users LIMIT ?");
             pst.setInt(1, limit);
@@ -142,16 +160,15 @@ public class DatabaseManager {
             int inserted = 0;
             while (resultSet.next() && inserted <= limit) {
                 int userId = resultSet.getInt("user_id");
-                String username = resultSet.getString("username");
-                String password = resultSet.getString("password");
-                System.out.println(userId + " -> " + username + ", " + password);
-                userNames.add(username);
+                String username = resultSet.getString("name");
+                UserModel u = new UserModel(userId, username);
+                users.add(u);
                 inserted++;
             }
         } catch (Exception e){
             System.out.println("Error retrieving all users.");
         }
-        return userNames;
+        return users;
     }
 
 
@@ -215,8 +232,63 @@ public class DatabaseManager {
                 curr.setListId(listIdsForUser.getInt("watchlist_id"));
                 curr.setListName(listIdsForUser.getString("list_name"));
                 curr.setUserId(listIdsForUser.getInt("user_id"));
-                curr.setPrivate(listIdsForUser.getBoolean("isPrivate"));
+
+                int priv = listIdsForUser.getInt("isPrivate");
+                System.out.println("priv for list " + curr.getListName() + " is " + priv);
+                if (priv == 0) {curr.setPrivate(false); }
+                else {curr.setPrivate(true);}
+
                 curr.setMovies(new ArrayList<>());
+
+                while (moviesInList.next()) {
+                    ArrayList<Integer> temp = curr.getMovies();
+                    temp.add(moviesInList.getInt("movie_id"));
+                    curr.setMovies(temp);
+                } // end while
+                l.add(curr);
+            } // end while
+        } catch (Exception e) {
+            System.out.println("Error in getListsForUses(): "+e.toString());
+        }
+        return l;
+    } // end getListsForUser
+
+
+    /**
+     * @param userId
+     * @return
+     */
+    public ArrayList<ListModel> getPublicListsForUser(int userId) {
+
+        ArrayList<ListModel> l = new ArrayList<>();
+        try (Connection c = DriverManager.getConnection(SQLITE_CONNECTION_STRING)) {
+
+            String queryForLists = "SELECT * FROM watchlists WHERE user_id = ?";
+            PreparedStatement pst = c.prepareStatement(queryForLists);
+            pst.setInt(1, userId);
+            ResultSet listIdsForUser = pst.executeQuery();
+
+            while (listIdsForUser.next()) {
+
+                ListModel curr = new ListModel();
+                int priv = listIdsForUser.getInt("isPrivate");
+                System.out.println("priv for list " + curr.getListName() + " is " + priv);
+                if (priv == 0) {curr.setPrivate(false); }
+                else {
+                    continue;
+                }
+
+                String queryForMovies = "SELECT * FROM contentsOfLists WHERE watchlist_id = ? ";
+                PreparedStatement pst2 = c.prepareStatement(queryForMovies);
+                pst2.setInt(1, listIdsForUser.getInt(1));
+                ResultSet moviesInList = pst2.executeQuery();
+
+                curr.setListId(listIdsForUser.getInt("watchlist_id"));
+                curr.setListName(listIdsForUser.getString("list_name"));
+                curr.setUserId(listIdsForUser.getInt("user_id"));
+
+                curr.setMovies(new ArrayList<>());
+
                 while (moviesInList.next()) {
                     ArrayList<Integer> temp = curr.getMovies();
                     temp.add(moviesInList.getInt("movie_id"));
@@ -258,7 +330,11 @@ public class DatabaseManager {
                     "values(?,?,?)");
             pst.setString(1, listName);
             pst.setInt(2, forUser);
-            pst.setBoolean(3, isPrivate);
+
+            int priv= 1;
+            if (!isPrivate) { priv = 0; }
+
+            pst.setInt(3, priv);
             pst.executeUpdate();
 
             rs = queryForId.executeQuery();

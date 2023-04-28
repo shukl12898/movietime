@@ -15,7 +15,7 @@ class DatabaseManagerTest {
     void setDB() throws Exception {
         db = new DatabaseManager();
         db.dropAllTables();
-        db = new DatabaseManager();
+        db.setUp();
     }
     @AfterEach
     void tearDown() {
@@ -29,7 +29,7 @@ class DatabaseManagerTest {
         db.createNewUser("tommytrojan2", "traveler", "Tommy 2");
         db.createNewUser("tommytrojan3", "traveler", "Tommy 3");
 
-        List<String> userNames = db.getAllUsers(10);
+        List<UserModel> userNames = db.getAllUsers(10);
 
         assertEquals(4, userNames.size());
 
@@ -133,6 +133,41 @@ class DatabaseManagerTest {
         tommysLists = db.getListsForUser(tommy.getUser_id());
         assertTrue(tommysLists.get(0).getMovies().isEmpty());
 
+    }
+
+    @Test
+    void testPublicPrivate() throws Exception {
+        db.createNewUser("tommytrojan", "traveler", "Tommy");
+
+        UserModel u = db.getUser("tommytrojan", "traveler");
+        int listOne = db.newWatchlist("Shrek Films", u.getUser_id(), true);
+        int listTwo = db.newWatchlist("Toy Story Films", u.getUser_id(), false);
+        int listThree = db.newWatchlist("Animated Films", u.getUser_id(), false);
+        int listFour = db.newWatchlist("USC Favorites", u.getUser_id(), true);
+
+        ArrayList<ListModel> l = db.getListsForUser(u.getUser_id());
+        assertEquals(4, l.size());
+
+        ArrayList<ListModel> publicLists = db.getPublicListsForUser(u.getUser_id());
+        assertEquals(2, publicLists.size());
+
+        String two = publicLists.get(0).getListName();
+        String three = publicLists.get(1).getListName();
+
+        assertEquals(two, "Toy Story Films");
+        assertEquals(three, "Animated Films");
+    }
+
+    @Test
+    void testPublicUsers() throws Exception {
+
+        db.createNewUser("tommytrojan", "traveler", "Tommy");
+        db.createNewUser("tommytrojan1", "traveler", "Tommy");
+        db.createNewUser("tommytrojan3", "traveler", "Tommy");
+        db.createNewUser("tommytrojan4", "traveler", "Tommy");
+        db.createNewUser("tommytrojan5", "traveler", "Tommy");
+
+        List<UserModel> users = db.getAllUsers(10);
     }
 
 }

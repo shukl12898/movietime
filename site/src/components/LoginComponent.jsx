@@ -13,6 +13,7 @@ function LoginComponent({toggleLogIn}) {
     const allow = (username != '') && (password != '');
 
     const [registered, setRegistered] = useState(true);
+    const [correct, setCorrect] = useState(true);
 
     function handleUsernameChange(event) {
         setUsername(event.target.value);
@@ -45,6 +46,11 @@ function LoginComponent({toggleLogIn}) {
                            Account not found.
                          </FormHelperText>
                        )}
+                       {!correct && (
+                                                <FormHelperText>
+                                                  Incorrect password.
+                                                </FormHelperText>
+                                              )}
                   </FormControl>
 
 
@@ -67,16 +73,25 @@ function LoginComponent({toggleLogIn}) {
                         .then(res => res.json())
                         .then((response) => {
                             console.log("API Responded With: ");
-                            if (response.displayName == null) {
-                                console.log("Error.");
+                            console.log(response);
+                            if(response.message == "Wrong password.") {
+
+                                setCorrect(false);
+
+                            } else if(response.message == "User does not exist.") {
+
+                                setCorrect(true);
                                 setRegistered(false);
-                            } else {
+
+                            } else if (response.message == "Success"){
+
                                 sessionStorage.setItem("userId", response.userId);
-                                sessionStorage.setItem("displayName", response.displayName);
+                                                                sessionStorage.setItem("displayName", response.displayName);
+                                setCorrect(true);
                                 setRegistered(true);
                                 toggleLogIn();
+
                             }
-                            console.log(response);
                         })
                         .catch(error => {
                           console.log(error);
