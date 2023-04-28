@@ -1,5 +1,6 @@
 package edu.usc.csci310.project;
 
+import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -76,12 +77,22 @@ public class SearchStepDefinitions {
         driver.findElement(By.id("searchBar")).sendKeys(arg0);
     }
 
+    @And("I input {string} in the start year field")
+    public void iEnterInTheStartYear(String arg0){
+        driver.findElement(By.id("startYear")).sendKeys(arg0);
+    }
+
+    @And("I input {string} in the end year field")
+    public void iEnterInTheEndYear(String arg0){
+        driver.findElement(By.id("endYear")).sendKeys(arg0);
+    }
+
     @And("I press the search button")
     public void iPressTheSearchButton() {
         driver.findElement(By.xpath("/html/body/div[1]/div[2]/div/div[1]/div[2]/div[2]/div/div[3]/form/button")).click();
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        By movieDetailsSelector = By.id("movie-title");
-        wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(movieDetailsSelector, 9));
+        By movieDetailsSelector = By.id("movie-title-name");
+        wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(movieDetailsSelector, 8));
     }
 
     @When("I select {string} in the dropdown menu")
@@ -109,7 +120,7 @@ public class SearchStepDefinitions {
     @Then("I should see {int} results in the page")
     public void iShouldSeeResultsInThePage(int arg0) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        By movieDetailsSelector = By.id("movie-title");
+        By movieDetailsSelector = By.id("movie-title-name");
         wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(movieDetailsSelector, arg0 - 1));
         List<WebElement> movieDetailsList = driver.findElements(movieDetailsSelector);
         int actualResults = movieDetailsList.size();
@@ -119,7 +130,7 @@ public class SearchStepDefinitions {
 
     @And("I press the load more button")
     public void iPressTheLoadMoreButton() {
-        driver.findElement(By.xpath("/html/body/div[1]/div/div/div[3]/button")).click();
+        driver.findElement(By.xpath("/html/body/div[1]/div[2]/div/div[2]/button")).click();
     }
 
     @And("I press the enter key")
@@ -184,17 +195,15 @@ public class SearchStepDefinitions {
     }
 
     @Then("I should see {string} in the page")
-    public void iShouldSeeInThePage(String arg0) {
+    public void iShouldSeeInThePage(String arg0) throws InterruptedException {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(120));
-        By movieDetailsSelector = By.id("movie-title");
-        wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(movieDetailsSelector, 9));
-        List<WebElement> movieDetailsList = driver.findElements(movieDetailsSelector);
 
+        List<WebElement> titles = wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.id("movie-title-name")));
         boolean foundMatch = false;
-        for (WebElement movie : movieDetailsList) {
-            String movieTitle = movie.findElement(By.id("movie-name")).getText();
-            if (movieTitle.contains(arg0)) {
+        for (WebElement currTitle : titles) {
+            if (currTitle.getText().contains(arg0)) {
                 foundMatch = true;
+                Thread.sleep(2000);
                 break;
             }
         }
@@ -335,14 +344,74 @@ public class SearchStepDefinitions {
 
     @And("I add to a new watchlist from the plus button")
     public void iAddToANewWatchlistFromThePlusButton() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(120));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(180));
         WebElement addButton = wait.until(ExpectedConditions.elementToBeClickable(By.id("addButton")));
         addButton.click();
     }
 
 
-//    @After
-//    public void after(){
-//        driver.quit();
-//    }
+
+
+    @Then("I should see {string} and {string} on the page")
+    public void iShouldSeeAndOnThePage(String arg0, String arg1) throws InterruptedException {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(120));
+
+        List<WebElement> titles = wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.id("movie-title-name")));
+        boolean foundArg0 = false;
+        boolean foundArg1 = false;
+
+        for (WebElement currTitle : titles) {
+            if (currTitle.getText().contains(arg0)) {
+                foundArg0 = true;
+                Thread.sleep(2000);
+            }
+            else if (currTitle.getText().contains(arg1)){
+                foundArg1 = true;
+                Thread.sleep(2000);
+            }
+        }
+        boolean foundMatch = (foundArg0 && foundArg1);
+        assertTrue("Should see " + arg0 + " " + arg1 +" in the page", foundMatch);
+    }
+
+
+    @Then("I should not see {string} or {string} in the page")
+    public void iShouldNotSeeOrInThePage(String arg0, String arg1) throws InterruptedException {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(120));
+
+        List<WebElement> titles = wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.id("movie-title-name")));
+        boolean notFoundArg0 = true;
+        boolean notFoundArg1 = true;
+
+        for (WebElement currTitle : titles) {
+            if (currTitle.getText().contains(arg0)) {
+                notFoundArg0 = false;
+                Thread.sleep(2000);
+            }
+            else if (currTitle.getText().contains(arg1)){
+                notFoundArg1 = false;
+                Thread.sleep(2000);
+            }
+        }
+        boolean noMatch = (notFoundArg0 && notFoundArg1);
+        assertTrue("Should not see " + arg0 + " " + arg1 +" in the page", noMatch);
+    }
+
+    @And("I navigate to the watchlist page")
+    public void iNavigateToTheWatchlistPage() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement watchlistNavButton = wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div[3]/button[2]"))));
+        watchlistNavButton.click();
+    }
+
+    @Then("I am on the watchlist page")
+    public void iAmOnTheWatchlistPage() {
+        driver.get(ROOT_URL+"MyWatchlists");
+    }
+
+    @After
+    public void after(){
+        driver.quit();
+    }
+
 }

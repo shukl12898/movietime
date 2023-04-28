@@ -21,14 +21,13 @@ function Search() {
   const [endYear, setEndYear] = useState("");
   const [selectedFilters, setSelectedFilters]= useState([]);
   const [fetchData, setFetchData] = useState(false);
-  // const [prevFilters, setPrevFilters] = useState([]);
-  // const [searchSubmitted, setSearchSubmitted] = useState(false);
-
 
     const options=[
-      {label: "Movie Title", value: "movie"},
-      {label: "Keyword", value: "keyword"},
-      {label: "Actor/Actress", value: "person"}];
+  {label: "Movie Title", value: "movie"},
+  {label: "Keyword", value: "keyword"},
+  {label: "Actor/Actress", value: "person"}];
+
+
   const handleSelectFilter = (selectedOptions) => {
       setSelectedFilters(selectedOptions);
   };
