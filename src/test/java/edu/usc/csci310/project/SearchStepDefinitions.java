@@ -156,14 +156,14 @@ public class SearchStepDefinitions {
 
     @Then("I should be able to scroll through cast")
     public void iShouldBeAbleToScrollThroughCastIn() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
-        By overlayElementSelector = By.id("overlay-content");
-        wait.until(ExpectedConditions.visibilityOfElementLocated(overlayElementSelector));
-        driver.findElement(By.id("accordion-button-:rb:")).click();
-        WebElement castList = driver.findElement(By.id("accordion-panel-:rb:"));
-        Boolean isScrollable = (Boolean) ((JavascriptExecutor) driver).executeScript("return arguments[0].scrollHeight > arguments[0].clientHeight", castList);
+WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+By overlayElementSelector = By.id("overlay-content");
+wait.until(ExpectedConditions.visibilityOfElementLocated(overlayElementSelector));
+driver.findElement(By.cssSelector("[data-testid='castButton']")).click();
+WebElement castList = driver.findElement(By.cssSelector("[data-testid='castList']"));
+Boolean isScrollable = (Boolean) ((JavascriptExecutor) driver).executeScript("return arguments[0].scrollHeight > arguments[0].clientHeight", castList);
 
-        assertTrue("Cast list is scrollable", isScrollable);
+assertTrue("Cast list is scrollable", isScrollable);
     }
 
     @Then("I should not see {string} in the page")
@@ -403,6 +403,7 @@ public class SearchStepDefinitions {
         WebElement watchlistNavButton = wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div[3]/button[2]"))));
         watchlistNavButton.click();
     }
+
 
     @Then("I am on the watchlist page")
     public void iAmOnTheWatchlistPage() {
