@@ -15,7 +15,7 @@ import CompareWatchlist from "../components/CompareWatchlist";
 function MyWatchlists({selectedMovies, setSelectedMovies}) {
 
     const [watchlists, assignLists] = useState([]);
-    const setId = useState(0);
+    const [userId,setId] = useState(0);
     const navigate = useNavigate();
     const [showSuggestionStuff, setShowSuggestionStuff] = useState(false);
 
