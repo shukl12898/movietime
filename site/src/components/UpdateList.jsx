@@ -7,7 +7,7 @@ Input, Switch,
 FormHelperText, FormControl,FormLabel
 } from '@chakra-ui/react';
 
-function CreateNewList({onAlertDialogClose}) {
+function UpdateList({onAlertDialogClose}) {
 
     const [newListName, setNewListName] = useState("");
     const [makePrivate, setMakePrivate] = useState(false);
@@ -17,7 +17,7 @@ function CreateNewList({onAlertDialogClose}) {
     const listCreated = async () => {
        const storedId = sessionStorage.getItem('userId');
        try {
-           const response = await fetch("/api/newList", {
+           const response = await fetch("/api/updateList", {
                method: "POST",
                headers: {
                    "Content-Type": "application/json"
@@ -25,7 +25,7 @@ function CreateNewList({onAlertDialogClose}) {
                body: JSON.stringify({
                    watchListName: newListName,
                    forUser: storedId,
-                   private: makePrivate
+                   isPrivate: makePrivate
                })
            });
            const result = await response.json();
@@ -47,7 +47,7 @@ function CreateNewList({onAlertDialogClose}) {
     return (
         <Popover>
             <PopoverTrigger>
-              <Button>Create a New List</Button>
+              <Button>Rename List</Button>
             </PopoverTrigger>
             <PopoverContent>
               <PopoverArrow />
@@ -80,12 +80,7 @@ function CreateNewList({onAlertDialogClose}) {
               <Heading size='sm'>Make private?</Heading>
               <Switch size='md'
                 value={makePrivate}
-                onChange={() => {
-
-                 setMakePrivate(!makePrivate);
-                 console.log("Changed priv/public. " + makePrivate);
-                }
-                }/>
+                onChange={(e) => setMakePrivate(e.target.value)}/>
               </PopoverBody>
               <PopoverFooter>
                   <Button

@@ -20,7 +20,8 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 public class SearchStepDefinitions {
-    private static final String ROOT_URL = "http://localhost:8080/";
+    private static final String ROOT_URL = "https://localhost:8080/";
+    private static final String ROOT_URL_HTTP = "http://localhost:8080/";
     private WebDriver driver;
 //
 //    @BeforeAll
@@ -55,6 +56,23 @@ public class SearchStepDefinitions {
     public void iAmOnTheSearchPage(){
         driver.get(ROOT_URL+"Search");
     }
+
+    @Given("I am on the start page")
+    public void iAmOnTheStartPage(){
+        driver.get(ROOT_URL);
+    }
+
+    @When("I am logged in")
+    public void iAmLoggedIn() {
+        driver.findElement(By.xpath("/html/body/div[1]/div[2]/div[2]/button")).click();
+        driver.findElement(By.xpath("/html/body/div[1]/div[2]/div[1]/div/div[2]/div[2]/div[1]/input")).sendKeys("user");
+        driver.findElement(By.xpath("/html/body/div[1]/div[2]/div[1]/div/div[2]/div[2]/div[2]/input")).sendKeys("pass");
+        driver.findElement(By.xpath("/html/body/div[1]/div[2]/div[1]/div/div[2]/div[2]/div[3]/input")).sendKeys("pass");
+        driver.findElement(By.xpath("/html/body/div[1]/div[2]/div[1]/div/div[2]/div[2]/div[4]/input")).sendKeys("User");
+        driver.findElement(By.xpath("/html/body/div[1]/div[2]/div[1]/div/div[2]/div[3]/button")).click();
+        System.out.println(driver.getCurrentUrl());
+    }
+
 
     @And("I enter {string} in the search bar with {string} filter selected")
     public void iEnterInTheSearchBarWithFilterSelected(String arg0, String arg1) {
@@ -395,6 +413,26 @@ public class SearchStepDefinitions {
         }
 
         assertTrue("Should see " + arg0 + " in the page", foundMatch);
+
+    @Given("I am on the {string} page using HTTP")
+    public void iAmOnThePageUsingHTTP(String arg0) {
+        driver.get(ROOT_URL_HTTP+arg0);
+
+    }
+
+    @Then("I should see {string} simply on page")
+    public void iShouldSeeSimplyOnPage(String arg0) {
+        assertTrue(driver.getPageSource().contains(arg0));
+    }
+
+    @When("I click advanced")
+    public void iClickAdvanced() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(120));
+        WebElement advButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"details-button\"]")));
+        advButton.click();
+        WebElement proButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"proceed-link\"]")));
+        proButton.click();
+
     }
 
 //    @After
