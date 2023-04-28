@@ -1,21 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
-Card, CardHeader, CardBody, Heading,
-Flex, Spacer,Button, Popover, PopoverArrow, PopoverCloseButton,
-PopoverFooter, PopoverContent, PopoverTrigger, PopoverBody,
- Box, SimpleGrid,Text,CardFooter, ButtonGroup, Input, Badge, Switch,
- Divider,FormHelperText, FormControl,FormLabel
+Heading,
+Button, Popover, PopoverArrow, PopoverCloseButton,
+PopoverFooter, PopoverContent, PopoverTrigger, PopoverBody, Input, Switch,
+ FormHelperText, FormControl,FormLabel
 } from '@chakra-ui/react';
-import { useNavigate } from "react-router-dom";
-import MovieDetails from '../components/MovieDetails';
-import WatchlistMovieDetails from '../components/WatchlistMovieDetails';
 
 function SuggestionCreateNewList({movies, numResults}) {
 
     const [newListName, setNewListName] = useState("");
     const [makePrivate, setMakePrivate] = useState(false);
     const [exists, setExists] = useState(false);
-    const [watchlists, setWatchlists] = useState([]);
 
   const getListId = async () => {
     const storedId = sessionStorage.getItem('userId');

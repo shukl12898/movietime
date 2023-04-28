@@ -1,5 +1,6 @@
-package edu.usc.csci310.project.demo;
+/*package edu.usc.csci310.project.demo;
 
+import edu.usc.csci310.project.DatabaseManager;
 import io.cucumber.java.Before;
 import io.cucumber.java.BeforeAll;
 import io.cucumber.java.en.And;
@@ -30,10 +31,12 @@ public class WatchlistStepDefinitions {
     private WebDriver driver;
 
     @Before
-    public void before() {
+    public void before() throws Exception {
         ChromeOptions options = new ChromeOptions ();
         options.addArguments("--remote-allow-origins=*");
         driver = new ChromeDriver (options);
+        DatabaseManager db = new DatabaseManager();
+        db.dropAllTables();
     }
 
     /*
@@ -49,6 +52,7 @@ public class WatchlistStepDefinitions {
         driver = new ChromeDriver(options);
     }
     */
+    /*
     @Given("I am on the {string} page")
     public void iAmOnPage(String arg0) {
         driver.get(ROOT_URL + arg0);
@@ -152,16 +156,16 @@ public class WatchlistStepDefinitions {
         driver.findElement(By.id("searchBar")).sendKeys(arg0);
     }
 
-    @And("I press the search button")
+    /*@And("I press the search button")
     public void iPressTheSearchButton() {
         driver.findElement(By.xpath("/html/body/div[1]/div/div/div[2]/div[2]/div[2]/div/div[2]/form/button")).click();
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         By movieDetailsSelector = By.id("movie-title");
         wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(movieDetailsSelector, 9));
 
-    }
+    }*/
 
-    @And("I should see {string} in the page")
+    /*@And("I should see {string} in the page")
     public void iShouldSeeInThePage(String arg0) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(120));
         By movieDetailsSelector = By.id("movie-title");
@@ -178,4 +182,5 @@ public class WatchlistStepDefinitions {
         }
         Assert.assertTrue("Should see " + arg0 + " in the page", foundMatch);
     }
-}
+}*/
+

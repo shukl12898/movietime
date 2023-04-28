@@ -11,7 +11,6 @@ import {
     AccordionItem,
     AccordionButton,
     AccordionPanel,
-    AccordionIcon,
     Box, Flex, Spacer, ButtonGroup, Checkbox
 } from '@chakra-ui/react';
 
