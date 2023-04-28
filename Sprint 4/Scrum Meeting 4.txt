@@ -1,0 +1,23 @@
+What have you done since the last meeting? 
+
+Akanksha: Finished step definitions for movie details and some for search
+Oscar: Finished database and comparing watchlists backend
+Adit: Finished and pushed HTTPS enabled branch and created passing acceptance tests which use login 
+Devika: Finished search front and back end completely
+Hiroaki: Finished the front/back end for suggestions and front end for comparisons
+
+What do you plan to do for the next meeting? 
+
+Akanksha: Working on step definitions for movie details 
+Oscar: Finalizing use cases and error messages, fixing bugs in other components
+Adit: Working on step definitions for watchlists  
+Devika: Working on step definitions for search
+Hiroaki: Working on step definitions for suggestions and comparisons until submission
+
+Anything blocking your progress?
+
+Akanksha: Some use cases for movie details were passing and now they are not
+Oscar: Some security issues are taking a bit longer than expected.
+Adit: Step definitions are giving me a lot of trouble despite using the same steps as my teammates
+Devika: Some step definitions are not working due to lack of computer storage
+Hiroaki: Step definitions for suggestions and comparing watchlists require many steps, including login. 
