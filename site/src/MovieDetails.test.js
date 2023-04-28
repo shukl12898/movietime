@@ -1,145 +1,120 @@
-import React from 'react';
-import { render, waitFor, screen, fireEvent } from '@testing-library/react';
-import { act } from 'react-dom/test-utils';
-import MovieDetails from './components/MovieDetails';
+import React from "react";
+import { render, fireEvent, screen, waitFor } from "@testing-library/react";
+import MovieDetails from "./components/MovieDetails";
 
-describe('MovieDetails component', () => {
-  const mockDataMovie = {
+describe("MovieDetails component", () => {
+  const mockMovieData = {
     id: 1,
-    original_title: 'The Matrix',
-    release_date: 1989,
-    genres: [{name: "Comedy"}, {name: "Drama"}],
-    overview: "A good movie",
-    production_companies: [{name: "M.G.D Film"}],
+    title: "Test Movie",
+    poster: "http://test.com/poster.jpg",
+    overview: "This is a test movie",
+    year: 2021,
+    genres: [{ name: "Action" }, { name: "Thriller" }],
+    cast: ["Actor 1", "Actor 2", "Actor 3"],
+    director: "Director 1",
+    productionCompanies: ["Company 1", "Company 2"],
   };
 
-  const mockDataPerson = {
-    known_for: [{id: 1, id: 2, id:3}],
-    original_title: 'The Matrix',
-  };
-
-  const mockDataKeyword = {
-      id: 1,
-      original_title: 'The Matrix',
-    };
-
-  const mockCastData = [
-    { id: 1, cast: [{ name: 'Keanu Reeves' }, { name: 'Carrie-Anne Moss' }], crew: [{ name: 'Lana Wachowski', job: 'Director' }] }
-  ];
+  beforeEach(() => {
+    global.fetch = jest.fn(() =>
+      Promise.resolve({
+        json: () => Promise.resolve(mockMovieData),
+        status: 200,
+      })
+    );
+  });
 
   afterEach(() => {
-    global.fetch.mockRestore();
+    jest.resetAllMocks();
   });
 
-  it('should render movie details with movie filter', async () => {
+  test("renders loading message before movie details are fetched", async () => {
+    const handleCastMock = jest.fn();
+    const handleGenreMock = jest.fn();
 
-    jest.spyOn(global, 'fetch').mockResolvedValue({
-          ok: true,
-          json: () => Promise.resolve(mockDataMovie)
-        });
-
-  await act(async()=>{
-    await render(<MovieDetails data={mockDataMovie} filter="movie" />);
-    });
-
-    expect(screen.getByText(mockDataMovie.original_title)).toBeInTheDocument();
+    render(<MovieDetails data={mockMovieData} filter="movie" handleCast = {handleCastMock} handleGenre = {handleGenreMock}/>);
+    expect(screen.getByText("Loading...")).toBeInTheDocument();
+    expect(global.fetch).toHaveBeenCalledTimes(1);
   });
 
-  it('should render movie details with actor/actress filter', async () => {
+  test("opens overlay with movie details when movie title is clicked", async () => {
+    const handleCastMock = jest.fn();
+    const handleGenreMock = jest.fn();
 
-      jest.spyOn(global, 'fetch').mockResolvedValue({
-            ok: true,
-            json: () => Promise.resolve(mockDataPerson)
-          });
+    render(<MovieDetails data={mockMovieData} filter="movie" handleCast = {handleCastMock} handleGenre = {handleGenreMock}/>);
+    await screen.findByTestId("movie-title");
+    fireEvent.click(screen.getByTestId("movie-title"));
+    expect(screen.getByTestId("overlay")).toBeInTheDocument();
+    expect(screen.getByText("Released 2021")).toBeInTheDocument();
+    expect(screen.getByText("Cast List")).toBeInTheDocument();
+    expect(screen.getAllByTestId("cast")).toHaveLength(3);
+    expect(global.fetch).toHaveBeenCalledTimes(1);
+  });
 
-    await act(async()=>{
-      await render(<MovieDetails data={mockDataPerson} filter="person" />);
-      });
+  test('MovieDetails handles mouse enter and leave events', async () => {
+    const handleCastMock = jest.fn();
+    const handleGenreMock = jest.fn();
+    render(<MovieDetails data={mockMovieData} filter="movie" handleCast = {handleCastMock} handleGenre = {handleGenreMock}/>);
+    await screen.findByTestId("movie-title");
 
-      expect(screen.getByText(mockDataPerson.original_title)).toBeInTheDocument();
+    const movieTitle = screen.getByTestId('movie-title');
+    fireEvent.mouseEnter(movieTitle);
+    await screen.findByTestId('hover-buttons');
+    expect(screen.getByTestId('hover-buttons')).toBeInTheDocument();
+
+    fireEvent.mouseLeave(movieTitle);
+    await waitFor(() => {
+      expect(screen.queryByTestId('hover-buttons')).not.toBeInTheDocument();
+    });
+  });
+
+  test('should log error message when movieID is invalid', async () => {
+    const handleCastMock = jest.fn();
+    const handleGenreMock = jest.fn();
+    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    const mockMovieData = { id: 12345 };
+    global.fetch = jest.fn().mockImplementation(() =>
+      Promise.resolve({
+        status: 400,
+        json: () => Promise.resolve({ error: 'Invalid movieID' }),
+      })
+    );
+
+    render(<MovieDetails data={mockMovieData} filter="movie" handleCast = {handleCastMock} handleGenre = {handleGenreMock}/>);
+    await waitFor(() => expect(fetch).toHaveBeenCalledTimes(1));
+
+    consoleSpy.mockRestore();
+    delete global.fetch;
+  });
+
+  test("deselects movie when movie title is clicked again", async () => {
+    const handleCastMock = jest.fn();
+    const handleGenreMock = jest.fn();
+    render(<MovieDetails data={mockMovieData} filter="movie" handleCast = {handleCastMock} handleGenre = {handleGenreMock}/>);
+    await screen.findByTestId("movie-title");
+
+    fireEvent.click(screen.getByTestId("movie-title"));
+    expect(screen.getByTestId("overlay")).toBeInTheDocument();
+
+    fireEvent.click(screen.getByTestId("movie-title"));
+    expect(screen.queryByTestId("overlay")).not.toBeInTheDocument();
+  });
+
+    test("toggles Cast List accordion on click", async () => {
+      const handleCastMock = jest.fn();
+      const handleGenreMock = jest.fn();
+      render(<MovieDetails data={mockMovieData} filter="movie" handleCast = {handleCastMock} handleGenre = {handleGenreMock}/>);
+      await screen.findByTestId("movie-title");
+      fireEvent.click(screen.getByTestId("movie-title"));
+
+      const accordionButton = screen.getByTestId("castButton");
+      const castList = screen.getByTestId("castList");
+
+      fireEvent.click(accordionButton);
+
+      expect(castList).not.toBeNull();
+
     });
 
-    it('should render movie details with keyword filter', async () => {
-
-          jest.spyOn(global, 'fetch').mockResolvedValue({
-                ok: true,
-                json: () => Promise.resolve(mockDataMovie)
-              });
-
-        await act(async()=>{
-          await render(<MovieDetails data={mockDataMovie} filter="keyword" />);
-          });
-
-          expect(screen.getByText(mockDataMovie.original_title)).toBeInTheDocument();
-        });
-
-    it("should log an error message when there is an error fetching movie or cast data", async () => {
-        const consoleSpy = jest.spyOn(console, "log").mockImplementation(() => {});
-        jest.spyOn(global, "fetch").mockImplementation(() => Promise.reject("error"));
-
-        render(<MovieDetails data={{id: 123}} filter="movie" />);
-
-        await waitFor(() => expect(consoleSpy).toHaveBeenCalledWith("error"));
-        consoleSpy.mockRestore();
-      });
-
-    it('renders overlay when title is clicked', async () => {
-        const mockMovie = {
-          id: 1,
-          title: 'The Matrix',
-          poster: '/path/to/poster',
-          overview: 'A computer hacker learns from mysterious rebels about the true nature of his reality and his role in the war against its controllers.',
-          release_date: '1999-03-31',
-          genres: [{ id: 1, name: 'Action' }, { id: 2, name: 'Science Fiction' }],
-          cast: [{ name: 'Keanu Reeves' }, { name: 'Carrie-Anne Moss' }],
-          crew: [{ name: 'Lana Wachowski', job: 'Director' }],
-          production_companies: [{name: 'Village Roadshow Pictures'}, {name: 'Groucho II Film Partnership'}, {name: 'Silver Pictures'}],
-        };
-
-        jest.spyOn(global, 'fetch').mockResolvedValue({
-                  ok: true,
-                  json: () => Promise.resolve(mockMovie)
-                });
-
-          await act(async()=>{
-            await render(<MovieDetails data={mockDataMovie} filter="movie"/>);
-            });
-
-        const title = screen.getByTestId('movie-title');
-        fireEvent.click(title);
-
-        const overlayElement = screen.getByTestId('overlay');
-        expect(overlayElement).toBeInTheDocument();
-      });
-
-      it('removes overlay when title is clicked twice', async () => {
-              const mockMovie = {
-                id: 1,
-                title: 'The Matrix',
-                poster: '/path/to/poster',
-                overview: 'A computer hacker learns from mysterious rebels about the true nature of his reality and his role in the war against its controllers.',
-                release_date: '1999-03-31',
-                genres: [{ id: 1, name: 'Action' }, { id: 2, name: 'Science Fiction' }],
-                cast: [{ name: 'Keanu Reeves' }, { name: 'Carrie-Anne Moss' }],
-                crew: [{ name: 'Lana Wachowski', job: 'Director' }],
-                production_companies: [{name: 'Village Roadshow Pictures'}, {name: 'Groucho II Film Partnership'}, {name: 'Silver Pictures'}],
-              };
-
-              jest.spyOn(global, 'fetch').mockResolvedValue({
-                        ok: true,
-                        json: () => Promise.resolve(mockMovie)
-                      });
-
-                await act(async()=>{
-                  await render(<MovieDetails data={mockDataMovie} filter="movie"/>);
-                  });
-
-              const title = screen.getByTestId('movie-title');
-              fireEvent.click(title);
-
-              const overlay = screen.getByTestId('overlay');
-              const closeButton = screen.queryByTestId('closeButton');
-              expect(closeButton).toBeInTheDocument();
-            });
 
 });

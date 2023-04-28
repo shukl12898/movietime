@@ -5,6 +5,7 @@ public class LoginResponse {
     private int status;
     private String displayName;
     private int userId;
+    private String message;
     public String getDisplayName() {
         return displayName;
     }
@@ -20,6 +21,14 @@ public class LoginResponse {
         this.userId = userId;
     }
 
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+    
     public int getStatus() {
         return status;
     }

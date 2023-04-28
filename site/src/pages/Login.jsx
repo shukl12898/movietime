@@ -1,28 +1,25 @@
 import React, { useState } from "react";
-import NavBar from '../components/NavBar';
 import {
 Flex, Spacer, Button
-} from '@chakra-ui/react'
+} from '@chakra-ui/react';
 
 import LoginComponent from '../components/LoginComponent';
 import CreateAccount from '../components/CreateAccount';
 
-function Login() {
+function Login({toggleLogIn}) {
 
  // const [fetchResponse, handleFetchResponse] = useState();
   const [signUp, setSignUp] = useState(false);
 
-
      if (!signUp) {
         return (
         <>
-        <NavBar/>
         <br/>
-        <LoginComponent />
+        <LoginComponent toggleLogIn={toggleLogIn} data-testid="login-component" />
         <br/>
         <Flex alignItems='center'>
         <Spacer/>
-        <Button variant='ghost' onClick={() => {setSignUp(true);}} >Create Account</Button>
+        <Button data-testid="createButton" variant='ghost' onClick={() => {setSignUp(true);}} >Create Account</Button>
         <Spacer/>
         </Flex>
         </>
@@ -30,13 +27,12 @@ function Login() {
       } else {
         return (
         <>
-        <NavBar/>
         <br/>
-        <CreateAccount />
+        <CreateAccount toggleLogIn={toggleLogIn} data-testid="create-account"/>
         <br/>
         <Flex alignItems='center'>
         <Spacer/>
-        <Button variant='ghost' onClick={() => {setSignUp(false);}} >Have an account? Login</Button>
+        <Button data-testid="loginButton" variant='ghost' onClick={() => {setSignUp(false);}} >Have an account? Login</Button>
         <Spacer/>
         </Flex>
         </>);

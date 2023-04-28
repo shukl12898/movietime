@@ -2,25 +2,29 @@ import React from "react";
 import { useState } from 'react';
 import {
 Card, CardHeader, CardBody, Heading,CardFooter,
-Flex, Spacer, FormControl,FormLabel,Input, Button
+Flex, Spacer, FormControl,FormLabel,Input, Button, FormHelperText
 } from '@chakra-ui/react'
 
-function CreateAccount() {
+function CreateAccount({toggleLogIn}) {
 
-     const [username, setUsername] = useState("");
-     const [password, setPassword] = useState("");
-     const [confirmPassword, setConfPassword] = useState("");
-     const [name, setName] = useState("");
-     const [user, setUser] = useState();
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfPassword] = useState("");
+    const [name, setName] = useState("");
 
-    console.log(user);
-     function handleUsernameChange(event) {
-         setUsername(event.target.value);
-     }
+    const [exists, setExists] = useState(false);
 
-     function handlePasswordChange(event) {
-         setPassword(event.target.value);
-     }
+    const matchingPw = password != confirmPassword;
+    const empty = (username == '') || (password == '');
+    //const [validUser, setValid] = useState(true);
+
+    function handleUsernameChange(event) {
+        setUsername(event.target.value);
+    }
+
+    function handlePasswordChange(event) {
+        setPassword(event.target.value);
+    }
 
      function handleNameChange(event) {
          setName(event.target.value);
@@ -31,6 +35,9 @@ function CreateAccount() {
      }
 
      function handleSubmit() {
+        if (name == "") {
+            setName(username);
+        }
         fetch("/api/createUser", {
             method: "POST",
             headers: {
@@ -46,7 +53,14 @@ function CreateAccount() {
             .then((response) => {
                console.log("API Responded With: ");
                console.log(response);
-               setUser(response);
+               if (response.message == "User exists.") {
+                   setExists(true);
+               } else {
+                   setExists(false);
+                   sessionStorage.setItem("userId", response.userId);
+                   sessionStorage.setItem("displayName", response.displayName);
+                   toggleLogIn();
+               }
             })
             .catch(error => {
              console.log(error)
@@ -63,30 +77,40 @@ function CreateAccount() {
                </CardHeader>
                <CardBody>
 
-                   <FormControl isRequired>
+                   <FormControl isRequired isInvalid={false}>
                      <FormLabel htmlFor="username">Username</FormLabel>
                      <Input
                      placeholder='Enter a username' type="text" value={username} onChange={handleUsernameChange}
                      />
+                     {exists && (
+                          <FormHelperText>
+                            Username already exists.
+                          </FormHelperText>
+                        )}
                       </FormControl>
-                      <FormControl isRequired>
+                      <FormControl isRequired isInvalid={matchingPw}>
                       <FormLabel htmlFor="password">Password</FormLabel>
                       <Input placeholder='Enter a password' type="password" value={password} onChange={handlePasswordChange}/>
                        </FormControl>
 
-                     <FormControl isRequired>
+                     <FormControl isRequired isInvalid={matchingPw}>
                      <FormLabel htmlFor="confirmPassword">Confirm Password</FormLabel>
                      <Input placeholder='Retype password' type="password" value={confirmPassword} onChange={handlePasswordConf}/>
+                    {matchingPw && (
+                          <FormHelperText>
+                            Passwords must match.
+                          </FormHelperText>
+                        )}
                       </FormControl>
 
-                      <FormControl isRequired>
+                      <FormControl>
                    <FormLabel htmlFor="displayName">Display Name</FormLabel>
                    <Input placeholder='Enter display name' type="text" value={name} onChange={handleNameChange}/>
                     </FormControl>
                </CardBody>
                <CardFooter>
                 <Spacer/>
-                <Button onClick={handleSubmit}>Create Account</Button>
+                <Button isDisabled={matchingPw || empty} onClick={handleSubmit}>Create Account</Button>
                 <Spacer/>
                </CardFooter>
              </Card>

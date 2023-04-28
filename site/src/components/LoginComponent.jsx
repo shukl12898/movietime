@@ -2,13 +2,18 @@ import React from "react";
 import { useState } from 'react';
 import {
 Card, CardHeader, CardBody, Heading,CardFooter,
-Flex, Spacer, FormControl,FormLabel,Input, Button
-} from '@chakra-ui/react'
+Flex, Spacer, FormControl,FormLabel,Input, Button, FormHelperText
+} from '@chakra-ui/react';
 
-function LoginComponent() {
+function LoginComponent({toggleLogIn}) {
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+
+    const allow = (username != '') && (password != '');
+
+    const [registered, setRegistered] = useState(true);
+    const [correct, setCorrect] = useState(true);
 
     function handleUsernameChange(event) {
         setUsername(event.target.value);
@@ -17,6 +22,8 @@ function LoginComponent() {
     function handlePasswordChange(event) {
         setPassword(event.target.value);
     }
+
+
     return (
     <div>
     <Flex>
@@ -27,20 +34,32 @@ function LoginComponent() {
           </CardHeader>
           <CardBody>
 
-              <FormControl isRequired>
+              <FormControl isRequired isInvalid={!registered}>
                 <FormLabel>Username</FormLabel>
                 <Input placeholder='Username' type="text" value={username} onChange={handleUsernameChange}/>
                  </FormControl>
-                 <FormControl isRequired>
+                 <FormControl isRequired isInvalid={!registered}>
                  <FormLabel>Password</FormLabel>
                  <Input placeholder='Password' type="password" value={password} onChange={handlePasswordChange}/>
+                  {!registered && (
+                         <FormHelperText>
+                           Account not found.
+                         </FormHelperText>
+                       )}
+                       {!correct && (
+                                                <FormHelperText>
+                                                  Incorrect password.
+                                                </FormHelperText>
+                                              )}
                   </FormControl>
 
 
           </CardBody>
           <CardFooter>
           <Spacer/>
-           <Button onClick={() => {
+           <Button
+           isDisabled={!allow}
+           onClick={() => {
                       fetch("/api/login", {
                         method: "POST",
                         headers: {
@@ -55,9 +74,27 @@ function LoginComponent() {
                         .then((response) => {
                             console.log("API Responded With: ");
                             console.log(response);
+                            if(response.message == "Wrong password.") {
+
+                                setCorrect(false);
+
+                            } else if(response.message == "User does not exist.") {
+
+                                setCorrect(true);
+                                setRegistered(false);
+
+                            } else if (response.message == "Success"){
+
+                                sessionStorage.setItem("userId", response.userId);
+                                                                sessionStorage.setItem("displayName", response.displayName);
+                                setCorrect(true);
+                                setRegistered(true);
+                                toggleLogIn();
+
+                            }
                         })
                         .catch(error => {
-                          console.log(error)
+                          console.log(error);
                         });
                     }}
                     >Log In</Button>

@@ -1,25 +1,27 @@
-import React, {useState} from 'react';
-import { Select } from '@chakra-ui/react'
+import React, {useState} from "react";
+import {VStack, Checkbox, CheckboxGroup} from "@chakra-ui/react";
 
-// functional component
-const SearchFilter = ({options, onSelect}) => {
-    const [selected, setSelected] = useState("");
+const SearchFilter = ({ options, onSelect }) => {
+    const [selectedValues, setSelectedValues] = useState([]);
 
-    const handleSelect = (event) => {
-        const selectedOption = event.target.value;
-        setSelected(selectedOption);
-        onSelect(selectedOption);
+
+    function handleCheckboxChange(values) {
+        console.log('Seclected Values:',values);
+        setSelectedValues(values);
+        onSelect(values);
     }
+
     return (
- <div key = "0">
-   <Select value={selected} id = "chooseFilter" onChange={handleSelect} w='200px'>
-     {options.map((option) => (
-                         <option key={option.value} value={option.value}>
-                             {option.label}
-                         </option>
-                     ))}
-   </Select>
-   </div>
-    )
+        <CheckboxGroup colorScheme="green" onChange={handleCheckboxChange} value={selectedValues}>
+            <VStack alignItems="start">
+                {options.map((option) => (
+                    <Checkbox key={option.value} value={option.value}>
+                        {option.label}
+                    </Checkbox>
+                ))}
+            </VStack>
+        </CheckboxGroup>
+    );
 }
+
 export default SearchFilter;

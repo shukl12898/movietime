@@ -1,171 +1,127 @@
-import React from "react";
-import {useState, useEffect} from "react";
-import '../styles/movie-details.css';
-
+import React, { useState, useEffect } from "react";
+import "../styles/movie-details.css";
+import HoverButtons from "../components/HoverButtons";
 import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-  Image,
+  Box,
   Badge,
-   Accordion,
-    AccordionItem,
-    AccordionButton,
-    AccordionPanel,
-    AccordionIcon,
-    Box,
-} from '@chakra-ui/react';
+  Image,
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
+} from "@chakra-ui/react";
 
 function MovieDetails(props) {
-
-  const [movieDetails, setMovieDetails] = useState({});
-  const [castDetails, setCastDetails] = useState({});
-  const [showOverlay, setShowOverlay] = useState(false);
-  const [movieID, setMovieID] = useState({});
+  const [movieDetails, setMovieDetails] = useState(null);
+  const [isHovering, setIsHovering] = useState(false);
   const [selectedMovieID, setSelectedMovieID] = useState(null);
-  const imageURL = "https://image.tmdb.org/t/p/w500/";
-  const APIkey = '?api_key=5e9de98263d160a232935f6d95ab878d';
-  const movie = props.data;
-  const filter = props.filter;
-  const baseurl = 'https://api.themoviedb.org/3/movie/';
+  const [castIsOpen, setCastIsOpen] = useState(false);
 
-    useEffect(() => {
-      if (filter === "movie") {
-        setMovieID(movie.id);
-      } else if (filter === "keyword") {
-          setMovieID(movie.id);
-      } else if (filter === "person") {
-        if (movie.known_for.length > 0) {
-          const knownForIDs = movie.known_for.map((movie)=>movie.id);
-          setMovieID(knownForIDs);
+  const movieID = props.data;
+
+  const handleCast = (newQuery) =>{
+    props.handleCast(newQuery);
+    setSelectedMovieID(null);
+  }
+
+  // const handleGenre = (newQuery) => {
+  //   props.handleGenre(newQuery);
+  //   setSelectedMovieID(null);
+  // }
+
+  useEffect(() => {
+    fetch(`/movies/${movieID}`)
+      .then((response) => {
+        if (response.status === 400) {
+          throw new Error(response.json());
         }
-      }
-    }, [filter, movie]);
+        return response.json();
+      })
+      .then((data) => setMovieDetails(data))
+      .catch((error) => console.error(error));
+  }, [movieID]);
 
-    useEffect(() => {
-      if (Array.isArray(movieID)) {
-        const promises = movieID.map((id) => {
-          const fullurl = baseurl + id + APIkey;
-          return fetch(fullurl).then((response) => response.json());
-        });
-
-        Promise.all(promises)
-          .then((data) => setMovieDetails(data))
-          .catch((error) => console.log(error));
-      } else if (movieID) {
-        const fullurl = baseurl + movieID + APIkey;
-        fetch(fullurl)
-          .then((response) => response.json())
-          .then((data) => setMovieDetails([data]))
-          .catch((error) => console.log(error));
-      }
-    }, [movieID]);
-
-    useEffect(() => {
-        if (Array.isArray(movieID)) {
-            const promises = movieID.map((id) => {
-            const casturl = baseurl + id + '/credits' + APIkey;
-            return fetch(casturl).then((response) => response.json());
-        });
-
-        Promise.all(promises)
-        .then((data) => setCastDetails(data))
-        .catch((error) => console.log(error));
-        } else if (movieID) {
-            const casturl = baseurl + movieID + '/credits' + APIkey;
-            fetch(casturl)
-            .then((response) => response.json())
-            .then((data) => setCastDetails(data))
-            .catch((error) => console.log(error));
-        }
-    }, [movieID]);
-
-        console.log(castDetails);
-
-
-    const showDetails = (movieID) => {
-        setShowOverlay(true);
-        setSelectedMovieID(movieID);
+  const showDetailsToggle = (movieID) => {
+    if (selectedMovieID === movieID) {
+       setSelectedMovieID(null);
+    } else {
+       setSelectedMovieID(movieID);
     }
+  };
 
-    return (
-      <div className="background">
-        {movieDetails.length > 0 ? (
-          movieDetails.map((movie) => (
-            <div className="movie-title"  data-testid="movie-title" key={movie.id} onClick={() => {
-            showDetails(movie.id) }}
-            ><Box p={3}>
-              {movie.original_title}
+  const handleMouseEnter = () => {
+    setIsHovering(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovering(false);
+  };
+
+  if (!movieDetails) {
+    return <div>Loading...</div>;
+  }
+
+  console.log("Movie Details are: " + movieDetails);
+
+  return (
+    <Box className="background">
+      {movieDetails.title && (
+        <Box
+          p={3}
+          id="movie-name"
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+          key={movieID}
+          position="relative"
+          zIndex="1"
+        >
+          <div
+            className="movie-title"
+            data-testid="movie-title"
+            id="movie-title-name"
+            onClick={() => {
+              showDetailsToggle(movieID);
+            }}
+          >
+            {movieDetails.title}
+          </div>
+          {isHovering && <HoverButtons movieDetails={movieDetails} className="hover" />}
+          {selectedMovieID && (
+            <Box id="overlay-content" data-testid="overlay" mt={2} padding="20px" borderWidth="1px" borderRadius="md" boxShadow="lg" width="400px">
+              <Box mb={2}>
+                <Badge>Released {movieDetails.year}</Badge>
+              </Box>
+              <Box d="flex">
+                <Image src={movieDetails.poster} mr={2} />
+                <Box>
+                  <Box mb={2}>{movieDetails.overview}</Box>
+                  <Box mb={2}>
+                    Genres: {movieDetails.genres.map((genre) => genre).join(", ")}
+                  </Box>
+                  <Accordion mb={2} allowToggle>
+                    <AccordionItem>
+                      <h2>
+                        <AccordionButton data-testid="castButton" onClick={() => setCastIsOpen(!castIsOpen)}>Cast List</AccordionButton>
+                      </h2>
+                      <AccordionPanel maxH="200px" data-testid="castList" overflowY="scroll" isOpen={castIsOpen}>
+                        {movieDetails.cast.map((member, index) => (
+                          <li key={index} data-testid="cast" onClick={() => handleCast(member)}>
+                            {member}
+                          </li>
+                        ))}
+                      </AccordionPanel>
+                    </AccordionItem>
+                  </Accordion>
+                  <Box mb={2}>{movieDetails.director}</Box>
+                  <Box>{movieDetails.productionCompanies.join(", ")}</Box>
+                </Box>
+              </Box>
             </Box>
-            </div>
-          ))
-        ) : (
-          <div>No movies found</div>
-        )}
-
-        {showOverlay && selectedMovieID && (
-
-        <Modal isOpen={showOverlay} onClose={setShowOverlay} >
-            <ModalOverlay />
-                <ModalContent data-testid="overlay">
-                  <ModalHeader>
-                    {movieDetails.filter((movie) => movie.id === selectedMovieID)[0].original_title}
-                    <br />
-                    <Badge>Released {movieDetails.filter((movie) =>
-                     movie.id === selectedMovieID)[0].release_date.toString().substring(0, 4)} </Badge >
-                  </ModalHeader>
-                  <ModalCloseButton data-testid="closeButton"/>
-                  <ModalBody>
-                    <br />
-                      <Image src={imageURL + movieDetails.filter((movie) => movie.id === selectedMovieID)[0].poster_path} />
-                    <br />
-                        {movieDetails.filter((movie) => movie.id === selectedMovieID)[0].overview}
-                    <br />
-                      Genres:
-                                          {movieDetails.filter((movie) => movie.id === selectedMovieID)[0].genres && movieDetails.filter((movie) => movie.id === selectedMovieID)[0].genres.map((genre) => genre.name).join(", ")}
-
-                    <br />
-                    <br />
-                    <Accordion>
-                       <AccordionItem>
-                         <h2>
-                           <AccordionButton>
-
-                               Cast List
-
-                             <AccordionIcon />
-                           </AccordionButton>
-                         </h2>
-                         <AccordionPanel >
-                           {Array.isArray(castDetails) && castDetails.find((cast) => cast.id === selectedMovieID) && castDetails.find((cast) => cast.id === selectedMovieID).cast.map((member,index) =>
-                              <li key={index}>{member.name}</li>
-                            )}
-                            {!Array.isArray(castDetails) && castDetails.cast.map((member,index) =>
-                              <li key={index} data-testid="cast">{member.name}</li>
-                            )}
-                         </AccordionPanel>
-                       </AccordionItem>
-
-                    </Accordion>
-                    <br />
-
-                 {Array.isArray(castDetails) && castDetails.find((cast) => cast.id === selectedMovieID) && castDetails.find((cast) => cast.id === selectedMovieID).crew.find((member) => member.job === "Director").name}
-                  {!Array.isArray(castDetails) && castDetails.crew.find((member)=>member.job === "Director").name}
-                  {movieDetails.filter((movie) => movie.id === selectedMovieID)[0].production_companies.map((company) => company.name).join(", ")}
-
-                      </ModalBody>
-                      <ModalFooter>
-                      </ModalFooter>
-                    </ModalContent>
-             </Modal>
-
-
-            )}
-            </div>
-    );
+          )}
+        </Box>
+      )}
+    </Box>
+  );
 }
-export default MovieDetails
+
+export default MovieDetails;
