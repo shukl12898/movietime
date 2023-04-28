@@ -156,7 +156,8 @@ function MyWatchlists({selectedMovies, setSelectedMovies}) {
                                     </Button>
                                     {!watchlists[index].private && <CompareWatchlist
                                         listId = {watchlists[index].listId}
-                                        isPrivate = {watchlists[index].isPrivate} />}
+                                        isPrivate = {watchlists[index].isPrivate}
+                                        getLists={getLists}/>}
 
                                      <DeleteWatchlist
                                         listTitle={watchlists[index].listName}

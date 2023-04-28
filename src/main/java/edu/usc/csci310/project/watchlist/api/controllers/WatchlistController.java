@@ -180,8 +180,10 @@ public class WatchlistController {
                              @RequestBody NewWatchlistRequest request) {
         try {
             DatabaseManager db = new DatabaseManager();
-          //  String message = db.renameList(watchlistId, newName);
-           return "";
+            String message = db.combineLists(listOne, listTwo,
+                    request.getForUser(), request.getWatchListName());
+
+            return message;
         } catch (Exception e) {
             return e.toString();
         }

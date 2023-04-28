@@ -472,36 +472,34 @@ public class DatabaseManager {
     }
 
     public String combineLists(int listIdOne, int listIdTwo, int forUser,
-                               String name) {
+                               String name) throws SQLException {
 
-//        try (Connection conn = DriverManager.getConnection(SQLITE_CONNECTION_STRING)) {
-//            String query = "SELECT user_id FROM watchlists WHERE watchlist_id = ? ";
-//            PreparedStatement pst1 = conn.prepareStatement(query);
-//            pst1.setInt(1, watchlistId);
-//            ResultSet rs = pst1.executeQuery();
-//            rs.next();
-//
-//            int belongsTo = rs.getInt("user_id");
-//
-//            String query3 = "SELECT * FROM watchlists WHERE user_id = ? and list_name = ? ";
-//            PreparedStatement pst3 = conn.prepareStatement(query3);
-//            pst3.setInt(1, belongsTo);
-//            pst3.setString(2, newName);
-//            ResultSet listsWithRename = pst3.executeQuery();
-//            if (listsWithRename.next()) {
-//                return "Name exists";
-//            }
-//
-//            String query2 = "UPDATE watchlists " +
-//                    "SET list_name = ? " +
-//                    "WHERE watchlist_id = ?";
-//            PreparedStatement pst2 = conn.prepareStatement(query2);
-//            pst2.setString(1, newName);
-//            pst2.setInt(2, watchlistId);
-//            pst2.executeUpdate();
-//        } catch (SQLException e) {
-//            System.err.println(e.getMessage());
-//        }
+        int newListId = newWatchlist(name, forUser, false);
+        if (newListId == -1) return "Name exists";
+
+        List<Integer> movies = new ArrayList<>();
+
+        try (Connection conn = DriverManager.getConnection(SQLITE_CONNECTION_STRING)) {
+            String query = "SELECT movie_id FROM contentsOfLists" +
+                    " WHERE watchlist_id = ? OR watchlist_id = ?";
+            PreparedStatement pst1 = conn.prepareStatement(query);
+            pst1.setInt(1, listIdOne);
+            pst1.setInt(2, listIdTwo);
+
+            ResultSet moviesToAdd = pst1.executeQuery();
+
+            while (moviesToAdd.next()) {
+                movies.add(moviesToAdd.getInt("movie_id"));
+            }
+
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+
+        for (int movie : movies) {
+            System.out.println(insertIntoWatchlist(movie, newListId));
+        }
+
         return "SUCCESS";
     }
 
