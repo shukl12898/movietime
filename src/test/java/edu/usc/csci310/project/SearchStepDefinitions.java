@@ -3,6 +3,7 @@ package edu.usc.csci310.project;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
+import org.junit.Assert;
 import org.openqa.selenium.*;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -148,8 +149,8 @@ public class SearchStepDefinitions {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
         By overlayElementSelector = By.id("overlay-content");
         wait.until(ExpectedConditions.visibilityOfElementLocated(overlayElementSelector));
-        driver.findElement(By.id("accordion-button-:rb:")).click();
-        WebElement castList = driver.findElement(By.id("accordion-panel-:rb:"));
+        driver.findElement(By.id("accordion-button-:r8:")).click();
+        WebElement castList = driver.findElement(By.id("accordion-panel-:r8:"));
         Boolean isScrollable = (Boolean) ((JavascriptExecutor) driver).executeScript("return arguments[0].scrollHeight > arguments[0].clientHeight", castList);
 
         assertTrue("Cast list is scrollable", isScrollable);
@@ -184,20 +185,19 @@ public class SearchStepDefinitions {
     }
 
     @Then("I should see {string} in the page")
-    public void iShouldSeeInThePage(String arg0) {
+    public void iShouldSeeInThePage(String arg0) throws InterruptedException {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(120));
-        By movieDetailsSelector = By.id("movie-title");
-        wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(movieDetailsSelector, 9));
-        List<WebElement> movieDetailsList = driver.findElements(movieDetailsSelector);
 
+        List<WebElement> titles = wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.id("movie-title-name")));
         boolean foundMatch = false;
-        for (WebElement movie : movieDetailsList) {
-            String movieTitle = movie.findElement(By.id("movie-name")).getText();
-            if (movieTitle.contains(arg0)) {
+        for (WebElement currTitle : titles) {
+            if (currTitle.getText().contains(arg0)) {
                 foundMatch = true;
+                Thread.sleep(2000);
                 break;
             }
         }
+
         assertTrue("Should see " + arg0 + " in the page", foundMatch);
     }
 
@@ -247,7 +247,7 @@ public class SearchStepDefinitions {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(120));
 
         // Wait for all movie titles to be visible
-        List<WebElement> titles = wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.id("movie-title")));
+        List<WebElement> titles = wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.id("movie-title-name")));
 
         // Find the desired movie title and hover over it
         for (WebElement currTitle : titles) {
@@ -333,13 +333,35 @@ public class SearchStepDefinitions {
         assertEquals(1, titles.size());
     }
 
-    @And("I add to a new watchlist from the plus button")
-    public void iAddToANewWatchlistFromThePlusButton() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(120));
-        WebElement addButton = wait.until(ExpectedConditions.elementToBeClickable(By.id("addButton")));
-        addButton.click();
+    @And("I make two watchlists")
+    public void iMakeTwoWatchlists() {
+        driver.findElement(By.xpath("/html/body/div[1]/div[2]/div/div[1]/div[3]/button[1]")).click();
+        driver.findElement(By.xpath("/html/body/div[1]/div[2]/div/div[1]/div[3]/div/section/div[2]/div/input")).sendKeys("list1");
+        driver.findElement(By.xpath("/html/body/div[1]/div[2]/div/div[1]/div[3]/div/section/footer/button")).click();
+        driver.findElement(By.xpath("/html/body/div[1]/div[2]/div/div[1]/div[3]/button[1]")).click();
+        driver.findElement(By.xpath("/html/body/div[1]/div[2]/div/div[1]/div[3]/div/section/div[2]/div/input")).sendKeys("list2");
+        driver.findElement(By.xpath("/html/body/div[1]/div[2]/div/div[1]/div[3]/div/section/footer/button")).click();
     }
 
+    @And("I press the eye sign hover button")
+    public void iPressTheEyeSignHoverButton() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(120));
+        WebElement eyeButton = wait.until(ExpectedConditions.elementToBeClickable(By.id("eyeButton")));
+        eyeButton.click();
+    }
+
+    @Then("I should see the watchlist title on the page")
+    public void iShouldSeeTheWatchlistTitleOnThePage() {
+        String pageSource = driver.getPageSource();
+        boolean isListPresent = pageSource.contains("list");
+        Assert.assertTrue("The word 'list' is not present in the page source.", isListPresent);
+
+    }
+
+//    @And("I click on {string} in the cast list")
+//    public void iClickOnInTheCastList(String arg0) {
+//
+//    }
 
 //    @After
 //    public void after(){

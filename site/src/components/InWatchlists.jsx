@@ -52,6 +52,7 @@ function InWatchlists(props) {
           variant="unstyled"
           display="flex"
           onClick={onOpen}
+          id="eyeButton"
         />
 
         <Modal isOpen={isOpen} onClose={onClose}>
