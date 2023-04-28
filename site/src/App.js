@@ -39,6 +39,7 @@ function App() {
         checkNameInSessionStorage();
     },[loggedIn]);
 
+  const [selectedMovies, setSelectedMovies] = useState([]);
   return (
     <ChakraProvider>
         <NavBar toggleLogIn={toggleLogIn} name={name}/>
@@ -47,9 +48,9 @@ function App() {
               <Routes>
                 {/* Root pages, located in /pages/ */}
                 <Route path="/" element={<Search />} />
-                <Route path="/MyWatchlists" element={<MyWatchlists />} />
+                <Route path="/MyWatchlists" element={<MyWatchlists selectedMovies = {selectedMovies} setSelectedMovies = {setSelectedMovies} />} />
                 <Route path="/Search" element={<Search />} />
-                 <Route path ="/Suggestions/:num" element ={<Suggestions />} />
+                 <Route path ="/Suggestions/:num" element ={<Suggestions selectedMovies={selectedMovies} setSelectedMovies={setSelectedMovies} />} />
                  <Route path ="/Montage" element ={<Montage />} />
                 {/* 404 page not found redirect */}
                 <Route path="*" element={<Navigate to="/" replace />} />

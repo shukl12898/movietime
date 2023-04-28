@@ -170,4 +170,33 @@ class DatabaseManagerTest {
         List<UserModel> users = db.getAllUsers(10);
     }
 
+    @Test
+    void combineLists() throws Exception {
+        UserModel tommy = db.createNewUser("tommytrojan", "traveler", "Tommy");
+        UserModel tommy2 = db.createNewUser("tommytrojan1", "traveler", "Tommy");
+
+        int watchlist1 = db.newWatchlist("Tommy's List", tommy.getUser_id(), false);
+        int watchlist2 = db.newWatchlist("Trojan's List", tommy2.getUser_id(), false);
+
+        db.insertIntoWatchlist(111, watchlist1);
+        db.insertIntoWatchlist(222, watchlist1);
+        db.insertIntoWatchlist(333, watchlist1);
+
+        db.insertIntoWatchlist(444, watchlist2);
+        db.insertIntoWatchlist(555, watchlist2);
+        db.insertIntoWatchlist(666, watchlist2);
+
+        assertEquals(1, db.getListsForUser(tommy.getUser_id()).size());
+        assertEquals(1, db.getListsForUser(tommy2.getUser_id()).size());
+        String response = db.combineLists(watchlist1, watchlist2, tommy.getUser_id(), "USC Movies");
+        assertTrue(response.contains("SUCCESS"));
+
+        List<ListModel> l = db.getListsForUser(tommy.getUser_id());
+        assertEquals(2, l.size());
+        assertEquals(1, db.getListsForUser(tommy2.getUser_id()).size());
+        assertEquals("USC Movies", l.get(1).getListName());
+        assertEquals(6, l.get(1).getMovies().size());
+
+    }
+
 }

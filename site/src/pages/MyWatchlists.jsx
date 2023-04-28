@@ -9,12 +9,22 @@ import WatchlistMovieDetails from '../components/WatchlistMovieDetails';
 import CreateNewList from '../components/CreateNewList';
 import DeleteWatchlist from '../components/DeleteWatchlist';
 import ReconfigureList from '../components/ReconfigureList';
+import SuggestionButton from '../components/SuggestionButton';
+import CompareWatchlist from "../components/CompareWatchlist";
 
-function MyWatchlists() {
+function MyWatchlists({selectedMovies, setSelectedMovies}) {
 
     const [watchlists, assignLists] = useState([]);
     const [userId, setId] = useState(0);
     const navigate = useNavigate();
+    const [showSuggestionStuff, setShowSuggestionStuff] = useState(false);
+
+
+
+
+    const handleSuggestionClick = () => {
+         setShowSuggestionStuff(!showSuggestionStuff);
+     };
 
     const handleCreateMontage = (selectedId) => {
       const selectedWatchlist = watchlists.find(list => list.listId === selectedId);
@@ -30,6 +40,16 @@ function MyWatchlists() {
         console.log("Action completed. Lists modified. Refreshing lists.");
         getLists();
       };
+
+    const handleRadioChange = (movieId, isSelected) => {
+      if (isSelected) {
+        setSelectedMovies((prevState) => [...prevState, movieId]);
+      } else {
+        setSelectedMovies((prevState) =>
+          prevState.filter((id) => id !== movieId)
+        );
+      }
+    };
 
     const getLists = async() => {
         const storedId = sessionStorage.getItem('userId');
@@ -75,11 +95,16 @@ function MyWatchlists() {
                 <Heading size='lg'>Your Watchlists</Heading>
               </Box>
               <Spacer />
-              <ButtonGroup gap='3'>
+              <ButtonGroup gap='2'>
+               <Button onClick = {handleSuggestionClick} > Get Suggestions </Button>
                <CreateNewList onAlertDialogClose={handleAlertDialogClose}/>
-                <Button> Find a List</Button>
               </ButtonGroup>
             </Flex>
+            <Flex justifyContent="center" alignItems="center" flexDirection="row">
+                                {showSuggestionStuff && (
+                                    <SuggestionButton containsSomething = {selectedMovies.length}/>
+                                    )}
+                            </Flex>
                 <SimpleGrid spacing={4} p={10} templateColumns='repeat(auto-fill, minmax(500px, 1fr))'>
                  {watchlists.slice(0).map((watchlist, index) => (
                         <div key={index}>
@@ -87,11 +112,6 @@ function MyWatchlists() {
                                  <CardHeader>
                                   <Heading size="md">
                                     {watchlists[index].listName}
-                                    {watchlists[index].userId == userId && (
-                                      <Badge ml="1" fontSize="0.8em" colorScheme="green">
-                                        Created by You
-                                      </Badge>
-                                    )}
                                     {watchlists[index].private ? (
                                       <Badge ml="1" fontSize="0.8em" colorScheme="purple">
                                         Private
@@ -115,6 +135,8 @@ function MyWatchlists() {
                                           listId={watchlists[index].listId}
                                           onAlertDialogClose={handleAlertDialogClose}
                                           watchlists={watchlists}
+                                          onRadioChange={handleRadioChange}
+                                          showRadio = {showSuggestionStuff}
                                           />
                                           </>
                                         ))
@@ -128,14 +150,21 @@ function MyWatchlists() {
                                     listId={watchlists[index].listId}
                                     onAlertDialogClose={handleAlertDialogClose}
                                     />
-                                    <DeleteWatchlist
-                                    listTitle={watchlists[index].listName}
-                                    listId={watchlists[index].listId}
-                                    onAlertDialogClose={handleAlertDialogClose}/>
+
                                     <Button onClick={() => handleCreateMontage(watchlists[index].listId)}>
                                         Create Montage
                                     </Button>
+                                    {!watchlists[index].private && <CompareWatchlist
+                                        listId = {watchlists[index].listId}
+                                        isPrivate = {watchlists[index].isPrivate}
+                                        getLists={getLists}/>}
+
+                                     <DeleteWatchlist
+                                        listTitle={watchlists[index].listName}
+                                        listId={watchlists[index].listId}
+                                        onAlertDialogClose={handleAlertDialogClose}/>
                                     </ButtonGroup>
+
                                  </CardFooter>
                            </Card>
                         </div>

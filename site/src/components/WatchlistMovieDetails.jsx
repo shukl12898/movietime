@@ -7,15 +7,15 @@ import MoveMovie from '../components/MoveMovie';
 
 import {
   Image,
-  Badge,
-   Accordion,
+  Badge,Accordion,
     AccordionItem,
     AccordionButton,
     AccordionPanel,
-    Box, Flex, Spacer, ButtonGroup
+    AccordionIcon,
+    Box, Flex, Spacer, ButtonGroup, Checkbox
 } from '@chakra-ui/react';
 
-function WatchlistMovieDetails({ onAlertDialogClose, ...props }) {
+function WatchlistMovieDetails({ onAlertDialogClose, onRadioChange,showRadio,...props }) {
 
     const [hoverControlsVisible, setHoverControlsVisible] = useState(false);
 
@@ -26,6 +26,13 @@ function WatchlistMovieDetails({ onAlertDialogClose, ...props }) {
     const watchlists = props.watchlists;
     const listTitle = props.listTitle;
     const listId = props.listId;
+    const [selected, setSelected] = useState(false);
+
+
+    const handleRadioSelection = (e) => {
+        setSelected(e.target.checked);
+        onRadioChange(movieID, e.target.checked);
+    };
 
     const showHoverControls = () => {
       setHoverControlsVisible(true);
@@ -60,7 +67,13 @@ function WatchlistMovieDetails({ onAlertDialogClose, ...props }) {
         {
             <Box p={3} id="movie-name" onMouseEnter={showHoverControls} onMouseLeave={hideHoverControls} key={movieID} >
             <Flex>
-
+               {showRadio && (
+               <Checkbox
+                 isChecked={selected}
+                 onChange={handleRadioSelection}
+               >
+               </Checkbox>
+               )}
               <div onClick={() => {
                        showDetailsToggle(movieID);
                }}>

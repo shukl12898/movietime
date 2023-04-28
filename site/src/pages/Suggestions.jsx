@@ -1,59 +1,82 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import SuggestionResult from "../components/SuggestionResult";
+import SuggestionCreateNewList from "../components/SuggestionCreateNewList"
+import { Box, Flex, Text} from "@chakra-ui/react";
 
-function Suggestions() {
-    const [movies, setMovies] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(false);
-    const APIkey = '?api_key=7ed8d4771870299ac266b6147ba2fa76';
- //   const baseImageUrl = "https://image.tmdb.org/t/p/w500";
-    const {num} = useParams();
-    const numMovies = parseInt(num);
+function Suggestions({ selectedMovies }) {
+  const [movies, setMovies] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+  const APIkey = "?api_key=7ed8d4771870299ac266b6147ba2fa76";
+  const { num } = useParams();
+  const numMovies = parseInt(num);
+
+  useEffect(() => {
+    setLoading(true);
+    setError(false);
+
+        const fetchMovies = async () => {
+          try {
+            const suggestedMoviesResponse = await fetch(
+              `/api/suggestions/${selectedMovies[0]}`
+            );
+            const suggestedMoviesData = await suggestedMoviesResponse.json();
+
+            const filteredMovies = suggestedMoviesData.results.filter(
+              (movie) => !selectedMovies.includes(movie.id)
+            );
+            // Fisher-Yates shuffle algorithm
+            const shuffleArray = (array) => {
+              for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+              }
+            };
+            shuffleArray(filteredMovies);
+            setMovies(filteredMovies);
+            setLoading(false);
+          } catch (error) {
+            console.error("Error fetching movies:", error);
+            setError(true);
+            setLoading(false);
+          }
+        };
+
+        if (selectedMovies.length > 0) {
+          fetchMovies();
+        } else {
+          setLoading(false);
+        }
+      }, [selectedMovies]);
 
 
-    useEffect(() => {
-        setLoading(true);
-        setError(false);
-        fetch(`https://api.themoviedb.org/3/discover/movie${APIkey}&with_genres=28`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                setMovies(data.results);
-                setLoading(false);
-            })
-            .catch(error => {
-                console.error('Error fetching movies:', error);
-                setError(true);
-                setLoading(false);
-            });
-    }, []);
+  return (
+    <div>
 
-
-
-    return (
-        <div>
+       <Flex justifyContent="center" alignItems="center" flexDirection="column">
           {loading && <div>Loading...</div>}
           {error && <div>These are the 0 movies that we suggest!</div>}
           {!loading && !error && (
-
-            <div>
-                These are the {num} movies that we suggest!
-            </div>
+            <Text color = "green.500">
+              These are the {num} movies that we suggest!
+            </Text>
           )}
 
-          {movies.slice(0, numMovies).map((movie) => (
-                <div key={movie.id}>
-                  <h2>{movie.title}</h2>
-                  <img src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} alt={movie.title} />
-                  <p>{movie.overview}</p>
-                </div>
-          ))}
-        </div>
-    );
+             <SuggestionResult
+               movies={movies}
+               numResults={numMovies}
+             />
+
+           <Box>
+                <SuggestionCreateNewList movies = {movies} numResults ={numMovies}/>
+           </Box>
+        </Flex>
+
+    </div>
+
+  );
 }
 
 export default Suggestions;
+

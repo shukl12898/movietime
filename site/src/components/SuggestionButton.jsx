@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Tooltip from './Tooltip';
+import { Tooltip ,Button, Text,Flex} from '@chakra-ui/react';
 
-const SuggestionButton = () => {
+const SuggestionButton = ({containsSomething}) => {
   const [num, setNum] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
@@ -13,7 +13,10 @@ const SuggestionButton = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (num === '') {
+    if (!containsSomething){
+        setError('Please select at least one movie.');
+    }
+    else if (num === '') {
       setError('Please enter a number');
     } else {
       setError('');
@@ -24,25 +27,30 @@ const SuggestionButton = () => {
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <label>
-          How many movies do you want to be suggested for you?
+        <Flex justifyContent="center" alignItems="center">
+          <Text color = "green.500">
+          How many suggestions
+          </Text>
+          <Tooltip label="Maximum 10, Minimum 1" aria-label="Maximum 10, Minimum 1">
+            <Button  id = "TooltipButton" size="xs" variant="outline">?</Button>
+          </Tooltip>
           <input
+            id = "SuggestionInputBox"
             type="number"
             value={num}
             min="1"
             max="10"
             onChange={handleInputChange}
+
           />
-        </label>
-        <Tooltip text="Maximum 10, Minimum 1">
-          <button>?</button>
-        </Tooltip>
-        <button type="submit">Generate Suggestions</button>
+
+        <Button type="submit" colorScheme="blue">Generate Suggestions</Button>
+        {error && <Text m1 ='2' color = "red">{error}</Text>}
+        </Flex>
       </form>
-      {error && <div style={{ color: 'red' }}>{error}</div>}
+
     </div>
   );
 };
 
 export default SuggestionButton;
-
