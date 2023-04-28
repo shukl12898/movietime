@@ -361,8 +361,22 @@ public class SearchStepDefinitions {
     @Given("I am on the {string} page using HTTP")
     public void iAmOnThePageUsingHTTP(String arg0) {
         driver.get(ROOT_URL_HTTP+arg0);
+
     }
 
+    @Then("I should see {string} simply on page")
+    public void iShouldSeeSimplyOnPage(String arg0) {
+        assertTrue(driver.getPageSource().contains(arg0));
+    }
+
+    @When("I click advanced")
+    public void iClickAdvanced() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(120));
+        WebElement advButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"details-button\"]")));
+        advButton.click();
+        WebElement proButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"proceed-link\"]")));
+        proButton.click();
+    }
 
 //    @After
 //    public void after(){
