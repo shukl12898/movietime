@@ -15,12 +15,10 @@ import CompareWatchlist from "../components/CompareWatchlist";
 function MyWatchlists({selectedMovies, setSelectedMovies}) {
 
     const [watchlists, assignLists] = useState([]);
-    const [userId, setId] = useState(0);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [userId,setId] = useState(0);
     const navigate = useNavigate();
     const [showSuggestionStuff, setShowSuggestionStuff] = useState(false);
-
-
-
 
     const handleSuggestionClick = () => {
          setShowSuggestionStuff(!showSuggestionStuff);

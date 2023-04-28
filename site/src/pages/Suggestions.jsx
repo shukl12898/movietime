@@ -8,7 +8,6 @@ function Suggestions({ selectedMovies }) {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-  const APIkey = "?api_key=7ed8d4771870299ac266b6147ba2fa76";
   const { num } = useParams();
   const numMovies = parseInt(num);
 
