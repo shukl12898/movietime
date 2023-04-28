@@ -91,17 +91,6 @@ public class MontageStepDefinition {
         assertTrue("Expected URL to contain search", driver.getCurrentUrl().contains("Search"));
     }
 
-    @When("I am logged in")
-    public void iAmLoggedIn() {
-        driver.findElement(By.xpath("/html/body/div[1]/div[2]/div[2]/button")).click();
-        driver.findElement(By.xpath("/html/body/div[1]/div[2]/div[1]/div/div[2]/div[2]/div[1]/input")).sendKeys("user");
-        driver.findElement(By.xpath("/html/body/div[1]/div[2]/div[1]/div/div[2]/div[2]/div[2]/input")).sendKeys("pass");
-        driver.findElement(By.xpath("/html/body/div[1]/div[2]/div[1]/div/div[2]/div[2]/div[3]/input")).sendKeys("pass");
-        driver.findElement(By.xpath("/html/body/div[1]/div[2]/div[1]/div/div[2]/div[2]/div[4]/input")).sendKeys("User");
-        driver.findElement(By.xpath("/html/body/div[1]/div[2]/div[1]/div/div[2]/div[3]/button")).click();
-        System.out.println(driver.getCurrentUrl());
-    }
-
     @And("I create a new watchlist")
     public void iCreateANewWatchlist() {
         System.out.println(driver.getPageSource());
