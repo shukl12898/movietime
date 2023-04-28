@@ -10,4 +10,3 @@ const Tooltip = ({ text, children }) => {
 };
 
 export default Tooltip;
-
