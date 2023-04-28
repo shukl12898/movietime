@@ -11,7 +11,7 @@ import {
   AlertDialogOverlay,
   useDisclosure,
   Select, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton,
-  ModalBody, ModalFooter, Heading
+  ModalBody, ModalFooter, Heading, FormHelperText, FormControl
 } from '@chakra-ui/react';
 import CreateNewList from '../components/CreateNewList';
 import InWatchlists from '../components/InWatchlists';
@@ -24,6 +24,8 @@ function HoverButtons({movieDetails}) {
     const movieId = movieDetails.id;
     const [showOverlay, setShowOverlay] = useState(false);
     const [lists, setLists] = useState([]);
+
+    const [exists, setInList] = useState(false);
 
    const [selectedOption, setSelectedOption] = useState(0);
 
@@ -73,10 +75,17 @@ function HoverButtons({movieDetails}) {
                });
                const result = await response.text();
                console.log(result);
+               if (result == "Already in list") {
+                    setInList(true);
+                    setShowOverlay(true);
+               } else {
+                    setInList(false);
+                    setShowOverlay(false);
+               }
              } catch (error) {
                console.error(error);
              }
-             setShowOverlay(false);
+
          }
 
          useEffect(()=>{
@@ -110,6 +119,7 @@ function HoverButtons({movieDetails}) {
           size="md"
           variant="unstyled"
           display="flex"
+          id="dollarButton"
         />
       </HStack>
 
@@ -134,7 +144,7 @@ function HoverButtons({movieDetails}) {
               <Button ref={cancelRef} onClick={onClose}>
                 Cancel
               </Button>
-              <Button style={{ backgroundColor: "#3e5936", color: 'white' }} onClick={redirectToTickets} ml={3}>
+              <Button id="purchaseButton" style={{ backgroundColor: "#3e5936", color: 'white' }} onClick={redirectToTickets} ml={3}>
                 Purchase
               </Button>
             </AlertDialogFooter>
@@ -151,11 +161,18 @@ function HoverButtons({movieDetails}) {
               </ModalHeader>
               <ModalCloseButton data-testid="close-modal-button"/>
               <ModalBody>
+              <FormControl>
               <Select placeholder='Select your list' id="dropdown" value={selectedOption} onChange={handleChange}>
                 {lists.slice(0).map((movie, index) => (
                       <option key={lists[index].listId} value={lists[index].listId}>{lists[index].listName}</option>
                 ) )}
               </Select>
+              {exists && (
+                 <FormHelperText>
+                   The movie is already in this list.
+                 </FormHelperText>
+                              )}
+              </FormControl>
                <br/>
                <Heading size='sm'>Looking for something new?</Heading>
              <CreateNewList onAlertDialogClose={fetchLists}/>

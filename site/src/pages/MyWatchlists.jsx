@@ -95,12 +95,16 @@ function MyWatchlists({selectedMovies, setSelectedMovies}) {
                 <Heading size='lg'>Your Watchlists</Heading>
               </Box>
               <Spacer />
-              <ButtonGroup gap='3'>
-               <Button onClick = {handleSuggestionClick} > Suggestion </Button>
+              <ButtonGroup gap='2'>
+               <Button onClick = {handleSuggestionClick} > Get Suggestions </Button>
                <CreateNewList onAlertDialogClose={handleAlertDialogClose}/>
-                <Button> Find a List</Button>
               </ButtonGroup>
             </Flex>
+            <Flex justifyContent="center" alignItems="center" flexDirection="row">
+                                {showSuggestionStuff && (
+                                    <SuggestionButton containsSomething = {selectedMovies.length}/>
+                                    )}
+                            </Flex>
                 <SimpleGrid spacing={4} p={10} templateColumns='repeat(auto-fill, minmax(500px, 1fr))'>
                  {watchlists.slice(0).map((watchlist, index) => (
                         <div key={index}>
@@ -108,12 +112,7 @@ function MyWatchlists({selectedMovies, setSelectedMovies}) {
                                  <CardHeader>
                                   <Heading size="md">
                                     {watchlists[index].listName}
-                                    {watchlists[index].userId == userId && (
-                                      <Badge ml="1" fontSize="0.8em" colorScheme="green">
-                                        Created by You
-                                      </Badge>
-                                    )}
-                                    {watchlists[index].isPrivate ? (
+                                    {watchlists[index].private ? (
                                       <Badge ml="1" fontSize="0.8em" colorScheme="purple">
                                         Private
                                       </Badge>
@@ -151,28 +150,26 @@ function MyWatchlists({selectedMovies, setSelectedMovies}) {
                                     listId={watchlists[index].listId}
                                     onAlertDialogClose={handleAlertDialogClose}
                                     />
-                                    <DeleteWatchlist
-                                    listTitle={watchlists[index].listName}
-                                    listId={watchlists[index].listId}
-                                    onAlertDialogClose={handleAlertDialogClose}/>
+
                                     <Button onClick={() => handleCreateMontage(watchlists[index].listId)}>
                                         Create Montage
                                     </Button>
-                                    <CompareWatchlist
+                                    {!watchlists[index].private && <CompareWatchlist
                                         listId = {watchlists[index].listId}
-                                        isPrivate = {watchlists[index].isPrivate} />
+                                        isPrivate = {watchlists[index].isPrivate}
+                                        getLists={getLists}/>}
+
+                                     <DeleteWatchlist
+                                        listTitle={watchlists[index].listName}
+                                        listId={watchlists[index].listId}
+                                        onAlertDialogClose={handleAlertDialogClose}/>
                                     </ButtonGroup>
+
                                  </CardFooter>
                            </Card>
                         </div>
                             ))}
                 </SimpleGrid>
-
-                <Flex justifyContent="center" alignItems="center" flexDirection="row">
-                    {showSuggestionStuff && (
-                        <SuggestionButton containsSomething = {selectedMovies.length}/>
-                        )}
-                </Flex>
 
             </div>
     );

@@ -13,35 +13,60 @@ import {
   Select,
   Text,
   useToast,
-  Input
+  Input,
+  FormHelperText
 } from "@chakra-ui/react";
 
-function CompareWatchlist({ listId, isPrivate }) {
+function CompareWatchlist({ getLists, listId, isPrivate }) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState("");
   const [selectedUserList, setSelectedUserList] = useState("");
   const [newListName, setNewListName] = useState("");
   const toast = useToast();
+
+  const [rename, setRename] = useState(false);
+
   const [publicWatchlists, setPublicWatchlists] = useState([]);
   const [users, setUsers] = useState([]);
 
-
-
   const onClose = () => setIsOpen(false);
 
-  const handleCompare = () => {
-    // Implement the logic to create a new list based on the comparison
+  const handleCompare = async () => {
 
-    // Show success message
-    toast({
-      title: "Watchlists compared",
-      description: `A new watchlist "${newListName}" has been created.`,
-      status: "success",
-      duration: 5000,
-      isClosable: true,
-    });
+    const storedId = sessionStorage.getItem('userId');
 
-    onClose();
+    try {
+       const response = await fetch(`/api/watchlists/combine=${listId}/and=${selectedUserList}`, {
+         method: 'POST',
+         headers: {
+           'Content-Type': 'application/json',
+         },
+         body: JSON.stringify({
+           watchListName: newListName,
+                  forUser: storedId,
+                  isPrivate: false
+         }),
+       });
+       const result = await response.text();
+       console.log(result);
+       if (result == "Name exists") {
+              setRename(true);
+         } else if (result == "SUCCESS"){
+              setRename(false);
+               toast({
+                    title: "Watchlists compared",
+                    description: `A new watchlist "${newListName}" has been created.`,
+                    status: "success",
+                    duration: 5000,
+                    isClosable: true,
+                  });
+              onClose();
+              getLists();
+         }
+     } catch (error) {
+       console.error(error);
+     }
+
   };
 
     const handleFirstCompareClick = () => {
@@ -57,6 +82,78 @@ function CompareWatchlist({ listId, isPrivate }) {
         setIsOpen(true);
       }
     };
+
+    const getListOfUsers = () => {
+
+         const storedId = sessionStorage.getItem('userId');
+                 if (storedId) {
+                   console.log('ID found in session storage: ', storedId);
+
+                   fetch(`/api/getUsers`, {
+                       method: "POST",
+                       headers: {
+                         "Content-Type": "application/json"
+                       },
+                       body: JSON.stringify({
+                        userId: storedId
+                        })
+                         })
+                       .then(res => res.json())
+                       .then((response) => {
+                           console.log("API Responded With: ");
+                           console.log(response);
+                           setUsers(response.users);
+                       })
+                       .catch(error => {
+                         console.log(error);
+                       });
+                 } else {
+                   console.log('ID not found in session storage.');
+                 }
+
+    };
+
+    const getPublicLists = () => {
+
+         const storedId = sessionStorage.getItem('userId');
+         if (storedId) {
+           console.log('ID found in session storage: ', storedId);
+
+           fetch(`/api/getPublicLists=${selectedUser}`, {
+               method: "POST",
+               headers: {
+                 "Content-Type": "application/json"
+               },
+               body: JSON.stringify({
+                userId: storedId
+                })
+                 })
+               .then(res => res.json())
+               .then((response) => {
+                   console.log("API Responded With: ");
+                   console.log(response);
+                   setPublicWatchlists(response.watchlists);
+               })
+               .catch(error => {
+                 console.log(error);
+               });
+         } else {
+           console.log('ID not found in session storage.');
+         }
+
+    };
+
+
+
+   useEffect(()=>{
+    getListOfUsers();
+    if (selectedUser != "") {
+        getPublicLists();
+    }
+   },[selectedUser]);
+
+
+
 
   return (
     <>
@@ -76,8 +173,10 @@ function CompareWatchlist({ listId, isPrivate }) {
                     value={selectedUser}
                     onChange={(e) => setSelectedUser(e.target.value)}
                   >
-                    {/* Populate with real user data , retrieve all user data*/}
-                    <option value="userB">User B</option>
+                    {users.map((user) => (
+                         (user.user_id != sessionStorage.getItem('userId')) &&
+                          (<option key={user.user_id} value={user.user_id}>{user.displayName}</option>)
+                    ) )}
                   </Select>
                 </FormControl>
 
@@ -88,8 +187,11 @@ function CompareWatchlist({ listId, isPrivate }) {
                     value={selectedUserList}
                     onChange={(e) => setSelectedUserList(e.target.value)}
                   >
-                    {/* Populate with real watchlist data */}
-                    <option value="action">Action</option>
+
+                    {publicWatchlists.map((list) => (
+                            (list.listId != listId) &&
+                                              (<option key={list.listId} value={list.listId}>{list.listName}</option>)
+                                        ) )}
                   </Select>
                 </FormControl>
 
@@ -103,6 +205,11 @@ function CompareWatchlist({ listId, isPrivate }) {
                     value={newListName}
                     onChange={(e) => setNewListName(e.target.value)}
                   />
+                  {rename && (
+                                   <FormHelperText>
+                                     This name exists.
+                                   </FormHelperText>
+                                                )}
                 </FormControl>
               </>
 
