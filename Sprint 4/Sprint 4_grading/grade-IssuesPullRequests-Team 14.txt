@@ -1,0 +1,60 @@
+Best Practice IssuesPullRequests Report
+Owner: Team 14
+Grade: 1.0/12
+Comments: 
+	Using commit: https://github.com/CSCI310/20231-project-team-14/commit/59952c8aa3baa9901b18509db8850b33aa745149
+		Reviewing issue 74
+			Did not find refactor/74: -1
+			Could not find matching PR : -5
+			Issue not closed: -1
+			Issue score: 0/7
+		Reviewing issue 73
+			Did not find refactor/73: -1
+			Could not find matching PR : -5
+			Issue not closed: -1
+			Issue score: 0/7
+		Reviewing issue 72
+			Found refactor/72: +1
+			Found matching PR #94: +1
+			PR created by issue assignee: +1
+			Changes matched: +1
+			PR not merged: -2
+			Issue not closed: -1
+			Issue score: 4/7
+		Reviewing issue 71
+			Did not find refactor/71: -1
+			Could not find matching PR : -5
+			Issue not closed: -1
+			Issue score: 0/7
+		Reviewing issue 70
+			Did not find refactor/70: -1
+			Could not find matching PR : -5
+			Issue not closed: -1
+			Issue score: 0/7
+		Reviewing issue 69
+			Did not find refactor/69: -1
+			Could not find matching PR : -5
+			Issue not closed: -1
+			Issue score: 0/7
+		Reviewing issue 68
+			Found refactor/68: +1
+			Could not find matching PR : -5
+			Issue not closed: -1
+			Issue score: 1/7
+		Reviewing issue 67
+			Did not find refactor/67: -1
+			Could not find matching PR : -5
+			Issue closed properly: +1
+			Issue score: 1/7
+		Reviewing issue 66
+			Did not find refactor/66: -1
+			Could not find matching PR : -5
+			Issue not closed: -1
+			Issue score: 0/7
+		Reviewing issue 65
+			Did not find refactor/65: -1
+			Could not find matching PR : -5
+			Issue not closed: -1
+			Issue score: 0/7
+		Total issue score count: 6/70
+		Points earned: 1.0
