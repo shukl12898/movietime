@@ -7,7 +7,7 @@
 |                          |                     | Scrum 2:                                      |
 |                          |                     | Scrum 3:                                      |
 |                          |                     | Scrum 4:No Task Chart                         |
-| Retrospective            | TBD                 |                                               |
+| Retrospective            | 0.0/8               | No retrospective found (-8)                   |
 | TDD                      | 2.4/12              |                                               |
 | GitFlow                  | 11.5/12             |                                               |
 | Continuous Integration   | 12.0/12             |                                               |
