@@ -1,0 +1,117 @@
+Best Practice TDD Report
+Owner: Team 14
+Grade: 1.6/12
+Comments: 
+	No test found for: src.components.WatchlistOptions.jsx.WatchlistOptions
+		Commit: https://github.com/CSCI310/20231-project-team-14/commit/17a66ed2788f1e42ae94abb0b2180c847472e1c7
+	No test found for: src.pages.MyWatchlists.jsx.handleUserIDChange
+		Commit: https://github.com/CSCI310/20231-project-team-14/commit/17a66ed2788f1e42ae94abb0b2180c847472e1c7
+	No test found for: databasemanager.addtowatchlist
+		Commit: https://github.com/CSCI310/20231-project-team-14/commit/a202700aa39f7d02b69985c59f472b47d8d78005
+	No test found for: databasemanager.removefromwatchlist
+		Commit: https://github.com/CSCI310/20231-project-team-14/commit/a202700aa39f7d02b69985c59f472b47d8d78005
+	No test found for: databasemanager.movemovie
+		Commit: https://github.com/CSCI310/20231-project-team-14/commit/a202700aa39f7d02b69985c59f472b47d8d78005
+	Test method was not created before method for: src.components.HoverButtons.jsx.HoverButtons
+		Method commit on 2023-04-18 18:57:50+00:00 UTC: https://github.com/CSCI310/20231-project-team-14/commit/bb78fe6ec0780444fccf119fb776b9d752fa6f64
+		Test commit on 2023-04-20 21:56:31+00:00 UTC: https://github.com/CSCI310/20231-project-team-14/commit/d57392cbfd73e12ac4e9bafbf5763c65284ce4ea
+	No test found for: watchlistcontroller.deletewatchlist
+		Commit: https://github.com/CSCI310/20231-project-team-14/commit/aa66799f7b1cd4dd83769458b0f3ae57c239ff84
+	Test method was not created before method for: watchlistcontroller.newlist
+		Method commit on 2023-04-20 21:23:08+00:00 UTC: https://github.com/CSCI310/20231-project-team-14/commit/dc76aad3ed071c900698b1123ac0a9589bc64013
+		Test commit on 2023-04-27 05:03:50+00:00 UTC: https://github.com/CSCI310/20231-project-team-14/commit/c50e5961a1ee75ab5adc1320d6cc972e78d94a82
+	No test found for: watchlistcontroller.insertmovie
+		Commit: https://github.com/CSCI310/20231-project-team-14/commit/dc76aad3ed071c900698b1123ac0a9589bc64013
+	No test found for: moviedbcontroller.fetchmovie
+		Commit: https://github.com/CSCI310/20231-project-team-14/commit/c0601afb85e155ef11d16eaf70267f68ec0198fc
+	No test found for: moviedetailsresttemplateconfig.moviedetailsresttemplate
+		Commit: https://github.com/CSCI310/20231-project-team-14/commit/d7dd68733ab40cd9bb80582ad0971bb9c5b6e497
+	No test found for: src.components.CopyMovie.jsx.CopyMovie
+		Commit: https://github.com/CSCI310/20231-project-team-14/commit/6b65a98db3243e3b34446533f96a92b0d07f584f
+	Test method was not created before method for: src.components.CreateNewList.jsx.CreateNewList
+		Method commit on 2023-04-23 23:46:33+00:00 UTC: https://github.com/CSCI310/20231-project-team-14/commit/6b65a98db3243e3b34446533f96a92b0d07f584f
+		Test commit on 2023-04-25 08:41:33+00:00 UTC: https://github.com/CSCI310/20231-project-team-14/commit/2e891a3b487c24199f4456885ca2ba7cc6807548
+	No test found for: src.components.DeleteWatchlist.jsx.DeleteWatchlist
+		Commit: https://github.com/CSCI310/20231-project-team-14/commit/6b65a98db3243e3b34446533f96a92b0d07f584f
+	No test found for: src.components.MoveMovie.jsx.MoveMovie
+		Commit: https://github.com/CSCI310/20231-project-team-14/commit/6b65a98db3243e3b34446533f96a92b0d07f584f
+	No test found for: src.components.ReconfigureList.jsx.ReconfigureList
+		Commit: https://github.com/CSCI310/20231-project-team-14/commit/6b65a98db3243e3b34446533f96a92b0d07f584f
+	No test found for: src.components.RemoveMovie.jsx.RemoveMovie
+		Commit: https://github.com/CSCI310/20231-project-team-14/commit/6b65a98db3243e3b34446533f96a92b0d07f584f
+	No test found for: src.components.WatchlistMovieDetails.jsx.WatchlistMovieDetails
+		Commit: https://github.com/CSCI310/20231-project-team-14/commit/6b65a98db3243e3b34446533f96a92b0d07f584f
+	Test method was not created before method for: databasemanager.deletefromwatchlist
+		Method commit on 2023-04-23 23:46:33+00:00 UTC: https://github.com/CSCI310/20231-project-team-14/commit/6b65a98db3243e3b34446533f96a92b0d07f584f
+		Test commit on 2023-04-25 23:58:50+00:00 UTC: https://github.com/CSCI310/20231-project-team-14/commit/405853c7ef99a7c9bd588395bf623f5e16d9ea1b
+	Test method was not created before method for: databasemanager.renamelist
+		Method commit on 2023-04-23 23:46:33+00:00 UTC: https://github.com/CSCI310/20231-project-team-14/commit/6b65a98db3243e3b34446533f96a92b0d07f584f
+		Test commit on 2023-04-25 23:58:50+00:00 UTC: https://github.com/CSCI310/20231-project-team-14/commit/405853c7ef99a7c9bd588395bf623f5e16d9ea1b
+	No test found for: watchlistcontroller.deletemovie
+		Commit: https://github.com/CSCI310/20231-project-team-14/commit/6b65a98db3243e3b34446533f96a92b0d07f584f
+	No test found for: watchlistcontroller.updatelist
+		Commit: https://github.com/CSCI310/20231-project-team-14/commit/6b65a98db3243e3b34446533f96a92b0d07f584f
+	No test found for: searchresttemplateconfig.searchresttemplate
+		Commit: https://github.com/CSCI310/20231-project-team-14/commit/fad4a447d8ccda6132c06223822be0123a324f50
+	Test method was not created before method for: searchservice.sortresults
+		Method commit on 2023-04-24 05:51:13+00:00 UTC: https://github.com/CSCI310/20231-project-team-14/commit/fad4a447d8ccda6132c06223822be0123a324f50
+		Test commit on 2023-04-28 02:51:17+00:00 UTC: https://github.com/CSCI310/20231-project-team-14/commit/1aa719caa05ceb6e3b0b6c69e666f25a77ce1ea9
+	No test found for: moviedetailsapiservice.makeapicall
+		Commit: https://github.com/CSCI310/20231-project-team-14/commit/97a4d1c72ba28b106c591c0817e9c9ab05b8989e
+	No test found for: databasemanager.doesuserexist
+		Commit: https://github.com/CSCI310/20231-project-team-14/commit/cba1c7a8f8da444cd9dc7bfd6cbc25b3a66349b6
+	No test found for: montageresttemplateconfig.montageresttemplate
+		Commit: https://github.com/CSCI310/20231-project-team-14/commit/4a6da7b6b4b9b136c0afb6bc615b1495d29fcfc1
+	No test found for: montageapiservice.makeapicall
+		Commit: https://github.com/CSCI310/20231-project-team-14/commit/eb100aac38c7587eb018e9beb2b439b4bff53b70
+	Test method was not created before method for: searchservice.filterresults
+		Method commit on 2023-04-27 09:50:06+00:00 UTC: https://github.com/CSCI310/20231-project-team-14/commit/65c3a752b77cd9ea59428be5bfc460eb815af8f8
+		Test commit on 2023-04-28 02:51:17+00:00 UTC: https://github.com/CSCI310/20231-project-team-14/commit/1aa719caa05ceb6e3b0b6c69e666f25a77ce1ea9
+	No test found for: watchlistcontroller.fetchcontainsmovie
+		Commit: https://github.com/CSCI310/20231-project-team-14/commit/772f8dd8a69a259be6539c4ac5b916e3a22bbc16
+	No test found for: searchapiservice.makeapicall
+		Commit: https://github.com/CSCI310/20231-project-team-14/commit/d0e94eb9520cc39cf0f03fc6d2092b6e061fba0e
+	No test found for: src.pages.MyWatchlists.jsx.handleWNameChange
+		Commit: https://github.com/CSCI310/20231-project-team-14/commit/17a66ed2788f1e42ae94abb0b2180c847472e1c7
+	No test found for: src.pages.MyWatchlists.jsx.handleIsPublicChange
+		Commit: https://github.com/CSCI310/20231-project-team-14/commit/17a66ed2788f1e42ae94abb0b2180c847472e1c7
+	No test found for: src.pages.MyWatchlists.jsx.handleMovieNameChange
+		Commit: https://github.com/CSCI310/20231-project-team-14/commit/17a66ed2788f1e42ae94abb0b2180c847472e1c7
+	No test found for: watchlistdatabasemanager.dropalltables
+		Commit: https://github.com/CSCI310/20231-project-team-14/commit/17a66ed2788f1e42ae94abb0b2180c847472e1c7
+	No test found for: watchlistdatabasemanager.addtowatchlist
+		Commit: https://github.com/CSCI310/20231-project-team-14/commit/17a66ed2788f1e42ae94abb0b2180c847472e1c7
+	No test found for: watchlistdatabasemanager.removefromwatchlist
+		Commit: https://github.com/CSCI310/20231-project-team-14/commit/17a66ed2788f1e42ae94abb0b2180c847472e1c7
+	No test found for: watchlistdatabasemanager.movemovie
+		Commit: https://github.com/CSCI310/20231-project-team-14/commit/17a66ed2788f1e42ae94abb0b2180c847472e1c7
+	No test found for: watchlistcontroller.viewuserwatchlists
+		Commit: https://github.com/CSCI310/20231-project-team-14/commit/17a66ed2788f1e42ae94abb0b2180c847472e1c7
+	No test found for: watchlistcontroller.addmovietowatchlist
+		Commit: https://github.com/CSCI310/20231-project-team-14/commit/17a66ed2788f1e42ae94abb0b2180c847472e1c7
+	No test found for: src.components.UpdateList.jsx.UpdateList
+		Commit: https://github.com/CSCI310/20231-project-team-14/commit/7ec312f3bffaf29c938867c54b11b9c0fe6f7d95
+	No test found for: src.components.CompareWatchlist.jsx.CompareWatchlist
+		Commit: https://github.com/CSCI310/20231-project-team-14/commit/f60c625387b5a358dde667926d5675fa22f86403
+	Test method was not created before method for: databasemanager.combinelists
+		Method commit on 2023-04-28 02:10:58+00:00 UTC: https://github.com/CSCI310/20231-project-team-14/commit/2ab58eb2759f3bc2c8834a0a9f76ddf0899ae7c6
+		Test commit on 2023-04-28 03:27:58+00:00 UTC: https://github.com/CSCI310/20231-project-team-14/commit/40d9790ad8791acd5c9b323c36ca8700a3030e05
+	No test found for: watchlistcontroller.combinelists
+		Commit: https://github.com/CSCI310/20231-project-team-14/commit/2ab58eb2759f3bc2c8834a0a9f76ddf0899ae7c6
+	No test found for: src.components.Backend.jsx.Backend
+		Commit: https://github.com/CSCI310/20231-project-team-14/commit/e1d525138e32afcd625102af832c2889202364e3
+	No test found for: resttemplateconfig.resttemplate
+		Commit: https://github.com/CSCI310/20231-project-team-14/commit/e1d525138e32afcd625102af832c2889202364e3
+	Correct TDD Methods:
+		databasemanager.newwatchlist
+		src.components.SuggestionCreateNewList.jsx.SuggestionCreateNewList
+		databasemanager.deletewatchlist
+		src.components.SearchBackend.jsx.SearchBackend
+		src.components.InWatchlists.jsx.InWatchlists
+		src.components.SearchFilter.jsx.handleCheckboxChange
+		databasemanager.insertintowatchlist
+
+
+Correct TDD methods: 7
+Incorrect TDD methods: 46
+Total methods evaluated for TDD: 53
